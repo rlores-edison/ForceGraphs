@@ -1,0 +1,809 @@
+{
+    "ATM_Raquel ATM_Raquel_FREE ETL:/calculated/ATM_Raquel/Sacram1/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "bmsUri": "ETL:/calculated/ATM_Raquel/Sacram1/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE",
+     "disMacro": "$equipRef $navName",
+     "equipRef": {
+         "fid": "p:{}:r:0257faf8-2718-3d7c-a79e-8bcb074828a2",
+         "repr": "Sacram1 Clima Clima CondExt .."
+     },
+     "fid": "p:{}:r:a4706781-872c-3a36-a9eb-0a8860d32bc8",
+     "hisFunc": "hisFuncVirtualDegreeDay",
+     "hisMode": "cov",
+     "hisOnWrite": "howConvertTz",
+     "id": "ATM_Raquel ATM_Raquel_FREE ETL:/calculated/ATM_Raquel/Sacram1/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE",
+     "instalZoneRef": {
+         "fid": "p:{}:r:7c056e0b-21fa-36d2-a401-acce42ff8779",
+         "repr": "Sacram1 Clima Clima"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:7022b10f-eb57-310f-87f5-fbc8590b4ba9",
+         "repr": "Sacram1 Clima"
+     },
+     "kind": "Number",
+     "lowBound": "-43",
+     "lowBoundClass": "-28",
+     "markers": [
+         "air",
+         "analytics",
+         "demand",
+         "energy",
+         "gradosdia_free",
+         "his",
+         "outside",
+         "point",
+         "sensor",
+         "virtual"
+     ],
+     "maxInacTime": "1000",
+     "model_name": "Leia_Raquel",
+     "navName": "GradosDia_FREE",
+     "pointType": "gradosdia_free",
+     "pointTypeDis": "GradosDia_FREE",
+     "pointUri": "ETL:/calculated/ATM_Raquel/Sacram1/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     },
+     "stationName": "ATM_Raquel_FREE",
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:8a1dd4c2-e002-3887-b02c-7ac783edc50e",
+         "repr": "Sacram1 Clima Clima CondExt"
+     },
+     "tz": "Madrid",
+     "unit": "°daysC",
+     "upBound": "42",
+     "upBoundClass": "27"
+ },
+ "ATM_Raquel ATM_Raquel_FREE ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "bmsUri": "ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE",
+     "disMacro": "$equipRef $navName",
+     "equipRef": {
+         "fid": "p:{}:r:6dfcb7a4-497c-3bca-bfa9-635be9126d71",
+         "repr": "Sacram7 Clima Clima CondExt .."
+     },
+     "fid": "p:{}:r:199b4e96-4a98-3b88-b470-0a76db45374f",
+     "hisFunc": "hisFuncVirtualDegreeDay",
+     "hisMode": "cov",
+     "hisOnWrite": "howConvertTz",
+     "id": "ATM_Raquel ATM_Raquel_FREE ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE",
+     "instalZoneRef": {
+         "fid": "p:{}:r:7f09ad29-94a1-3e00-a300-8939a24d3487",
+         "repr": "Sacram7 Clima Clima"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:b76e8520-8d4f-3e8e-bf43-12f67f580b86",
+         "repr": "Sacram7 Clima"
+     },
+     "kind": "Number",
+     "lowBound": "-43",
+     "lowBoundClass": "-28",
+     "markers": [
+         "air",
+         "analytics",
+         "demand",
+         "energy",
+         "gradosdia_free",
+         "his",
+         "outside",
+         "point",
+         "sensor",
+         "virtual"
+     ],
+     "maxInacTime": "1000",
+     "model_name": "Leia_Raquel",
+     "navName": "GradosDia_FREE",
+     "pointType": "gradosdia_free",
+     "pointTypeDis": "GradosDia_FREE",
+     "pointUri": "ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Clima/CondExt/GradosDia_FREE",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     },
+     "stationName": "ATM_Raquel_FREE",
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:84e86fb3-58d3-3f34-a3cd-673711847e0e",
+         "repr": "Sacram7 Clima Clima CondExt"
+     },
+     "tz": "Madrid",
+     "unit": "°daysC",
+     "upBound": "42",
+     "upBoundClass": "27"
+ },
+ "ATM_Raquel ATM_Raquel_FREE ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Elec/AcometElec/PM5100E7/OcupEner_FREE": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "bmsUri": "ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Elec/AcometElec/PM5100E7/OcupEner_FREE",
+     "disMacro": "$equipRef $navName",
+     "enum": "Desocup,Ocup",
+     "equipRef": {
+         "fid": "p:{}:r:e499146e-889b-38d9-b86c-aaedd219304f",
+         "repr": "Sacram7 Elec Elec AcometElec PM5100E7"
+     },
+     "fid": "p:{}:r:3b9bd22a-91c0-31c7-bf77-ca8417e2a8f1",
+     "hisFunc": "hisFuncOcupEner",
+     "hisOnWrite": "howConvertTz",
+     "id": "ATM_Raquel ATM_Raquel_FREE ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Elec/AcometElec/PM5100E7/OcupEner_FREE",
+     "instalZoneRef": {
+         "fid": "p:{}:r:29e87e33-951a-3d28-a439-d7792aa8ee88",
+         "repr": "Sacram7 Elec Elec"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+         "repr": "Sacram7 Elec"
+     },
+     "kind": "Bool",
+     "markers": [
+         "analytics",
+         "elec",
+         "his",
+         "occ",
+         "ocupener_free",
+         "point",
+         "run",
+         "swp",
+         "virtual"
+     ],
+     "maxInacTime": "1000",
+     "model_name": "Leia_Raquel",
+     "navName": "OcupEner_FREE",
+     "pointType": "ocupener_free",
+     "pointTypeDis": "OcupEner_FREE",
+     "pointUri": "ETL:/calculated/ATM_Raquel/Sacram7/ATM_Raquel_FREE/histories/Elec/AcometElec/PM5100E7/OcupEner_FREE",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     },
+     "stationName": "ATM_Raquel_FREE",
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:63f2f006-d5f8-328f-a5d7-77cff7fbb638",
+         "repr": "Sacram7 Elec Elec AcometElec"
+     },
+     "tz": "Madrid"
+ },
+ "ATM_Raquel Oreilly_Jace /Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "bmsUri": "SRC_DATA_QUALITY_PROC:/Oreilly_Jace/PM5100_E7_RED$2eEnergia$20Activa",
+     "disMacro": "$equipRef $navName",
+     "equipRef": {
+         "fid": "p:{}:r:e499146e-889b-38d9-b86c-aaedd219304f",
+         "repr": "Sacram7 Elec Elec AcometElec PM5100E7"
+     },
+     "fid": "p:{}:r:08a94ba3-dd4b-3d03-9878-8dfb085bebec",
+     "hisMode": "consumption",
+     "hisOnWrite": "howConvertTz",
+     "id": "ATM_Raquel Oreilly_Jace /Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa",
+     "instalZoneRef": {
+         "fid": "p:{}:r:29e87e33-951a-3d28-a439-d7792aa8ee88",
+         "repr": "Sacram7 Elec Elec"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+         "repr": "Sacram7 Elec"
+     },
+     "kind": "Number",
+     "markers": [
+         "active",
+         "analytics",
+         "clean",
+         "elec",
+         "eneract",
+         "energy",
+         "his",
+         "hisTotalized",
+         "kwh",
+         "point",
+         "sensor"
+     ],
+     "maxInacTime": "1000",
+     "model_name": "Leia_Raquel",
+     "navName": "EnerAct",
+     "pointType": "eneract",
+     "pointTypeDis": "EnerAct",
+     "pointUri": "/Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa",
+     "sampleRate": "15min",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     },
+     "stationName": "Oreilly_Jace",
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:63f2f006-d5f8-328f-a5d7-77cff7fbb638",
+         "repr": "Sacram7 Elec Elec AcometElec"
+     },
+     "tz": "Madrid",
+     "unit": "kWh"
+ },
+ "ATM_Raquel Oreilly_Jace2 /Drivers/LonNetwork/Produccion/points/Solar/Bombas17/TempEntPrimIntACS": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "bmsUri": "/Oreilly_Jace2//Drivers/LonNetwork/Produccion/points/Solar/Bombas17/TempEntPrimIntACS",
+     "disMacro": "$equipRef $navName",
+     "equipRef": {
+         "fid": "p:{}:r:0d01ddde-b0a8-3d26-b928-af02f1f6e169",
+         "repr": "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod"
+     },
+     "fid": "p:{}:r:ea5ab5fc-5665-3c95-939a-e198d3d0f29b",
+     "hisOnWrite": "howConvertTz",
+     "id": "ATM_Raquel Oreilly_Jace2 /Drivers/LonNetwork/Produccion/points/Solar/Bombas17/TempEntPrimIntACS",
+     "instalZoneRef": {
+         "fid": "p:{}:r:6e3111d8-6c91-3982-99c0-d7779bd41edb",
+         "repr": "Sacram1 ProdSolar ProdSolar"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3e335c59-ba63-3c31-95d0-0fd2dec75d31",
+         "repr": "Sacram1 ProdSolar"
+     },
+     "kind": "Number",
+     "markers": [
+         "analytics",
+         "his",
+         "point",
+         "sensor",
+         "temp"
+     ],
+     "maxInacTime": "1000",
+     "model_name": "Leia_Raquel",
+     "navName": "Bombas 17 Temp",
+     "pointType": "temp",
+     "pointTypeDis": "Temp",
+     "pointUri": "/Drivers/LonNetwork/Produccion/points/Solar/Bombas17/TempEntPrimIntACS",
+     "sampleRate": "15min",
+     "secEquipRef": {
+         "fid": "p:{}:r:13662825-670d-3bc6-b376-97f05ffa1a4b",
+         "repr": "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod Bombas 17"
+     },
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     },
+     "stationName": "Oreilly_Jace2",
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:9c8d11e3-911f-3436-a946-a444c1a88510",
+         "repr": "Sacram1 ProdSolar ProdSolar CtoPrimSolar"
+     },
+     "tz": "Madrid",
+     "unit": "°C"
+ },
+ "ATM_Raquel Oreilly_Jace__RAW /Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "bmsUri": "/Oreilly_Jace/PM5100_E7_RED$2eEnergia$20Activa",
+     "cleanRef": {
+         "fid": "p:{}:r:08a94ba3-dd4b-3d03-9878-8dfb085bebec",
+         "repr": "ATM_Raquel|Oreilly_Jace|/Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa"
+     },
+     "disMacro": "$equipRef $navName",
+     "equipRef": {
+         "fid": "p:{}:r:e499146e-889b-38d9-b86c-aaedd219304f",
+         "repr": "Sacram7 Elec Elec AcometElec PM5100E7"
+     },
+     "fid": "p:{}:r:1d7b7a69-2cff-33bd-a993-ef7c413f9f04",
+     "hisMode": "consumption",
+     "hisOnWrite": "howConvertTz",
+     "id": "ATM_Raquel Oreilly_Jace__RAW /Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa",
+     "instalZoneRef": {
+         "fid": "p:{}:r:29e87e33-951a-3d28-a439-d7792aa8ee88",
+         "repr": "Sacram7 Elec Elec"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+         "repr": "Sacram7 Elec"
+     },
+     "kind": "Number",
+     "markers": [
+         "active",
+         "analytics",
+         "elec",
+         "eneract__raw",
+         "energy",
+         "hidden",
+         "his",
+         "hisTotalized",
+         "kwh",
+         "point",
+         "raw",
+         "sensor"
+     ],
+     "maxInacTime": "1000",
+     "model_name": "Leia_Raquel",
+     "navName": "EnerAct__RAW",
+     "pointType": "eneract__raw",
+     "pointTypeDis": "EnerAct__RAW",
+     "pointUri": "/Drivers/Modbus/PM5100_E7_RED/points/Energia$20Activa",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     },
+     "stationName": "Oreilly_Jace__RAW",
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:63f2f006-d5f8-328f-a5d7-77cff7fbb638",
+         "repr": "Sacram7 Elec Elec AcometElec"
+     },
+     "tz": "Madrid",
+     "unit": "kWh"
+ },
+ "Sacram1": {
+     "area": "9436m2",
+     "areaHVAC": "9436m2",
+     "avgOccupancy": "387",
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "climaticZone": "D3",
+     "dis": "Sacram1",
+     "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+     "geoAddr": "Sacramento_1",
+     "geoCity": "Madrid",
+     "geoCountry": "ES",
+     "geoState": "Madrid",
+     "id": "Sacram1",
+     "kwhRate": "0.2",
+     "markers": [
+         "site"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Sacram1",
+     "operatingRegion": "Centro",
+     "siteType": "OficRegional",
+     "tz": "Madrid",
+     "yearlyElecEnerConsumption": "866881kWh",
+     "yearlyEnerConsumption": "866881kWh"
+ },
+ "Sacram1 Clima": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:7022b10f-eb57-310f-87f5-fbc8590b4ba9",
+     "id": "Sacram1 Clima",
+     "markers": [
+         "clima",
+         "hvac",
+         "instalacion",
+         "system"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Clima",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     }
+ },
+ "Sacram1 Clima Clima": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:7c056e0b-21fa-36d2-a401-acce42ff8779",
+     "id": "Sacram1 Clima Clima",
+     "instalacionRef": {
+         "fid": "p:{}:r:7022b10f-eb57-310f-87f5-fbc8590b4ba9",
+         "repr": "Sacram1 Clima"
+     },
+     "markers": [
+         "instalZone"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Clima",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     }
+ },
+ "Sacram1 Clima Clima CondExt": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$instalZoneRef $navName",
+     "fid": "p:{}:r:8a1dd4c2-e002-3887-b02c-7ac783edc50e",
+     "id": "Sacram1 Clima Clima CondExt",
+     "instalZoneRef": {
+         "fid": "p:{}:r:7c056e0b-21fa-36d2-a401-acce42ff8779",
+         "repr": "Sacram1 Clima Clima"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:7022b10f-eb57-310f-87f5-fbc8590b4ba9",
+         "repr": "Sacram1 Clima"
+     },
+     "markers": [
+         "tipoEquipo"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "CondExt",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     }
+ },
+ "Sacram1 Clima Clima CondExt ..": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "consumptionOn": "0kWh",
+     "disMacro": "$tipoEquipoRef $navName",
+     "fid": "p:{}:r:0257faf8-2718-3d7c-a79e-8bcb074828a2",
+     "id": "Sacram1 Clima Clima CondExt ..",
+     "instalZoneRef": {
+         "fid": "p:{}:r:7c056e0b-21fa-36d2-a401-acce42ff8779",
+         "repr": "Sacram1 Clima Clima"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:7022b10f-eb57-310f-87f5-fbc8590b4ba9",
+         "repr": "Sacram1 Clima"
+     },
+     "markers": [
+         "air",
+         "condext",
+         "conditions",
+         "equip",
+         "outside",
+         "zone"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "..",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     },
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:8a1dd4c2-e002-3887-b02c-7ac783edc50e",
+         "repr": "Sacram1 Clima Clima CondExt"
+     }
+ },
+ "Sacram1 ProdSolar": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:3e335c59-ba63-3c31-95d0-0fd2dec75d31",
+     "id": "Sacram1 ProdSolar",
+     "markers": [
+         "hot",
+         "hotWaterPlant",
+         "instalacion",
+         "plant",
+         "plantSystem",
+         "prodsolar",
+         "solar",
+         "system",
+         "water"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "ProdSolar",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     }
+ },
+ "Sacram1 ProdSolar ProdSolar": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:6e3111d8-6c91-3982-99c0-d7779bd41edb",
+     "id": "Sacram1 ProdSolar ProdSolar",
+     "instalacionRef": {
+         "fid": "p:{}:r:3e335c59-ba63-3c31-95d0-0fd2dec75d31",
+         "repr": "Sacram1 ProdSolar"
+     },
+     "markers": [
+         "instalZone"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "ProdSolar",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     }
+ },
+ "Sacram1 ProdSolar ProdSolar CtoPrimSolar": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$instalZoneRef $navName",
+     "fid": "p:{}:r:9c8d11e3-911f-3436-a946-a444c1a88510",
+     "id": "Sacram1 ProdSolar ProdSolar CtoPrimSolar",
+     "instalZoneRef": {
+         "fid": "p:{}:r:6e3111d8-6c91-3982-99c0-d7779bd41edb",
+         "repr": "Sacram1 ProdSolar ProdSolar"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3e335c59-ba63-3c31-95d0-0fd2dec75d31",
+         "repr": "Sacram1 ProdSolar"
+     },
+     "markers": [
+         "tipoEquipo"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "CtoPrimSolar",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     }
+ },
+ "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "consumptionOn": "0kWh",
+     "disMacro": "$tipoEquipoRef $navName",
+     "fid": "p:{}:r:0d01ddde-b0a8-3d26-b928-af02f1f6e169",
+     "id": "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod",
+     "instalZoneRef": {
+         "fid": "p:{}:r:6e3111d8-6c91-3982-99c0-d7779bd41edb",
+         "repr": "Sacram1 ProdSolar ProdSolar"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3e335c59-ba63-3c31-95d0-0fd2dec75d31",
+         "repr": "Sacram1 ProdSolar"
+     },
+     "markers": [
+         "circ",
+         "ctoprimsolar",
+         "equip",
+         "primaryLoop",
+         "solar",
+         "water"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Prod",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     },
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:9c8d11e3-911f-3436-a946-a444c1a88510",
+         "repr": "Sacram1 ProdSolar ProdSolar CtoPrimSolar"
+     }
+ },
+ "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod Bombas 17": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "consumptionOn": "0kWh",
+     "disMacro": "$equipRef $navName",
+     "equipRef": {
+         "fid": "p:{}:r:0d01ddde-b0a8-3d26-b928-af02f1f6e169",
+         "repr": "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod"
+     },
+     "fid": "p:{}:r:13662825-670d-3bc6-b376-97f05ffa1a4b",
+     "id": "Sacram1 ProdSolar ProdSolar CtoPrimSolar Prod Bombas 17",
+     "instalZoneRef": {
+         "fid": "p:{}:r:6e3111d8-6c91-3982-99c0-d7779bd41edb",
+         "repr": "Sacram1 ProdSolar ProdSolar"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3e335c59-ba63-3c31-95d0-0fd2dec75d31",
+         "repr": "Sacram1 ProdSolar"
+     },
+     "markers": [
+         "bombas",
+         "group",
+         "pump",
+         "secEquip"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Bombas 17",
+     "siteRef": {
+         "fid": "p:{}:r:a0867d88-7dc9-31e4-b3ac-68c991180383",
+         "repr": "Sacram1"
+     },
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:9c8d11e3-911f-3436-a946-a444c1a88510",
+         "repr": "Sacram1 ProdSolar ProdSolar CtoPrimSolar"
+     }
+ },
+ "Sacram7": {
+     "area": "9436m2",
+     "areaHVAC": "9436m2",
+     "avgOccupancy": "387",
+     "bdm_ts": "2024-09-12T17:37:13.609911+02:00",
+     "bdm_version": 2,
+     "climaticZone": "D3",
+     "dis": "Sacram7",
+     "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+     "geoAddr": "Sacramento_7",
+     "geoCity": "Madrid",
+     "geoCountry": "ES",
+     "geoState": "Madrid",
+     "id": "Sacram7",
+     "kwhRate": "0.2",
+     "markers": [
+         "site"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Sacram7",
+     "operatingRegion": "Centro",
+     "siteType": "OficRegional",
+     "tz": "Madrid",
+     "yearlyElecEnerConsumption": "866881kWh",
+     "yearlyEnerConsumption": "866881kWh"
+ },
+ "Sacram7 Clima": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:b76e8520-8d4f-3e8e-bf43-12f67f580b86",
+     "id": "Sacram7 Clima",
+     "markers": [
+         "clima",
+         "hvac",
+         "instalacion",
+         "system"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Clima",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     }
+ },
+ "Sacram7 Clima Clima": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:7f09ad29-94a1-3e00-a300-8939a24d3487",
+     "id": "Sacram7 Clima Clima",
+     "instalacionRef": {
+         "fid": "p:{}:r:b76e8520-8d4f-3e8e-bf43-12f67f580b86",
+         "repr": "Sacram7 Clima"
+     },
+     "markers": [
+         "instalZone"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Clima",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     }
+ },
+ "Sacram7 Clima Clima CondExt": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$instalZoneRef $navName",
+     "fid": "p:{}:r:84e86fb3-58d3-3f34-a3cd-673711847e0e",
+     "id": "Sacram7 Clima Clima CondExt",
+     "instalZoneRef": {
+         "fid": "p:{}:r:7f09ad29-94a1-3e00-a300-8939a24d3487",
+         "repr": "Sacram7 Clima Clima"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:b76e8520-8d4f-3e8e-bf43-12f67f580b86",
+         "repr": "Sacram7 Clima"
+     },
+     "markers": [
+         "tipoEquipo"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "CondExt",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     }
+ },
+ "Sacram7 Clima Clima CondExt ..": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "consumptionOn": "0kWh",
+     "disMacro": "$tipoEquipoRef $navName",
+     "fid": "p:{}:r:6dfcb7a4-497c-3bca-bfa9-635be9126d71",
+     "id": "Sacram7 Clima Clima CondExt ..",
+     "instalZoneRef": {
+         "fid": "p:{}:r:7f09ad29-94a1-3e00-a300-8939a24d3487",
+         "repr": "Sacram7 Clima Clima"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:b76e8520-8d4f-3e8e-bf43-12f67f580b86",
+         "repr": "Sacram7 Clima"
+     },
+     "markers": [
+         "air",
+         "condext",
+         "conditions",
+         "equip",
+         "outside",
+         "zone"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "..",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     },
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:84e86fb3-58d3-3f34-a3cd-673711847e0e",
+         "repr": "Sacram7 Clima Clima CondExt"
+     }
+ },
+ "Sacram7 Elec": {
+     "bdm_ts": "2024-09-12T17:37:13.609911+02:00",
+     "bdm_version": 2,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+     "id": "Sacram7 Elec",
+     "markers": [
+         "elec",
+         "instalacion",
+         "lowVoltage",
+         "system"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Elec",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     }
+ },
+ "Sacram7 Elec Elec": {
+     "bdm_ts": "2024-09-12T17:37:13.609911+02:00",
+     "bdm_version": 2,
+     "disMacro": "$siteRef $navName",
+     "fid": "p:{}:r:29e87e33-951a-3d28-a439-d7792aa8ee88",
+     "id": "Sacram7 Elec Elec",
+     "instalacionRef": {
+         "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+         "repr": "Sacram7 Elec"
+     },
+     "markers": [
+         "instalZone"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "Elec",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     }
+ },
+ "Sacram7 Elec Elec AcometElec": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "disMacro": "$instalZoneRef $navName",
+     "fid": "p:{}:r:63f2f006-d5f8-328f-a5d7-77cff7fbb638",
+     "id": "Sacram7 Elec Elec AcometElec",
+     "instalZoneRef": {
+         "fid": "p:{}:r:29e87e33-951a-3d28-a439-d7792aa8ee88",
+         "repr": "Sacram7 Elec Elec"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+         "repr": "Sacram7 Elec"
+     },
+     "markers": [
+         "tipoEquipo"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "AcometElec",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     }
+ },
+ "Sacram7 Elec Elec AcometElec PM5100E7": {
+     "bdm_ts": "2024-09-12T17:18:49.885386+02:00",
+     "bdm_version": 1,
+     "consumptionOn": "0kWh",
+     "disMacro": "$tipoEquipoRef $navName",
+     "fid": "p:{}:r:e499146e-889b-38d9-b86c-aaedd219304f",
+     "id": "Sacram7 Elec Elec AcometElec PM5100E7",
+     "instalZoneRef": {
+         "fid": "p:{}:r:29e87e33-951a-3d28-a439-d7792aa8ee88",
+         "repr": "Sacram7 Elec Elec"
+     },
+     "instalacionRef": {
+         "fid": "p:{}:r:3b796b7b-d637-3c5e-8142-6d4522f44f8d",
+         "repr": "Sacram7 Elec"
+     },
+     "markers": [
+         "acometelec",
+         "elec",
+         "equip",
+         "main"
+     ],
+     "model_name": "Leia_Raquel",
+     "navName": "PM5100E7",
+     "siteRef": {
+         "fid": "p:{}:r:6afaf1a2-538a-3fa6-aaba-9ae2cb9f90d4",
+         "repr": "Sacram7"
+     },
+     "tipoEquipoRef": {
+         "fid": "p:{}:r:63f2f006-d5f8-328f-a5d7-77cff7fbb638",
+         "repr": "Sacram7 Elec Elec AcometElec"
+     }
+ }
+}
