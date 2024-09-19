@@ -96,12 +96,24 @@ const ForceGraph = () => {
           ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillStyle = node.nodeColors;
+          ctx.fillStyle = getColorForNode(node.typeMarker);
           ctx.fillText(label, node.x, node.y);
         }}
         linkCanvasObjectMode={() => 'after'}
         />
       );
+    };
+    const getColorForNode = (typeMarker) => {
+      const colors = {
+        site: '#FF6347',
+        instalacion: '#4682B4',
+        instalZone: '#32CD32',
+        tipoEquipo: '#FFD700',
+        equip: '#BA55D3',
+        secEquip: '#FF4500',
+        point: '#00BFFF',
+      };
+      return colors[typeMarker] || '#000000'; // Default color
     };
     export default ForceGraph;
 
