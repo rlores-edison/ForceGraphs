@@ -19,18 +19,18 @@ const ForceGraph = () => {
   }, []);
 
     const typeMarkers = ['site', 'instalacion', 'instalZone', 'tipoEquipo', 'equip', 'secEquip', 'point'];
-    // const getPositionValues = (typeMarker) => {	    
-    //   const positions = {
-    //     site: 100,
-    //     instalacion: 80,
-    //     instalZone: 60,
-    //     tipoEquipo: 40,
-    //     equip: 30,
-    //     secEquip: 20,
-    //     point: 10,
-    //   };
-    //   return positions[typeMarker] || 0;
-    // };
+    const getPositionValues = (typeMarker) => {	    
+      const positions = {
+        site: 100,
+        instalacion: 80,
+        instalZone: 60,
+        tipoEquipo: 40,
+        equip: 30,
+        secEquip: 20,
+        point: 10,
+      };
+      return positions[typeMarker] || 0;
+    };
 
       const adaptDbToGraph = (db) => {
       const nodes = [];
