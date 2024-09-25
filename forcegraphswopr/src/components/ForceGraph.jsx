@@ -93,7 +93,7 @@ const ForceGraph = () => {
       nodeAutoColorBy="typeMarker"
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.name;
-        const fontSize = 12 / globalScale;
+        const fontSize = 50 / globalScale;
         ctx.beginPath();
         ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = getColorForNode(node.typeMarker);
