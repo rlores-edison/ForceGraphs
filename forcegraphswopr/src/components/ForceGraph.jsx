@@ -1,95 +1,85 @@
 import { useEffect, useState } from "react";
-import { ForceGraph2D } from 'react-force-graph';
+import {  ForceGraph2D,  ForceGraph3D,  ForceGraphVR,  ForceGraphAR,} from "react-force-graph";
 
-const ForceGraph = () => {  
-  const [graphData, setGraphData] = useState({nodes: [], links: [] });
+const ForceGraph = () => {
+  const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 
   useEffect(() => {
-    fetch ("../../server/db.json")
-    .then(response => response.json())
-    .then (data => {
-      console.log ('data', data);
-      const adaptedData = adaptDbToGraph(data);
-      console.log ("adaptDbToGraph",adaptedData);
-      setGraphData(adaptedData);
-    })
-    .catch(error => console.error("🤷‍♀️ Error fetching data:", error));
+    fetch("../../server/db.json")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data", data);
+
+        const adaptedData = adaptDbToGraph(data);
+        console.log("**", adaptedData);
+        setGraphData(adaptedData);
+      })
+      .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
   }, []);
 
-  // Grouped markers with their corresponding types
-  const groupedMarkers = {
-    group1: ['site'],
-    group2: ['instalacion'],
-    group3: ['instalZone'],
-    group4: ['tipoEquipo'],
-    group5: ['equip'],
-    group6: ['secEquip'],  // Secondary equipment group, which is not visible in the visualization
-    group7: ['point'],
+  const typeMarkers = [
+    "site",
+    "instalacion",
+    "instalZone",
+    "tipoEquipo",
+    "equip",
+    "secEquip",
+    "point",
+  ];
+
+   const getColorForNode = (typeMarker) => {
+    const colors = {
+      site: '#812921',
+      instalacion: '#0c63ef',
+      instalZone: '#f4bb00',
+      tipoEquipo: '#85db15',
+      equip: '#79e5f5',
+      secEquip: '#9200f4',
+      point: '#e61806',
+    };
+    return colors[typeMarker] || '#f94dbd';
   };
 
-  // Position values for each group (Group 1 at the top, Group 6 at the bottom)
-  const positionValues = {
-    group1: 100,   // Top
-    group2: 80,
-    group3: 60,
-    group4: 40,
-    group5: 20,
-    group6: 10,
-    group7: 0     // Bottom
+  // alineación vertical?
+  const getPositionValues = (typeMarker) => {
+    const positions = {
+      site: 100,
+      instalacion: 80,
+      instalZone: 60,
+      tipoEquipo: 40,
+      equip: 30,
+      secEquip: 20,
+      point: 10,
+    };
+    return positions[typeMarker] || 0;
   };
 
-  // Helper function to determine the group of a node
-  const getGroupForMarker = (typeMarker) => {
-    for (const group in groupedMarkers) {
-      if (groupedMarkers[group].includes(typeMarker)) {
-        return group;
-      }
-    }
-    return null;
-  };
-
-  // Function to adapt the database data into the graph format
   const adaptDbToGraph = (db) => {
     const nodes = [];
     const links = [];
 
     Object.keys(db).forEach((key) => {
       const item = db[key];
-      const nodeType = Object.keys(groupedMarkers).find(group =>
-        groupedMarkers[group].some(marker => item.markers && item.markers.includes(marker))
+      const nodeType = typeMarkers.find(
+        (marker) => item.markers && item.markers.includes(marker)
       );
 
       if (nodeType) {
-        // Create the node
         nodes.push({
-          id: item.fid, // Unique identifier for the node
-          name: item.navName || item.model_name || item.bmsUri, // Use the available name fields
-          group: nodeType, // Assign the node's group
-          y: positionValues[nodeType], // Set y-coordinate based on group
-          x: Math.random() * 1000 // Random x-coordinate for horizontal distribution
+          id: item.fid,
+          name: item.navName || item.model_name || item.bmsUri,
+          typeMarker: nodeType,
+          positionValues: getPositionValues(nodeType),
         });
 
-        // Create the link if a siteRef or other parent reference exists
         if (item.siteRef) {
-          links.push({
-            source: item.fid, // Current node id
-            target: item.siteRef.fid // Parent node id
-          });
+          links.push({ source: item.fid, target: item.siteRef.fid });
         } else if (item.instalacionRef) {
-          links.push({
-            source: item.fid, 
-            target: item.instalacionRef.fid 
-          });
+          links.push({ source: item.fid, target: item.instalacionRef.fid });
         } else if (item.instalZoneRef) {
-          links.push({
-            source: item.fid, 
-            target: item.instalZoneRef.fid
-          });
+          links.push({ source: item.fid, target: item.instalZoneRef.fid });
         } else if (item.tipoEquipoRef) {
-          links.push({
-            source: item.fid, 
-            target: item.tipoEquipoRef.fid
-          });
+          links.push({ source: item.fid, target: item.tipoEquipoRef.fid });
         }
       }
     });
@@ -100,37 +90,26 @@ const ForceGraph = () => {
   return (
     <ForceGraph2D
       graphData={graphData}
-      nodeAutoColorBy="group" // Automatically color nodes by their group
+      nodeAutoColorBy="typeMarker"
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.name;
         const fontSize = 12 / globalScale;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+        ctx.fillStyle = getColorForNode(node.typeMarker);
+        ctx.fill();
         ctx.font = `${fontSize}px Sans-Serif`;
         const textWidth = ctx.measureText(label).width;
-        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); // some padding
+        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = getColorForNode(node.group);
+        ctx.fillStyle = "#000002";
         ctx.fillText(label, node.x, node.y);
       }}
-      linkCanvasObjectMode={() => 'after'}
     />
   );
-};
-
-// Function to assign colors to nodes based on their group
-const getColorForNode = (group) => {
-  const colors = {
-    group1: '#FF6347',
-    group2: '#4682B4',
-    group3: '#32CD32',
-    group4: '#FFD700',
-    group5: '#BA55D3',
-    group6: '#00BFFF',
-    group7: '#FFD700',
-  };
-  return colors[group] || '#BA55D3'; // Default color
 };
 
 export default ForceGraph;
