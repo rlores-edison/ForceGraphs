@@ -8,10 +8,7 @@ const ForceGraph = () => {
     fetch("../../server/db.json")
       .then((response) => response.json())
       .then((data) => {
-        console.log("data", data);
-
         const adaptedData = adaptDbToGraph(data);
-        console.log("**", adaptedData);
         setGraphData(adaptedData);
       })
       .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
@@ -69,17 +66,17 @@ const ForceGraph = () => {
           id: item.fid,
           name: item.navName || item.model_name || item.bmsUri,
           typeMarker: nodeType,
-          positionValues: getPositionValues(nodeType),
+          positionValues: getPositionValues(nodeType)
         });
 
         if (item.siteRef) {
           links.push({ source: item.fid, target: item.siteRef.fid });
-        } else if (item.instalacionRef) {
+        } if (item.instalacionRef) {
+          links.push({ source: item.fid, target: item.siteRef.fid });
+        } if (item.instalZoneRef) {
           links.push({ source: item.fid, target: item.instalacionRef.fid });
-        } else if (item.instalZoneRef) {
+        } if (item.tipoEquipoRef) {
           links.push({ source: item.fid, target: item.instalZoneRef.fid });
-        } else if (item.tipoEquipoRef) {
-          links.push({ source: item.fid, target: item.tipoEquipoRef.fid });
         }
       }
     });
