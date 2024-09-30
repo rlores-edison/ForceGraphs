@@ -3,7 +3,18 @@ import {  ForceGraph2D,  ForceGraph3D,  ForceGraphVR,  ForceGraphAR,} from "reac
 
 const Group = () => {  
   const [graphData, setGraphData] = useState({nodes: [], links: [] });
+  const [dimensions, setDimensions] = useState({width: window.innerWidth, height: window.innerHeight });
 
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); 
+  
   useEffect(() => {
        fetch("../../server/db.json")
       .then((response) => response.json())
@@ -15,6 +26,7 @@ const Group = () => {
       })
       .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
   }, []);
+  
 
 const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip", "secEquip", "point"];
 
@@ -29,13 +41,13 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
   };
   
    const positionValues = {
-    group1: 100,   // Top
-    group2: 80,
-    group3: 60,
+    group1: 0,   // Top
+    group2: 10,
+    group3: 20,
     group4: 40,
-    group5: 20,
-    group6: 10,
-    group7: 0
+    group5: 60,
+    group6: 80,
+    group7: 100
    };
 
    const getColorForNode = (group) => {
@@ -50,6 +62,8 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
   };
   return colors[group] || '#f94dbd';
 };
+
+
   // Helper function to determine the group of a node
   const getGroupForMarker = (marker) => {
     for (const group in groupedMarkers) {
@@ -59,6 +73,7 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
 }
     return null;
 };
+  
   // Function to adapt the database data into the graph format
   const adaptDbToGraph = (db) => {
     const nodes = [];
@@ -75,6 +90,7 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
         console.error(`Skipping item with missing fid:`, item);
         return; // Skip this item if 'fid' is missing
       }
+    
       const nodeType = Object.keys(groupedMarkers).find(group =>
         groupedMarkers[group].some(marker => item.markers && item.markers.includes(marker))
       );
@@ -84,8 +100,9 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
           id: item.fid, // Unique identifier for the node
           name: item.navName || item.model_name || item.bmsUri, // Use the available name fields
           group: nodeType, // Assign the node's group
-          y: positionValues[nodeType], // Set y-coordinate based on group
-          x: Math.random() * 1000 // Random x-coordinate for horizontal distribution
+          // y-coordinate is locked based on group
+          x: Math.random() * 1000,
+          y: positionValues[nodeType]
         });
         // Helper function to create unique links
         const createUniqueLink = (source, target, group) => {
@@ -103,7 +120,7 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
         if (item.markers && item.markers.includes("instalacion") && item.siteRef && item.siteRef.fid) {
           createUniqueLink(item.siteRef.fid, item.fid, 'group1'); // Link instalacion to site
         }
-        // Additional linking logic for other node types...
+       
         if (item.secEquipRef) {
           createUniqueLink(item.secEquipRef.fid, item.fid, 'group6'); // Connect secEquip to point
         } else if (item.equipRef) {
@@ -122,23 +139,28 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
   return (
     <ForceGraph2D
       graphData={graphData}
-      nodeAutoColorBy="group" // Automatically color nodes by their group
+      width={dimensions.width}   // Dynamically adjust width
+      height={dimensions.height} // Dynamically adjust height
+      backgroundColor="#141a23"
+      nodeAutoColorBy="group"   // Automatically color nodes by their group
+      linkColor={() => '#f6f1fb'}
+      linkDirectionalParticles={4}
+      linkDirectionalParticleSpeed={0.01}// Adds 4 particles per link
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.name;
-        const fontSize = 12 / globalScale;
+        const fontSize = 7 / globalScale;
         ctx.beginPath();
-        ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+        ctx.arc(node.x, node.y, 7, 0, 2 * Math.PI, false);
         ctx.fillStyle = getColorForNode(node.group);
         ctx.fill();
         ctx.font = `${fontSize}px Sans-Serif`;
         const textWidth = ctx.measureText(label).width;
-        const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
+        //const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
+        //ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = getColorForNode(node.group);
-        ctx.fillStyle = "#000002";
+        ctx.fillStyle = "#ffffff";
         ctx.fillText(label, node.x, node.y);
       }}
       />
