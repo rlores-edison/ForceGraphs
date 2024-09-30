@@ -1,9 +1,9 @@
-import ForceGraph from "./ForceGraph.jsx";
+import Group from "./Group.jsx";
 export function Home() {
   return (
     <div>
-    <h1 className="text-3xl font-bold underline">Nodes Graph</h1>
-    <ForceGraph/>
+    <h1 className="text font-bold underline">Nodes ForceGraph</h1>
+    <Group/>
     </div>
   );
 }
