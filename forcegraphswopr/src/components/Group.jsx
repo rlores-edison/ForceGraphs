@@ -111,7 +111,7 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
             links.push({
               source: source,
               target: target,
-              group: group // Include the group in the link
+              group: groupedMarkers // Include the group in the link
             });
             existingLinks.add(linkKey);
           }
@@ -154,7 +154,6 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
         ctx.fillStyle = getColorForNode(node.group);
         ctx.fill();
         ctx.font = `${fontSize}px Sans-Serif`;
-        ctx.font = ("normal bold 12px Helvetica, Arial, sans-serif");
         const textWidth = ctx.measureText(label).width;
         //const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2);
         //ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
