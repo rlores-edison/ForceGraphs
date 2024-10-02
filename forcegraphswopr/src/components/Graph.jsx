@@ -144,8 +144,6 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
       backgroundColor="#141a23"
       nodeAutoColorBy="group"   // Automatically color nodes by their group
       linkColor={() => '#f6f1fb'}
-      linkDirectionalParticles={4}
-      linkDirectionalParticleSpeed={0.01}// Adds 4 particles per link
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.name;
         const fontSize = 7 / globalScale;
@@ -159,7 +157,6 @@ const typeMarkers = ["site", "instalacion", "instalZone", "tipoEquipo", "equip",
         //ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] / 2, ...bckgDimensions);
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = getColorForNode(node.group);
         ctx.fillStyle = "#ffffff";
         ctx.fillText(label, node.x, node.y);
       }}
