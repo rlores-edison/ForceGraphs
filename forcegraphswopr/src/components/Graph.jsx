@@ -106,7 +106,9 @@ const adaptDbToGraph = (db) => {
 };
 const getLayout = ({ nodes, links }) => {   // This function initializes a dagre graph. 
   const graph = new dagre.graphlib.Graph();
-  graph.setGraph({});
+  graph.setGraph({
+    nodesep: 90,
+  });
   graph.setDefaultEdgeLabel(() => ({}));
 
   //Add nodes and set default width/height
@@ -147,12 +149,12 @@ return (
     onEngineStop={() => fgRef.current.zoomToFit(400)}
     nodeCanvasObject={(node, ctx, globalScale) => {
       const label = node.name;
-      const fontSize = 7 / globalScale;
+      const fontSize = 5.5 / globalScale;
       ctx.beginPath();
-      ctx.arc(node.x, node.y, 7, 0, 2 * Math.PI, false);
+      ctx.arc(node.x, node.y, 10, 0, 2 * Math.PI, false);
       ctx.fillStyle = getColorForNode(node.group);
       ctx.fill();
-      ctx.font = `${fontSize}px Sans-Serif`;
+      ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
       ctx.textAlign = "top";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#ffffff";
