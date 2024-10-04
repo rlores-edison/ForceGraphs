@@ -7,15 +7,14 @@ const fgRef = useRef();
 const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
 
-//Recalculate dimensions on window resize
-useEffect(() => {
-  const handleResize = () => {
-    setDimensions({ width: window.innerWidth, height: window.innerHeight });
-  };
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);//Clean up the event listener
-}, []);
-
+  // Recalculate dimensions on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
+  }, []);
 useEffect(() => {
   fetch("../../server/db.json")
     .then((response) => response.json())
@@ -129,7 +128,12 @@ const updatedNodes = nodes.map((node) => {
 });
 return { nodes: updatedNodes, links };
 };
-
+// Trigger zoomToFit after the graph data is updated
+useEffect(() => {
+  if (fgRef.current && graphData.nodes.length > 0) {
+    fgRef.current.zoomToFit(400); // Only after the data is loaded
+  }
+}, [graphData]);
 return (
   <ForceGraph2D
     graphData={graphData}
@@ -139,7 +143,7 @@ return (
     nodeAutoColorBy="group" 
     linkColor={() => "#f6f1fb"}
     ref={fgRef}
-    cooldownTicks={100}
+    cooldownTicks={0}
     onEngineStop={() => fgRef.current.zoomToFit(400)}
     nodeCanvasObject={(node, ctx, globalScale) => {
       const label = node.name;
