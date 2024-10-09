@@ -1,22 +1,28 @@
 <!doctype html>
 <html lang="en">
-  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WOPR CHARTS</title>
-    <style> body { margin: 0; } </style>
+    <style> body { margin: 0 } </style>
+    
 
-  <script src="//bundle.run/@yarnpkg/lockfile@1.1.0"></script>
+    <!--<script src="//bundle.run/@yarnpkg/lockfile@1.1.0"></script>
 
-  <script src="//unpkg.com/dagre/dist/dagre.min.js"></script>
-  <script src="//unpkg.com/accessor-fn"></script>
+    <script src="//unpkg.com/dagre/dist/dagre.min.js"></script>
+    <script src="//unpkg.com/accessor-fn"></script>
 
-  <script src="//unpkg.com/force-graph"></script>
- <script src="../../dist/force-graph.js"></script>
+    <script src="//unpkg.com/force-graph"></script> -->
+ 
+    <style> 
+    .clickable { cursor: unset !important }
+    </style>
+   
   </head>
+
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div id="graph"></div>
+    <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>

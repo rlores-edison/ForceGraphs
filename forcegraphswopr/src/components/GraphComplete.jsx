@@ -1,37 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 
 const Graph = () => {
-const graphRef = useRef();
+const fgRef = useRef();
 const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
 
-//Recalculate dimensions on window resize
-
-const handleResize = () => {
-  const graphContainer = document.querySelector(".w-full.h-screen");
-  if (graphContainer) {
-    const rect = graphContainer.getBoundingClientRect();
-    const adjustedWidth = Math.max(rect.width, 400);  // Minimum width of 400px
-    const adjustedHeight = Math.max(rect.height, 400); // Minimum height of 400px
-
-    console.log("Adjusted Container size:", adjustedWidth, adjustedHeight);
-    console.log("Window size:", window.innerWidth, window.innerHeight);
-
-    setDimensions({ width: adjustedWidth, height: adjustedHeight });
-  }
-};
-
-  /*window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);//Clean up the event listener
-}, []);*/
-useEffect(() => {
-  if (graphRef.current) {
-    graphRef.current.zoomToFit(200, 50);  // Zoom to fit with proper padding
-  }
-}, [dimensions]);
-
+  // Recalculate dimensions on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
+  }, []);
 useEffect(() => {
   fetch("../../server/db.json")
     .then((response) => response.json())
@@ -51,7 +34,6 @@ const groupedMarkers = {
   group6: ["secEquip"],
   group7: ["point"],
 };
-
 const getColorForNode = (group) => {
   const colors = {
     group1: "#812921",
@@ -64,12 +46,10 @@ const getColorForNode = (group) => {
   };
   return colors[group] || "#f94dbd";
 };
-
 // Function to adapt the database data into the graph format
 const adaptDbToGraph = (db) => {
   const nodes = [];
   const links = [];
-
   // Store existing links to avoid duplicates
   const existingLinks = new Set();
 
@@ -120,23 +100,20 @@ const adaptDbToGraph = (db) => {
       }
     }
   });
-  //Let's use dagre to calculate the layout
+  //Use dagre to calculate the layout
   const layoutData = getLayout ({ nodes, links });
   return layoutData;
 };
 const getLayout = ({ nodes, links }) => {   // This function initializes a dagre graph. 
   const graph = new dagre.graphlib.Graph();
   graph.setGraph({
-    rankdir:"TB", //adjust to direction TB, BT, LR, RL
-    nodesep: 20,
-    edgesep:50,
-    ranksep:100, //separation between levels
+    nodesep: 90,
   });
   graph.setDefaultEdgeLabel(() => ({}));
 
-//Add nodes and set default width/height
+  //Add nodes and set default width/height
 nodes.forEach((node) => {
-graph.setNode(node.id, { width: 100, height: 50 });
+graph.setNode(node.id, { width: 20, height: 30 });
 });
 //Add edges
 links.forEach((link) => {
@@ -153,47 +130,32 @@ const updatedNodes = nodes.map((node) => {
 });
 return { nodes: updatedNodes, links };
 };
-
-const calculateBoundingBox = (nodes) => {
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  nodes.forEach(node => {
-    minX = Math.min(minX, node.x);
-    maxX = Math.max(maxX, node.x);
-    minY = Math.min(minY, node.y);
-    maxY = Math.max(maxY, node.y);
-  });
-  return { minX, maxX, minY, maxY };
-};
-
+// Trigger zoomToFit after the graph data is updated
 useEffect(() => {
-  if (graphData.nodes.length) {
-    const { minX, maxX, minY, maxY } = calculateBoundingBox(graphData.nodes);
-    const centerX = (minX + maxX) / 2;
-    const centerY = (minY + maxY) / 2;
-    graphRef.current.zoomToFit(400, 700, (node) => {
-      return node.x === centerX && node.y === centerY; 
-    });
+  if (fgRef.current && graphData.nodes.length > 0) {
+    fgRef.current.zoomToFit(400); // Only after the data is loaded
   }
 }, [graphData]);
-
 return (
   <ForceGraph2D
-    ref={graphRef}
     graphData={graphData}
-    width={Math.min(dimensions.width)} 
-    height={Math.min(dimensions.height)} 
-    backgroundColor="#141a23"
+    width={dimensions.width} // Dynamically adjustment 
+    height={dimensions.height} 
+    backgroundColor="#192c4b"
     nodeAutoColorBy="group" 
     linkColor={() => "#f6f1fb"}
+    ref={fgRef}
+    cooldownTicks={0}
+    onEngineStop={() => fgRef.current.zoomToFit(400)}
     nodeCanvasObject={(node, ctx, globalScale) => {
       const label = node.name;
-      const fontSize = 7 / globalScale;
+      const fontSize = 5.5 / globalScale;
       ctx.beginPath();
-      ctx.arc(node.x, node.y, 7, 0, 2 * Math.PI, false);
+      ctx.arc(node.x, node.y, 10, 0, 2 * Math.PI, false);
       ctx.fillStyle = getColorForNode(node.group);
       ctx.fill();
-      ctx.font = `${fontSize}px Sans-Serif`;
-      ctx.textAlign = "center";
+      ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
+      ctx.textAlign = "top";
       ctx.textBaseline = "middle";
       ctx.fillStyle = "#ffffff";
       ctx.fillText(label, node.x, node.y);

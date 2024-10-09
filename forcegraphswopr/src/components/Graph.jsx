@@ -100,14 +100,14 @@ const adaptDbToGraph = (db) => {
       }
     }
   });
-  //Let's use dagre to calculate the layout
+  //Use dagre to calculate the layout
   const layoutData = getLayout ({ nodes, links });
   return layoutData;
 };
 const getLayout = ({ nodes, links }) => {   // This function initializes a dagre graph. 
   const graph = new dagre.graphlib.Graph();
   graph.setGraph({
-    nodesep: 90,
+    nodesep: 110,
   });
   graph.setDefaultEdgeLabel(() => ({}));
 
@@ -149,16 +149,16 @@ return (
     onEngineStop={() => fgRef.current.zoomToFit(400)}
     nodeCanvasObject={(node, ctx, globalScale) => {
       const label = node.name;
-      const fontSize = 5.5 / globalScale;
+      const fontSize = 14 / globalScale;
       ctx.beginPath();
       ctx.arc(node.x, node.y, 10, 0, 2 * Math.PI, false);
       ctx.fillStyle = getColorForNode(node.group);
-      ctx.fill();
+      ctx.fill();1983
       ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
-      ctx.textAlign = "top";
-      ctx.textBaseline = "middle";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "right";
       ctx.fillStyle = "#ffffff";
-      ctx.fillText(label, node.x, node.y);
+      ctx.fillText(label, node.x-12, node.y+4);
     }}
   />
 );
