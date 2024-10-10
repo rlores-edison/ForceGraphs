@@ -55,91 +55,86 @@ const Graph = () => {
   };
 
   // Adapt database data into graph format
-  const adaptDbToGraph = (db) => {
+  const adaptDbToGraph = (data) => {
     const nodes = [];
     const links = [];
     console.log("Nodes: ", nodes);
     console.log("Links: ", links);
     const existingLinks = new Set();
 
-    Object.keys(db).forEach((key) => {
-      const item = db[key];
+    Object.keys(data).forEach((key) => {
+      const item = data[key];
+    
+      // Ensure the item has an 'fid' before processing
       if (!item || !item.fid) {
         console.error(`Skipping item with missing fid:`, item);
         return; // Skip this item if 'fid' is missing
-      } 
-
-      const nodeType = Object.keys(groupedMarkers).find(group =>
-        groupedMarkers[group].some(marker => item.markers && item.markers.includes(marker))
+      }
+    
+      const nodeType = Object.keys(groupedMarkers).find((group) =>
+        groupedMarkers[group].some(
+          (marker) => item.markers && item.markers.includes(marker)
+        )
       );
-
+    
       if (nodeType) {
-        // Check if this a root node (group1, with only "site" in markers)
-        const rootId = Object.keys(db).find(key => db[key].markers && db[key].markers.includes("site"));
-
-              // Create the node with the collapsed state
-      const newNode = {
-        id: item.fid,
-        name: item.navName || item.model_name || item.bmsUri,
-        group: nodeType,
-        collapsed: !rootId, // Nodes in group1 (with "site" marker are always expanded)
-        childLinks: [],
-      };
-
-      nodes.push(newNode);
-
-      const createUniqueLink = (source, target, group) => {
-        const linkKey = `${source}-${target}-${group}`;
-        if (!existingLinks.has(linkKey)) {
-          links.push({ source, target, group }); 
-          existingLinks.add(linkKey);
+        const newNode = {
+          id: item.fid,
+          name: item.navName || item.model_name || item.bmsUri,
+          group: nodeType,
+          collapsed: nodeType !== "group1", // Only group1 nodes expanded initially
+          childLinks: [], // Empty initially, will be populated during link creation
+        };
+    
+        nodes.push(newNode);
+        nodesById[item.fid] = newNode; // Store node by its fid for easy lookup
+    
+        // Helper function to create a unique link between nodes
+        const createUniqueLink = (source, target, group) => {
+          const linkKey = `${source}-${target}-${group}`;
+          if (!existingLinks.has(linkKey)) {
+            links.push({ source, target, group }); // Add the link
+            existingLinks.add(linkKey);
+    
+            const parentNode = nodesById[source];
+            if (parentNode) {
+              parentNode.childLinks.push({ source, target });
+            }
+          }
+        };
+    
+        // Linking strategy: Each group links to its parent group
+        // Group 2 links to Group 1 (sites)
+        if (item.markers.includes("instalacion") && item.siteRef?.fid) {
+          createUniqueLink(item.siteRef.fid, item.fid, "group2");
         }
-      };
-          // Add child links to the parent node (making sure parents have their child links)
-        
+    
+        // Group 3 links to Group 2
+        if (item.instalZoneRef) {
+          createUniqueLink(item.instalacionRef.fid, item.fid, "group3");
+        }
+    
+        // Group 4 links to Group 3
+        if (item.tipoEquipoRef) {
+          createUniqueLink(item.instalZoneRef.fid, item.fid, "group4");
+        }
+    
+        // Group 5 links to Group 4
+        if (item.equipRef) {
+          createUniqueLink(item.tipoEquipoRef.fid, item.fid, "group5");
+        }
+    
+        // Group 6 links to Group 5
         if (item.secEquipRef) {
-        createUniqueLink(item.secEquipRef.fid, item.fid, "group6"); // Connect secEquip to point
-        const parentNode = nodes.find(n => n.id === item.secEquipRef.fid);
-        if (parentNode) {
-          parentNode.childLinks.push({ source: item.secEquipRef.fid, target: item.fid });
+          createUniqueLink(item.equipRef.fid, item.fid, "group6");
         }
-      } else if (item.equipRef) {
-        createUniqueLink(item.equipRef.fid, item.fid, "group5"); // Connect equip to point if no secEquip
-        const parentNode = nodes.find(n => n.id === item.equipRef.fid);
-        if (parentNode) {
-          parentNode.childLinks.push({ source: item.equipRef.fid, target: item.fid });
-        }
-
-      } else if (item.tipoEquipoRef) {
-        createUniqueLink(item.tipoEquipoRef.fid, item.fid, "group4"); // Connect tipoEquipo to equip
-        const parentNode = nodes.find(n => n.id === item.tipoEquipoRef.fid);
-        if (parentNode) {
-          parentNode.childLinks.push({ source: item.tipoEquipoRef.fid, target: item.fid });
-        }
-
-      } else if (item.instalZoneRef) {
-        createUniqueLink(item.instalZoneRef.fid, item.fid, "group3"); // Connect instalZone to tipoEquipo
-        const parentNode = nodes.find(n => n.id === item.instalZoneRef.fid);
-        if (parentNode) {
-          parentNode.childLinks.push({ source: item.instalZoneRef.fid, target: item.fid });
-        }
-
-      } else if (item.instalacionRef) {
-        createUniqueLink(item.instalacionRef.fid, item.fid, "group2"); // Connect instalacion to instalZone
-        const parentNode = nodes.find(n => n.id === item.instalacionRef.fid);
-        if (parentNode) {
-          parentNode.childLinks.push({ source: item.instalacionRef.fid, target: item.fid });
-        }
-
-      } if (item.markers.includes("instalacion") && item.siteRef?.fid) {
-        createUniqueLink(item.siteRef.fid, item.fid, "group1"); // Link instalacion to site using siteRef.fid
-        const parentNode = nodes.find(n => n.id === item.siteRef.fid);
-        if (parentNode) {
-          parentNode.childLinks.push({ source: item.siteRef.fid, target: item.fid });
+    
+        // Group 7 links to Group 6
+        if (item.markers.includes("point") && item.secEquipRef?.fid) {
+          createUniqueLink(item.secEquipRef.fid, item.fid, "group7");
         }
       }
-    }
-  });
+    });
 
 
   // Use dagre to calculate the layout
