@@ -2,13 +2,12 @@ import { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 
+
 const Graph = () => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [collapsedNodes, setCollapsedNodes] = useState({});
 
   // Recalculate dimensions on window resize
   useEffect(() => {
@@ -23,10 +22,17 @@ const Graph = () => {
     fetch("../../server/db.json")
       .then((response) => response.json())
       .then((data) => {
-        const prunedData = getPrunedTree(data); // Process and prune the data
-        setGraphData(prunedData);
+        const adaptedData = adaptDbToGraph(data);
+        const collapsed_nodes = {};
+        adaptedData.nodes.forEach((node) => {
+          collapsed_nodes[node.id] = true;
+        });
+
+        setCollapsedNodes(collapsed_nodes);
+
+        setGraphData(adaptedData);
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
   }, []);
 
   const groupedMarkers = {
@@ -52,152 +58,232 @@ const Graph = () => {
     return colors[group] || "#f94dbd";
   };
 
-  // Function to process the raw data and prune nodes/links based on collapsed state
-  const getPrunedTree = (data) => {
+  // Function to adapt the database data into the graph format
+  const adaptDbToGraph = (db) => {
     const nodes = [];
     const links = [];
-    const visibleNodes = [];
-    const visibleLinks = [];
-    const existingLinks = new Set(); // Avoid duplicate links
+    // Store existing links to avoid duplicates
+    const existingLinks = new Set();
 
-    const nodesById = {}; // Create a map of nodes by their ID for easy lookup
+    Object.keys(db).forEach((key) => {
+      const item = db[key];
 
-    // Iterate over each item in the data object
-    Object.keys(data).forEach((key) => {
-      const item = data[key];
+      // Ensure the item has an 'fid' before processing
       if (!item || !item.fid) {
-        console.error("Skipping item with missing fid:", item); 
-        return;  // Skip this item
-      }   
-    
-      const nodeType = Object.keys(groupedMarkers).find((group) =>
-        groupedMarkers[group].some(
-          (marker) => item.markers && item.markers.includes(marker)
-        )
+        console.error(`Skipping item with missing fid:`, item);
+        return; // Skip this item if 'fid' is missing
+      }
+
+      const nodeType = Object.keys(groupedMarkers).find (group =>
+        groupedMarkers[group].some(marker => item.markers && item.markers.includes(marker))
       );
-    
+
+      // Helper function to determine parent based on group
+      const getParentGroup = (nodeType) => {
+        if (nodeType ==='group2') {
+          return item.siteRef.fid;
+        } 
+        else if (nodeType === 'group3') {
+          return item.instalacionRef.fid;
+        }
+        else if (nodeType === 'group4') {
+          return item.instalZoneRef.fid;
+        }
+        else if (nodeType === 'group5') {
+          return item.tipoEquipoRef.fid;
+        }
+        else if (nodeType === 'group6') {
+          return item.equipRef.fid;
+        }
+        else if (nodeType === 'group7') {
+          if (item.secEquipRef?.fid) {
+            return item.secEquipRef.fid;
+          }
+          else {
+            return item.equipRef.fid;
+          }
+        }
+      }
+
       if (nodeType) {
-        const newNode = {
-          id: item.fid,
-          name: item.navName || item.model_name || item.bmsUri,
+        // Create the node
+        nodes.push({
+          id: item.fid, // Unique identifier for the node
+          name: item.navName,
           group: nodeType,
-          collapsed: nodeType !== "group1", // Only group1 nodes expanded initially
-          childLinks: [], // Empty initially, will be populated during link creation
-        };
-    
-        nodes.push(newNode);
-        nodesById[item.fid] = newNode; // Store node by its fid for easy lookup
-    
-        // Helper function to create a unique link between nodes
+          parent: getParentGroup(nodeType) // To reference the parent node
+        });
+
+        // Helper function to create unique links
         const createUniqueLink = (source, target, group) => {
-          console.log(`Creating link from ${source} to ${target} in ${group}`);
           const linkKey = `${source}-${target}-${group}`;
           if (!existingLinks.has(linkKey)) {
-            links.push({ source, target, group });
+            links.push({ source, target, group }); // Include the group in the link
             existingLinks.add(linkKey);
-            
-            // Add child link to the parent node
-            const parentNode = nodesById[source];
-            if (parentNode) {
-              parentNode.childLinks.push({ source, target });
-            }
           }
         };
-        // Linking strategy: Each group links to its parent group
-        // link from site to instalacion
+
         if (item.markers.includes("instalacion") && item.siteRef?.fid) {
-          createUniqueLink(item.siteRef.fid, item.fid, "group2");
+          createUniqueLink(
+            item.siteRef.fid,
+            item.fid,
+            "group1",
+            item.siteRef.fid
+          ); // Link instalacion to site using siteRef.fid
         }
-    
-        // link from instalacion to instalZone
-        if (item.markers.includes("instalZone") && item.instalacionRef?.fid) {
-          createUniqueLink(item.instalacionRef.fid, item.fid, "group3");
-        }
-    
-        // link from instalZone to tipoEquipo
-        if (item.markers.includes("tipoEquipo") && item.instalZoneRef?.fid) {
-          createUniqueLink(item.instalZoneRef.fid, item.fid, "group4");
-        }
-    
-        // link from tipoEquipo to equip
-        if (item.markers.includes("equip") && item.tipoEquipoRef?.fid) {
-          createUniqueLink(item.tipoEquipoRef.fid, item.fid, "group5");
-        }
-    
-        // link from equip to secEquip
-        if (item.markers.includes("secEquip") && item.equipRef?.fid) {
-          createUniqueLink(item.equipRef.fid, item.fid, "group6");
-        }
-    
-        // link point to secEquip, if secEquipRef exists, otherwise link point to equip
-        if (item.markers.includes("point")) {
-          if (item.secEquipRef?.fid) {
-            createUniqueLink(item.fid, item.secEquipRef.fid, "group7");
-          } else if (item.equipRef?.fid) {
-            createUniqueLink(item.fid, item.equipRef.fid, "group7");
-          }
+
+        if (item.secEquipRef) {
+          createUniqueLink(
+            item.secEquipRef.fid,
+            item.fid,
+            "group6",
+            item.secEquipRef.fid
+          ); // Connect secEquip to point
+        } else if (item.equipRef) {
+          createUniqueLink(
+            item.equipRef.fid,
+            item.fid,
+            "group5",
+            item.equipRef.fid
+          ); // Connect equip to point if no secEquip
+        } else if (item.tipoEquipoRef) {
+          createUniqueLink(
+            item.tipoEquipoRef.fid,
+            item.fid,
+            "group4",
+            item.tipoEquipoRef.fid
+          ); // Connect tipoEquipo to equip
+        } else if (item.instalZoneRef) {
+          createUniqueLink(
+            item.instalZoneRef.fid,
+            item.fid,
+            "group3",
+            item.instalZoneRef.fid
+          ); // Connect instalZone to tipoEquipo
+        } else if (item.instalacionRef) {
+          createUniqueLink(
+            item.instalacionRef.fid,
+            item.fid,
+            "group2",
+            item.instalacionRef.fid
+          ); // Connect instalacion to instalZone
         }
       }
     });
 
-    // Traverse from root nodes (group1) to expand them
-    nodes.filter((node) => node.group === "group1").forEach((node) => {
-      traverseTree(node, visibleNodes, visibleLinks, nodesById, existingLinks);
-    });
-
-    // Return visible nodes and links after layout adjustment
-    return getLayout({ nodes: visibleNodes, links: visibleLinks });
+    //Use dagre to calculate the layout
+    const layoutData = getLayout({ nodes, links });
+    return layoutData;
   };
-
-  // Recursive tree traversal
-  const traverseTree = (node, visibleNodes, visibleLinks, nodesById, existingLinks) => {
-    if (!node) return;
-
-    visibleNodes.push(node); // Add the current node to the visible list
-
-    if (node.collapsed) return; // Stop if the node is collapsed
-
-    node.childLinks.forEach((link) => {
-      // Add link if it's not already visible
-      if (!existingLinks.has(link.source + "-" + link.target)) {
-        visibleLinks.push(link);
-        existingLinks.add(link.source + "-" + link.target);
-      }
-
-      // Recursively traverse child nodes
-      const childNode = nodesById[link.target];
-      traverseTree(childNode, visibleNodes, visibleLinks, nodesById, existingLinks);
-    });
-  };
-
   const getLayout = ({ nodes, links }) => {
-    // Initialize a dagre graph
+    // This function initializes a dagre graph.
     const graph = new dagre.graphlib.Graph();
+
     graph.setGraph({
-      nodesep: 110,
+      nodesep: 50,
     });
+
     graph.setDefaultEdgeLabel(() => ({}));
 
-    // Add nodes with default width/height
     nodes.forEach((node) => {
+      //Add nodes and set default width/height
       graph.setNode(node.id, { width: 20, height: 30 });
     });
 
-    // Add edges
     links.forEach((link) => {
+      //Add edges
       graph.setEdge(link.source, link.target);
     });
 
-    // Run the layout algorithm
-    dagre.layout(graph);
+    dagre.layout(graph); //Run the layout
 
-    // Update node positions
+    //Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
       return { ...node, x: dagreNode.x, y: dagreNode.y };
     });
-
     return { nodes: updatedNodes, links };
+  };
+
+  //Helper function to recursively collapse all descendants of a node
+  const collapseBranch = (node, allNodes, collapsedNodes) => {
+    // Collapse the current node
+    let updatedCollapsedNodes = {
+      ...collapsedNodes,
+      [node.id]: true, // Ensure this node is collapsed
+    };
+    // Find all children (nodes whose parent is this node's id)
+    const children = allNodes.filter((n) => n.parent === node.id);
+
+    //Recursively collapse each child node
+    children.forEach((child) => {
+      updatedCollapsedNodes = collapseBranch(
+        child,
+        allNodes,
+        updatedCollapsedNodes
+      );
+    });
+    return updatedCollapsedNodes;
+  };
+
+  // Function to collapse/expand a node
+  const handleNodeClick = ( node, allNodes ) => {
+    setCollapsedNodes((prev) => {
+      // If the node is collapsed, expand it
+      if (prev[node.id]) {
+        return {
+          ...prev,
+          [node.id]: false, // Expand the node
+        };
+      } else {
+        // If the node is being collapsed, collapse the node and all its child nodes
+        return collapseBranch(node, graphData.nodes, prev);
+      }
+    });
+  };
+
+  // Function to determine which nodes are down
+  const getVisibleGraph = () => {
+    // List of visible (not collapsed) nodes
+    const visibleNodes = [];
+    const visibleLinks = [];
+
+    // Create a node map by ID for easy access to parents
+    const nodeMap = new Map(graphData.nodes.map((node) => [node.id, node]));
+
+    // Adding visible nodes
+    graphData.nodes.forEach((node) => {
+      let isVisible = true;
+      let parent = nodeMap.get(node.parent);
+
+      //If any of the parents is collapsed, the node is not visible
+      while (parent) {
+        if (collapsedNodes[parent.id]) {
+          isVisible = false;
+          break;
+        }
+        parent = nodeMap.get(parent.parent);
+      }
+      if (isVisible) {
+        visibleNodes.push(node);
+      }
+    });
+
+    // Adding visible links
+    graphData.links.forEach((link) => {
+      const found = visibleNodes.some((node) => {
+        const sourceId =
+          typeof link.source === "object" ? link.source.id : link.source;
+        const targetId =
+          typeof link.target === "object" ? link.target.id : link.target;
+        return sourceId === node.parent && targetId === node.id;
+      });
+
+      if (found) {
+        visibleLinks.push(link);
+      }
+    });
+    return { nodes: visibleNodes, links: visibleLinks };
   };
 
   // Trigger zoomToFit after the graph data is updated
@@ -207,17 +293,9 @@ const Graph = () => {
     }
   }, [graphData]);
 
-  const handleNodeClick = (node) => {
-    if (node.childLinks.length > 0) {
-      node.collapsed = !node.collapsed; // Toggle the collapsed state
-      const updatedGraphData = getPrunedTree(graphData); // Recalculate the pruned tree
-      setGraphData(updatedGraphData); // Update the graph data
-    }
-  };
-
   return (
     <ForceGraph2D
-      graphData={graphData}
+      graphData={getVisibleGraph()}
       width={dimensions.width}
       height={dimensions.height}
       backgroundColor="#192c4b"
@@ -226,12 +304,12 @@ const Graph = () => {
       ref={fgRef}
       cooldownTicks={0}
       onEngineStop={() => fgRef.current.zoomToFit(400)}
-      onNodeClick={handleNodeClick}
+      onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.name;
         const fontSize = 14 / globalScale;
         ctx.beginPath();
-        ctx.arc(node.x, node.y, 10, 0, 2 * Math.PI, false);
+        ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = getColorForNode(node.group);
         ctx.fill();
         ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
