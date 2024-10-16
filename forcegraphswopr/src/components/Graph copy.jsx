@@ -176,37 +176,36 @@ const Graph = () => {
     return layoutData;
   };
   const getLayout = ({ nodes, links }) => {
+    // This function initializes a dagre graph.
     const graph = new dagre.graphlib.Graph();
-  
+
     graph.setGraph({
-      nodesep: 90,  // Set node separation
+      nodesep: 30,        
     });
-  
+
     graph.setDefaultEdgeLabel(() => ({}));
-  
-    // Add nodes to Dagre
+
     nodes.forEach((node) => {
+      //Add nodes and set default width/height
       graph.setNode(node.id, { width: 20, height: 30 });
     });
-  
-    // Add links (edges) to Dagre
+
     links.forEach((link) => {
+      //Add edges
       graph.setEdge(link.source, link.target);
     });
-  
-    // Run the layout calculation
-    dagre.layout(graph);
-  
+
+    dagre.layout(graph); //Run the layout
+
     //Update node positions
     const updatedNodes = nodes.map((node) => {
-    const dagreNode = graph.node(node.id);
-    return { ...node, x: dagreNode.x, y: dagreNode.y };
+      const dagreNode = graph.node(node.id);
+      return { ...node, x: dagreNode.x, y: dagreNode.y };
     });
-  
     return { nodes: updatedNodes, links };
   };
 
-   //Helper function to recursively collapse all descendants of a node
+  //Helper function to recursively collapse all descendants of a node
   const collapseBranch = (node, allNodes, collapsedNodes) => {
     // Collapse the current node
     let updatedCollapsedNodes = {
@@ -287,17 +286,16 @@ const Graph = () => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-
   // Trigger zoomToFit after the graph data is updated
   useEffect(() => {
-  if (fgRef.current && graphData.nodes.length > 0) {
-    fgRef.current.zoomToFit(400, 200); // Only after the data is loaded
-  }
+    if (fgRef.current && graphData.nodes.length > 0) {
+      fgRef.current.zoomToFit(400); // Only after the data is loaded
+    }
   }, [graphData]);
 
+  
 
   return (
-    <div>
     <ForceGraph2D
       graphData={getVisibleGraph()}
       width={dimensions.width}
@@ -307,7 +305,7 @@ const Graph = () => {
       linkColor={() => "#f6f1fb"}
       ref={fgRef}
       cooldownTicks={0}
-      onEngineStop={() => fgRef.current.zoomToFit(400, 200)}
+      onEngineStop={() => fgRef.current.zoomToFit(400)}
       onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.name;
@@ -317,13 +315,12 @@ const Graph = () => {
         ctx.fillStyle = getColorForNode(node.group);
         ctx.fill();
         ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
-        ctx.textAlign = "right";
-        ctx.textBaseline = "right";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "left";
         ctx.fillStyle = "#ffffff";
         ctx.fillText(label, node.x - 12, node.y + 4);
       }}
     /> 
-  </div>
   );
 };
 

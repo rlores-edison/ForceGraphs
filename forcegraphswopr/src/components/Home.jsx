@@ -1,4 +1,5 @@
 import Graph from "./Graph.jsx";
+
 export function Home() {
   return (
     <div>
