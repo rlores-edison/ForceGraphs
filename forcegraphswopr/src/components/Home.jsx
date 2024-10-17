@@ -1,9 +1,9 @@
-import Graph from "./Graph.jsx";
+import NodeDetails from "../components/NodeDetails.jsx";
 
 export function Home() {
   return (
     <div>
-      <Graph/>
+      <NodeDetails/>
     </div>
   );
 }

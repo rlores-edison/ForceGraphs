@@ -228,7 +228,7 @@ const Graph = () => {
   };
 
   // Function to collapse/expand a node
-  const handleNodeClick = ( node, allNodes ) => {
+  const handleNodeClick = ( node ) => {
     setCollapsedNodes((prev) => {
       // If the node is collapsed, expand it
       if (prev[node.id]) {
