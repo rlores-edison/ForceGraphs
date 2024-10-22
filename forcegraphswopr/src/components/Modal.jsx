@@ -39,7 +39,7 @@ const Modal = ({ node, onClose }) => {
 
         {/* Cross Icon for Closing */}
         <button
-          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800 p-1"
           onClick={onClose}
         >
           &#x2715;
