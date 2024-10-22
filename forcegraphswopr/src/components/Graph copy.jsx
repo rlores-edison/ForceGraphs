@@ -1,17 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
-import Modal from "./Modal.jsx";
+
 
 const Graph = () => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [collapsedNodes, setCollapsedNodes] = useState({});
-  const [selectedNode, setSelectedNode] = useState(null);
 
   // Recalculate dimensions on window resize
   useEffect(() => {
@@ -78,32 +74,36 @@ const Graph = () => {
         return; // Skip this item if 'fid' is missing
       }
 
-      const nodeType = Object.keys(groupedMarkers).find((group) =>
-        groupedMarkers[group].some(
-          (marker) => item.markers && item.markers.includes(marker)
-        )
+      const nodeType = Object.keys(groupedMarkers).find (group =>
+        groupedMarkers[group].some(marker => item.markers && item.markers.includes(marker))
       );
 
       // Helper function to determine parent based on group
       const getParentGroup = (nodeType) => {
-        if (nodeType === "group2") {
+        if (nodeType ==='group2') {
           return item.siteRef.fid;
-        } else if (nodeType === "group3") {
+        } 
+        else if (nodeType === 'group3') {
           return item.instalacionRef.fid;
-        } else if (nodeType === "group4") {
+        }
+        else if (nodeType === 'group4') {
           return item.instalZoneRef.fid;
-        } else if (nodeType === "group5") {
+        }
+        else if (nodeType === 'group5') {
           return item.tipoEquipoRef.fid;
-        } else if (nodeType === "group6") {
+        }
+        else if (nodeType === 'group6') {
           return item.equipRef.fid;
-        } else if (nodeType === "group7") {
+        }
+        else if (nodeType === 'group7') {
           if (item.secEquipRef?.fid) {
             return item.secEquipRef.fid;
-          } else {
+          }
+          else {
             return item.equipRef.fid;
           }
         }
-      };
+      }
 
       if (nodeType) {
         // Create the node
@@ -111,7 +111,7 @@ const Graph = () => {
           id: item.fid, // Unique identifier for the node
           name: item.navName,
           group: nodeType,
-          parent: getParentGroup(nodeType), // To reference the parent node
+          parent: getParentGroup(nodeType) // To reference the parent node
         });
 
         // Helper function to create unique links
@@ -177,36 +177,36 @@ const Graph = () => {
   };
   const getLayout = ({ nodes, links }) => {
     const graph = new dagre.graphlib.Graph();
-
+  
     graph.setGraph({
-      nodesep: 90, // Set node separation
+      nodesep: 90,  // Set node separation
     });
-
+  
     graph.setDefaultEdgeLabel(() => ({}));
-
+  
     // Add nodes to Dagre
     nodes.forEach((node) => {
       graph.setNode(node.id, { width: 20, height: 30 });
     });
-
+  
     // Add links (edges) to Dagre
     links.forEach((link) => {
       graph.setEdge(link.source, link.target);
     });
-
+  
     // Run the layout calculation
     dagre.layout(graph);
-
+  
     //Update node positions
     const updatedNodes = nodes.map((node) => {
-      const dagreNode = graph.node(node.id);
-      return { ...node, x: dagreNode.x, y: dagreNode.y };
+    const dagreNode = graph.node(node.id);
+    return { ...node, x: dagreNode.x, y: dagreNode.y };
     });
-
+  
     return { nodes: updatedNodes, links };
   };
 
-  //Helper function to recursively collapse all descendants of a node
+   //Helper function to recursively collapse all descendants of a node
   const collapseBranch = (node, allNodes, collapsedNodes) => {
     // Collapse the current node
     let updatedCollapsedNodes = {
@@ -228,7 +228,7 @@ const Graph = () => {
   };
 
   // Function to collapse/expand a node
-  const handleNodeClick = (node) => {
+  const handleNodeClick = ( node ) => {
     setCollapsedNodes((prev) => {
       // If the node is collapsed, expand it
       if (prev[node.id]) {
@@ -287,81 +287,46 @@ const Graph = () => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-  // Modal opens on right-click on the node
-  const handleNodeRightClick = (node) => {
-    setSelectedNode(node);
-  };
-
-  //Function to close the Modal
-  const handleCloseModal = () => {
-    setSelectedNode(null);
-  };
 
   // Trigger zoomToFit after the graph data is updated
   useEffect(() => {
-    if (fgRef.current && graphData.nodes.length > 0) {
-      fgRef.current.zoomToFit(400, 200); // Only after the data is loaded
-    }
+  if (fgRef.current && graphData.nodes.length > 0) {
+    fgRef.current.zoomToFit(400, 200); // Only after the data is loaded
+  }
   }, [graphData]);
 
-  const nodes = [
-    { id: "", name: "", description:"" },
-    { id: "", name: "", description:"" },
-    { id: "", name: "", description:"" },
-    { id: "", name: "", description:"" },
-    { id: "", name: "", description:"" },
-    { id: "", name: "", description:"" },
-    { id: "", name: "", description:"" },
-  ];
 
   return (
     <div>
-      <div>
-          <div className="flex gap-8">
-          {nodes.map((nodes) => (
-            <div
-              key={nodes.id}
-              onClick={() => handleNodeRightClick(node)}
-              className="p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-100 transition"
-            >
-              {nodes.name}
-            </div>
-          ))}
-        </div>
-        {/*Modal with info of the selected node*/}
-        {selectedNode && <Modal node={selectedNode} onClose={handleCloseModal} />}
-      </div>
-
-      <ForceGraph2D
-        graphData={getVisibleGraph()}
-        width={dimensions.width}
-        height={dimensions.height}
-        backgroundColor="#192c4b"
-        nodeAutoColorBy="group"
-        linkColor={() => "#f6f1fb"}
-        ref={fgRef}
-        cooldownTicks={0}
-        onEngineStop={() => fgRef.current.zoomToFit(400, 200)}
-        onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
-        onNodeRightClick={handleNodeRightClick}
-        nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node.name;
-          const fontSize = 14 / globalScale;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
-          ctx.fillStyle = getColorForNode(node.group);
-          ctx.fill();
-          ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
-          ctx.textAlign = "right";
-          ctx.textBaseline = "right";
-          ctx.fillStyle = "#ffffff";
-          ctx.fillText(label, node.x - 12, node.y + 4);
-        }}
-      />
-      {/*Modal with node info*/}
-      {selectedNode && <Modal node={selectedNode} onClose={handleCloseModal} />}
-    </div>
+    <ForceGraph2D
+      graphData={getVisibleGraph()}
+      width={dimensions.width}
+      height={dimensions.height}
+      backgroundColor="#192c4b"
+      nodeAutoColorBy="group"
+      linkColor={() => "#f6f1fb"}
+      ref={fgRef}
+      cooldownTicks={0}
+      onEngineStop={() => fgRef.current.zoomToFit(400, 200)}
+      onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
+      nodeCanvasObject={(node, ctx, globalScale) => {
+        const label = node.name;
+        const fontSize = 14 / globalScale;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+        ctx.fillStyle = getColorForNode(node.group);
+        ctx.fill();
+        ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
+        ctx.textAlign = "right";
+        ctx.textBaseline = "right";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(label, node.x - 12, node.y + 4);
+      }}
+    /> 
+  </div>
   );
 };
 
 export default Graph;
+
+

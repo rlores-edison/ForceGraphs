@@ -10,10 +10,10 @@ export default {
        '30': '30px',
       },
     },
-    container: {
+    /*container: {
       padding:'2rem',
       center: true,
-    },
+    },*/
   },
   plugins: [],
   
