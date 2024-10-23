@@ -11,9 +11,9 @@ const Graph = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
-     // Recalculate dimensions on window resize
-    const [collapsedNodes, setCollapsedNodes] = useState({});
-    const [selectedNode, setSelectedNode] = useState(null);
+  // Recalculate dimensions on window resize
+  const [collapsedNodes, setCollapsedNodes] = useState({});
+  const [selectedNode, setSelectedNode] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -257,34 +257,49 @@ const Graph = () => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-  // Modal opens on right-click on the node
- 
-  const handleNodeRightClick = (node) => {
-   
-      fetch("../../server/db.json")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Fetched data:", data); // Log the fetched data
-          setJsonData(data); // Set the fetched data to jsonData state
-          const jsonData = setJsonData(data);
-         
-    setSelectedNode(node);
-    if (jsonData || Object.keys(jsonData).length === 0) {
-      console.error("jsonData is empty");
-      return;
+  
+  const findByFid = (obj, searchedFid) => {
+    // Check if the main object itself has the 'fid'
+    if (obj.hasOwnProperty("fid") && obj.fid === searchedFid) {
+      return obj; // If fid matches, return the entire object
+  }
+    // If fid not found in the main object, iterate over all nested objects and search
+    if (typeof obj === "object" && obj !== null) {
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key) && typeof obj[key] === "object") {
+          // Recursively search nested objects
+          const result = findByFid(obj[key], searchedFid);
+          if (result) {
+            return result; // If a match is found in nested objects, return it
+          }
+        }
+      }
     }
-    const searchedFid = node.id;
-    console.log("searching for fid:", searchedFid);
-    console.log("jsonData", jsonData) //Check the fid in the selected node
-    
-    const selectedNodeData = Object.entries("../../server/db.json").find(([key, value]) => (value.fid) === searchedFid); //Find node data from the fetched jsonData
-        
-    if (selectedNodeData) {
-          console.log("Object found:", selectedNodeData[1]);
+    return null; // Return null if no match is found
+  };
+
+  // Modal opens on right-click on the node
+  const handleNodeRightClick = (node) => {
+    setSelectedNode(node);
+    fetch("../../server/db.json")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched data:", data); // Log the fetched data
+        const searchedFid = node.fid || node.id;
+        console.log("Searching for fid:", searchedFid);
+  
+        // Use the recursive function to search through the fetched data
+        const selectedNodeData = findByFid(data, searchedFid);
+  
+        if (selectedNodeData) {
+          console.log("Object found:", selectedNodeData); // Log the correct found object
+          setSelectedNode(selectedNodeData); // Set the found node data to display in the modal
         } else {
-          console.error("Object not found with the specified fid:", searchedFid);    
-        }          
-  }) };
+          console.error("Object not found with the specified fid:", searchedFid);
+        }
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  };
 
   //Function to close the Modal
   const handleCloseModal = () => {
@@ -325,7 +340,6 @@ const Graph = () => {
           ctx.textBaseline = "right";
           ctx.fillStyle = "#ffffff";
           ctx.fillText(label, node.x - 9, node.y + 1);
-          
         }}
       />
       {/* Modal with node info */}
@@ -333,4 +347,8 @@ const Graph = () => {
     </div>
   );
 };
+
+
+
+
 export default Graph;
