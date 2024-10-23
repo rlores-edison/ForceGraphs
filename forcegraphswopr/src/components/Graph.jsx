@@ -6,12 +6,14 @@ import Modal from "./Modal.jsx";
 const Graph = () => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+  const [jsonData, setJsonData] = useState({});
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
-  }); // Recalculate dimensions on window resize
-  const [collapsedNodes, setCollapsedNodes] = useState({});
-  const [selectedNode, setSelectedNode] = useState(null);
+  });
+     // Recalculate dimensions on window resize
+    const [collapsedNodes, setCollapsedNodes] = useState({});
+    const [selectedNode, setSelectedNode] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -256,9 +258,33 @@ const Graph = () => {
   };
 
   // Modal opens on right-click on the node
+ 
   const handleNodeRightClick = (node) => {
+   
+      fetch("../../server/db.json")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Fetched data:", data); // Log the fetched data
+          setJsonData(data); // Set the fetched data to jsonData state
+          const jsonData = setJsonData(data);
+         
     setSelectedNode(node);
-  };
+    if (jsonData || Object.keys(jsonData).length === 0) {
+      console.error("jsonData is empty");
+      return;
+    }
+    const searchedFid = node.id;
+    console.log("searching for fid:", searchedFid);
+    console.log("jsonData", jsonData) //Check the fid in the selected node
+    
+    const selectedNodeData = Object.entries("../../server/db.json").find(([key, value]) => (value.fid) === searchedFid); //Find node data from the fetched jsonData
+        
+    if (selectedNodeData) {
+          console.log("Object found:", selectedNodeData[1]);
+        } else {
+          console.error("Object not found with the specified fid:", searchedFid);    
+        }          
+  }) };
 
   //Function to close the Modal
   const handleCloseModal = () => {
