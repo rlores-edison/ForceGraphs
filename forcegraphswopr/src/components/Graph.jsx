@@ -15,6 +15,7 @@ const Graph = () => {
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [selectedNode, setSelectedNode] = useState(null);
 
+
   useEffect(() => {
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -33,9 +34,13 @@ const Graph = () => {
         });
         setCollapsedNodes(collapsed_nodes);
         setGraphData(adaptedData);
+        setJsonData(data);
       })
       .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
   }, []);
+
+
+
   const groupedMarkers = {
     group1: ["site"],
     group2: ["instalacion"],
@@ -280,25 +285,13 @@ const Graph = () => {
 
   // Modal opens on right-click on the node
   const handleNodeRightClick = (node) => {
-    setSelectedNode(node);
-    fetch("../../server/db.json")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched data:", data); // Log the fetched data
-        const searchedFid = node.fid || node.id;
-        console.log("Searching for fid:", searchedFid);
-  
-        // Use the recursive function to search through the fetched data
-        const selectedNodeData = findByFid(data, searchedFid);
-  
-        if (selectedNodeData) {
-          console.log("Object found:", selectedNodeData); // Log the correct found object
-          setSelectedNode(selectedNodeData); // Set the found node data to display in the modal
-        } else {
-          console.error("Object not found with the specified fid:", searchedFid);
-        }
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+    const objetoEncontrado = Object.entries(jsonData).find(([clave, valor]) => valor.fid === node.id);
+    console.log("find", objetoEncontrado);
+
+    setSelectedNode(objetoEncontrado);
+    
+       console.log("testing", jsonData)
+        
   };
 
   //Function to close the Modal
