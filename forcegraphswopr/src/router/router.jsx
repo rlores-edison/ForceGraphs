@@ -8,13 +8,6 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Home />,
-            // children: [
-            // {
-            // path: 'node:fid',
-            // element: <NodeDetails />,
-            // loader: async ({ params }) => {  // Fetch request 
-            //     return getNodeByFid(params.fid);
-            //    },
             },
 ]);
 export default router;

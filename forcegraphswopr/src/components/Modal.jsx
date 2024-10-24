@@ -1,6 +1,8 @@
 import { GoInfo } from "react-icons/go";
 import WOPRLogo from "../assets/WOPRLogo.png";
 
+
+// node is an object, passed as a prop
 const Modal = ({ node, onClose }) => {
   if (!node) return null; // Don't render the modal if no node is selected
 
@@ -33,8 +35,7 @@ const Modal = ({ node, onClose }) => {
           <button
             className="rounded-lg w-96 h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all focus:opacity-85 active:opacity-85 disabled:opacity-50 disabled:pointer-events-none"
             onClick={onClose}
-          >
-            Close
+          >Close
           </button>
         </div>
 
@@ -45,6 +46,9 @@ const Modal = ({ node, onClose }) => {
         >
           &#x2715;
         </button>
+      
+
+
       </div>
     </div>
     </>

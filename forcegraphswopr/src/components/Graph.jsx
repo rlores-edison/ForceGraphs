@@ -3,6 +3,7 @@ import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import Modal from "./Modal.jsx";
 
+
 const Graph = () => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -11,7 +12,9 @@ const Graph = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  // Recalculate dimensions on window resize
+
+
+// Recalculate dimensions on window resize
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [selectedNode, setSelectedNode] = useState(null);
 
@@ -21,8 +24,11 @@ const Graph = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+
+
   useEffect(() => {
     fetch("../../server/db.json")
       .then((response) => response.json())
@@ -40,7 +46,6 @@ const Graph = () => {
   }, []);
 
 
-
   const groupedMarkers = {
     group1: ["site"],
     group2: ["instalacion"],
@@ -50,6 +55,7 @@ const Graph = () => {
     group6: ["secEquip"],
     group7: ["point"],
   };
+
   const getColorForNode = (group) => {
     const colors = {
       group1: "#812921",
@@ -62,15 +68,19 @@ const Graph = () => {
     };
     return colors[group] || "#f94dbd";
   };
-  // Function to adapt the database data into the graph format
+
+
+// Function to adapt the database data into the graph format
   const adaptDbToGraph = (db) => {
     const nodes = [];
     const links = [];
-    // Store existing links to avoid duplicates
+
+  // Store existing links to avoid duplicates
     const existingLinks = new Set();
     Object.keys(db).forEach((key) => {
       const item = db[key];
-      // Ensure the item has an 'fid' before processing
+
+  // Ensure the item has an 'fid' before processing
       if (!item || !item.fid) {
         console.error(`Skipping item with missing fid:`, item);
         return; // Skip this item if 'fid' is missing
@@ -80,7 +90,8 @@ const Graph = () => {
           (marker) => item.markers && item.markers.includes(marker)
         )
       );
-      // Helper function to determine parent based on group
+
+  // Helper function to determine PARENT based on group
       const getParentGroup = (nodeType) => {
         if (nodeType === "group2") {
           return item.siteRef.fid;
@@ -100,22 +111,25 @@ const Graph = () => {
           }
         }
       };
+
       if (nodeType) {
-        // Create the node
+  // Create the NODES
         nodes.push({
           id: item.fid, // Unique identifier for the node
           name: item.navName,
           group: nodeType,
-          parent: getParentGroup(nodeType), // To reference the parent node
+          parent: getParentGroup(nodeType), // To reference the PARENT node
         });
-        // Helper function to create unique links
+
+  // Helper function to create unique LINKS
         const createUniqueLink = (source, target, group) => {
           const linkKey = `${source}-${target}-${group}`;
           if (!existingLinks.has(linkKey)) {
-            links.push({ source, target, group }); // Include the group in the link
+            links.push({ source, target, group }); 
             existingLinks.add(linkKey);
           }
         };
+
         if (item.markers.includes("instalacion") && item.siteRef?.fid) {
           createUniqueLink(
             item.siteRef.fid,
@@ -124,6 +138,7 @@ const Graph = () => {
             item.siteRef.fid
           ); // Link instalacion to site using siteRef.fid
         }
+
         if (item.secEquipRef) {
           createUniqueLink(
             item.secEquipRef.fid,
@@ -162,43 +177,57 @@ const Graph = () => {
         }
       }
     });
-    //Use dagre to calculate the layout
+
+
+  //Use DAGRE to calculate the layout
     const layoutData = getLayout({ nodes, links });
     return layoutData;
   };
+
   const getLayout = ({ nodes, links }) => {
-    // This function initializes a dagre graph.
+  // This function initializes a dagre graph.
     const graph = new dagre.graphlib.Graph();
     graph.setGraph({
       nodesep: 90,
     });
+
     graph.setDefaultEdgeLabel(() => ({}));
     nodes.forEach((node) => {
-      //Add nodes and set default width/height
+  //Add nodes and set default width/height
       graph.setNode(node.id, { width: 20, height: 30 });
     });
+
     links.forEach((link) => {
-      //Add edges
+  //Add edges
       graph.setEdge(link.source, link.target);
     });
-    dagre.layout(graph); //Run the layout
-    //Update node positions
+
+  //Run the layout
+    dagre.layout(graph); 
+
+  //Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
       return { ...node, x: dagreNode.x, y: dagreNode.y };
     });
     return { nodes: updatedNodes, links };
   };
-  //Helper function to recursively collapse all descendants of a node
+
+
+
+  //Function to recursively COLLAPSE all descendants of a node
   const collapseBranch = (node, allNodes, collapsedNodes) => {
-    // Collapse the current node
+
+  // Collapse the current node
     let updatedCollapsedNodes = {
       ...collapsedNodes,
       [node.id]: true, // Ensure this node is collapsed
     };
-    // Find all children (nodes whose parent is this node's id)
+
+  // Find all children (nodes whose parent is this node's id)
     const children = allNodes.filter((n) => n.parent === node.id);
-    //Recursively collapse each child node
+
+  //Recursively collapse each child node
     children.forEach((child) => {
       updatedCollapsedNodes = collapseBranch(
         child,
@@ -208,33 +237,42 @@ const Graph = () => {
     });
     return updatedCollapsedNodes;
   };
-  // Function to collapse/expand a node
+
+
+  // Function to COLLAPSE/EXPAND a node
   const handleNodeClick = (node) => {
     setCollapsedNodes((prev) => {
-      // If the node is collapsed, expand it
+  // If the node is collapsed, expand it
       if (prev[node.id]) {
         return {
           ...prev,
           [node.id]: false, // Expand the node
         };
+
       } else {
-        // If the node is being collapsed, collapse the node and all its child nodes
+  // If the node is being collapsed, collapse the node and all its child nodes
         return collapseBranch(node, graphData.nodes, prev);
       }
     });
   };
+
+
   // Function to determine which nodes are down
   const getVisibleGraph = () => {
-    // List of visible (not collapsed) nodes
+  // List of visible (not collapsed) nodes
     const visibleNodes = [];
     const visibleLinks = [];
-    // Create a node map by ID for easy access to parents
+
+  // Create a node map by ID for easy access to parents
     const nodeMap = new Map(graphData.nodes.map((node) => [node.id, node]));
-    // Adding visible nodes
+
+
+  // Adding visible NODES
     graphData.nodes.forEach((node) => {
       let isVisible = true;
       let parent = nodeMap.get(node.parent);
-      //If any of the parents is collapsed, the node is not visible
+
+  //If any of the parents is collapsed, the node is not visible
       while (parent) {
         if (collapsedNodes[parent.id]) {
           isVisible = false;
@@ -246,7 +284,9 @@ const Graph = () => {
         visibleNodes.push(node);
       }
     });
-    // Adding visible links
+
+
+  // Adding visible LINKS
     graphData.links.forEach((link) => {
       const found = visibleNodes.some((node) => {
         const sourceId =
@@ -259,45 +299,25 @@ const Graph = () => {
         visibleLinks.push(link);
       }
     });
+
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-  
-  const findByFid = (obj, searchedFid) => {
-    // Check if the main object itself has the 'fid'
-    if (obj.hasOwnProperty("fid") && obj.fid === searchedFid) {
-      return obj; // If fid matches, return the entire object
-  }
-    // If fid not found in the main object, iterate over all nested objects and search
-    if (typeof obj === "object" && obj !== null) {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key) && typeof obj[key] === "object") {
-          // Recursively search nested objects
-          const result = findByFid(obj[key], searchedFid);
-          if (result) {
-            return result; // If a match is found in nested objects, return it
-          }
-        }
-      }
-    }
-    return null; // Return null if no match is found
-  };
 
-  // Modal opens on right-click on the node
+  // MODAL opens on right-click on the node, looks for an object in jsonData whose fid === node.id, updates the state to show de details
   const handleNodeRightClick = (node) => {
-    const objetoEncontrado = Object.entries(jsonData).find(([clave, valor]) => valor.fid === node.id);
-    console.log("find", objetoEncontrado);
-
-    setSelectedNode(objetoEncontrado);
-    
-       console.log("testing", jsonData)
-        
+    const objectFound = Object.entries(jsonData).find(
+      ([key, value]) => value.fid === node.id
+    );
+    setSelectedNode(objectFound);
   };
+
 
   //Function to close the Modal
   const handleCloseModal = () => {
     setSelectedNode(null);
   };
+
 
   // Trigger zoomToFit after the graph data is updated
   useEffect(() => {
@@ -305,6 +325,7 @@ const Graph = () => {
       fgRef.current.zoomToFit(400, 100); // Only after the data is loaded
     }
   }, [graphData]);
+
 
   return (
     <div>
@@ -335,13 +356,11 @@ const Graph = () => {
           ctx.fillText(label, node.x - 9, node.y + 1);
         }}
       />
+
       {/* Modal with node info */}
       {selectedNode && <Modal node={selectedNode} onClose={handleCloseModal} />}
     </div>
   );
 };
-
-
-
 
 export default Graph;
