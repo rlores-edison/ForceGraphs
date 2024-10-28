@@ -13,7 +13,7 @@ const Graph = () => {
   });
   // Recalculate dimensions on window resize
   const [collapsedNodes, setCollapsedNodes] = useState({});
-  const [selectedNode, setSelectedNode] = useState(null);
+  const [nodeJsonFound, setNodeJsonFound] = useState(null);
 
 
   useEffect(() => {
@@ -23,6 +23,8 @@ const Graph = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
   }, []);
+
+
   useEffect(() => {
     fetch("../../server/db.json")
       .then((response) => response.json())
@@ -37,7 +39,7 @@ const Graph = () => {
         setJsonData(data);
       })
       .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
-  }, []);
+  }, [])
 
 
 
@@ -62,6 +64,7 @@ const Graph = () => {
     };
     return colors[group] || "#f94dbd";
   };
+
   // Function to adapt the database data into the graph format
   const adaptDbToGraph = (db) => {
     const nodes = [];
@@ -80,6 +83,7 @@ const Graph = () => {
           (marker) => item.markers && item.markers.includes(marker)
         )
       );
+
       // Helper function to determine parent based on group
       const getParentGroup = (nodeType) => {
         if (nodeType === "group2") {
@@ -100,6 +104,7 @@ const Graph = () => {
           }
         }
       };
+      
       if (nodeType) {
         // Create the node
         nodes.push({
@@ -162,6 +167,8 @@ const Graph = () => {
         }
       }
     });
+    
+
     //Use dagre to calculate the layout
     const layoutData = getLayout({ nodes, links });
     return layoutData;
@@ -182,6 +189,8 @@ const Graph = () => {
       graph.setEdge(link.source, link.target);
     });
     dagre.layout(graph); //Run the layout
+
+
     //Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
@@ -198,6 +207,7 @@ const Graph = () => {
     };
     // Find all children (nodes whose parent is this node's id)
     const children = allNodes.filter((n) => n.parent === node.id);
+    
     //Recursively collapse each child node
     children.forEach((child) => {
       updatedCollapsedNodes = collapseBranch(
@@ -208,6 +218,7 @@ const Graph = () => {
     });
     return updatedCollapsedNodes;
   };
+  
   // Function to collapse/expand a node
   const handleNodeClick = (node) => {
     setCollapsedNodes((prev) => {
@@ -218,11 +229,13 @@ const Graph = () => {
           [node.id]: false, // Expand the node
         };
       } else {
+        
         // If the node is being collapsed, collapse the node and all its child nodes
         return collapseBranch(node, graphData.nodes, prev);
       }
     });
   };
+  
   // Function to determine which nodes are down
   const getVisibleGraph = () => {
     // List of visible (not collapsed) nodes
@@ -246,6 +259,9 @@ const Graph = () => {
         visibleNodes.push(node);
       }
     });
+
+
+    
     // Adding visible links
     graphData.links.forEach((link) => {
       const found = visibleNodes.some((node) => {
@@ -262,42 +278,23 @@ const Graph = () => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-  
-  const findByFid = (obj, searchedFid) => {
-    // Check if the main object itself has the 'fid'
-    if (obj.hasOwnProperty("fid") && obj.fid === searchedFid) {
-      return obj; // If fid matches, return the entire object
-  }
-    // If fid not found in the main object, iterate over all nested objects and search
-    if (typeof obj === "object" && obj !== null) {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key) && typeof obj[key] === "object") {
-          // Recursively search nested objects
-          const result = findByFid(obj[key], searchedFid);
-          if (result) {
-            return result; // If a match is found in nested objects, return it
-          }
-        }
-      }
-    }
-    return null; // Return null if no match is found
-  };
+
 
   // Modal opens on right-click on the node
   const handleNodeRightClick = (node) => {
-    const objetoEncontrado = Object.entries(jsonData).find(([clave, valor]) => valor.fid === node.id);
-    console.log("find", objetoEncontrado);
-
-    setSelectedNode(objetoEncontrado);
-    
-       console.log("testing", jsonData)
-        
+    const objectFound = Object.entries(jsonData).find(
+      ([key, value]) => value.fid === node.id
+    );
+    setNodeJsonFound(objectFound);
+    console.log('objectFound', objectFound)
   };
+
 
   //Function to close the Modal
   const handleCloseModal = () => {
-    setSelectedNode(null);
+    setNodeJsonFound(null);
   };
+
 
   // Trigger zoomToFit after the graph data is updated
   useEffect(() => {
@@ -335,8 +332,12 @@ const Graph = () => {
           ctx.fillText(label, node.x - 9, node.y + 1);
         }}
       />
+
       {/* Modal with node info */}
-      {selectedNode && <Modal node={selectedNode} onClose={handleCloseModal} />}
+      {nodeJsonFound && <Modal 
+                          node={nodeJsonFound} 
+                          on_close={handleCloseModal} 
+                        />}
     </div>
   );
 };
