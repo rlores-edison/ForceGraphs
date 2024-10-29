@@ -22,7 +22,11 @@ const Home = () => {
 
     <div>
       {/* Graph component is rendered here */}
-      <Graph json_data={jsonData} />
+      <Graph 
+        json_data={jsonData}
+        background_color={"#fdfdfd"}
+        link_color={"#0000FF"}
+      />
     </div>
 
 );

@@ -3,7 +3,7 @@ import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import Modal from "./Modal.jsx";
 
-const Graph = ({json_data}) => {
+const Graph = ({json_data, background_color, link_color}) => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [dimensions, setDimensions] = useState({
@@ -290,15 +290,16 @@ const Graph = ({json_data}) => {
         graphData={getVisibleGraph()}
         width={dimensions.width}
         height={dimensions.height}
-        backgroundColor="#192c4b"
+        backgroundColor={background_color}
         nodeAutoColorBy="group"
         nodeRelSize={5}
-        linkColor={() => "#f6f1fb"}
+        linkColor={() => link_color}
         ref={fgRef}
         cooldownTicks={0}
         onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
         onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
         onNodeRightClick={handleNodeRightClick}
+        nodeLabel={(node) => `Hover Label: ${node.group}`}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.name;
           const fontSize = 14 / globalScale;
@@ -309,7 +310,7 @@ const Graph = ({json_data}) => {
           ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
           ctx.textAlign = "right";
           ctx.textBaseline = "right";
-          ctx.fillStyle = "#ffffff";
+          ctx.fillStyle = "#0000FF";
           ctx.fillText(label, node.x - 9, node.y + 1);
         }}
       />
