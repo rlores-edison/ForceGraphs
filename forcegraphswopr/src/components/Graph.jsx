@@ -3,10 +3,9 @@ import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import Modal from "./Modal.jsx";
 
-const Graph = () => {
+const Graph = ({json_data}) => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-  const [jsonData, setJsonData] = useState({});
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -14,7 +13,6 @@ const Graph = () => {
   // Recalculate dimensions on window resize
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,24 +22,17 @@ const Graph = () => {
     return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
   }, []);
 
-
   useEffect(() => {
-    fetch("../../server/db.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const adaptedData = adaptDbToGraph(data);
-        const collapsed_nodes = {};
-        adaptedData.nodes.forEach((node) => {
-          collapsed_nodes[node.id] = true;
-        });
-        setCollapsedNodes(collapsed_nodes);
-        setGraphData(adaptedData);
-        setJsonData(data);
-      })
-      .catch((error) => console.error("🤷‍♀️ Error fetching data:", error));
-  }, [])
-
-
+    if (json_data && Object.keys(json_data).length > 0) {
+      const adaptedData = adaptDbToGraph(json_data);
+      const collapsed_nodes = {};
+      adaptedData.nodes.forEach((node) => {
+        collapsed_nodes[node.id] = true;
+      });
+      setCollapsedNodes(collapsed_nodes);
+      setGraphData(adaptedData);
+    }
+  }, [json_data]);
 
   const groupedMarkers = {
     group1: ["site"],
@@ -66,13 +57,13 @@ const Graph = () => {
   };
 
   // Function to adapt the database data into the graph format
-  const adaptDbToGraph = (db) => {
+  const adaptDbToGraph = (json_data) => {
     const nodes = [];
     const links = [];
     // Store existing links to avoid duplicates
     const existingLinks = new Set();
-    Object.keys(db).forEach((key) => {
-      const item = db[key];
+    Object.keys(json_data).forEach((key) => {
+      const item = json_data[key];
       // Ensure the item has an 'fid' before processing
       if (!item || !item.fid) {
         console.error(`Skipping item with missing fid:`, item);
@@ -104,7 +95,7 @@ const Graph = () => {
           }
         }
       };
-      
+
       if (nodeType) {
         // Create the node
         nodes.push({
@@ -167,7 +158,6 @@ const Graph = () => {
         }
       }
     });
-    
 
     //Use dagre to calculate the layout
     const layoutData = getLayout({ nodes, links });
@@ -190,7 +180,6 @@ const Graph = () => {
     });
     dagre.layout(graph); //Run the layout
 
-
     //Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
@@ -207,7 +196,7 @@ const Graph = () => {
     };
     // Find all children (nodes whose parent is this node's id)
     const children = allNodes.filter((n) => n.parent === node.id);
-    
+
     //Recursively collapse each child node
     children.forEach((child) => {
       updatedCollapsedNodes = collapseBranch(
@@ -218,7 +207,7 @@ const Graph = () => {
     });
     return updatedCollapsedNodes;
   };
-  
+
   // Function to collapse/expand a node
   const handleNodeClick = (node) => {
     setCollapsedNodes((prev) => {
@@ -229,13 +218,12 @@ const Graph = () => {
           [node.id]: false, // Expand the node
         };
       } else {
-        
         // If the node is being collapsed, collapse the node and all its child nodes
         return collapseBranch(node, graphData.nodes, prev);
       }
     });
   };
-  
+
   // Function to determine which nodes are down
   const getVisibleGraph = () => {
     // List of visible (not collapsed) nodes
@@ -260,8 +248,6 @@ const Graph = () => {
       }
     });
 
-
-    
     // Adding visible links
     graphData.links.forEach((link) => {
       const found = visibleNodes.some((node) => {
@@ -278,23 +264,18 @@ const Graph = () => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-
-
   // Modal opens on right-click on the node
   const handleNodeRightClick = (node) => {
-    const objectFound = Object.entries(jsonData).find(
+    const objectFound = Object.entries(json_data).find(
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
-    console.log('objectFound', objectFound)
   };
-
 
   //Function to close the Modal
   const handleCloseModal = () => {
     setNodeJsonFound(null);
   };
-
 
   // Trigger zoomToFit after the graph data is updated
   useEffect(() => {
@@ -334,15 +315,11 @@ const Graph = () => {
       />
 
       {/* Modal with node info */}
-      {nodeJsonFound && <Modal 
-                          node={nodeJsonFound} 
-                          on_close={handleCloseModal} 
-                        />}
+      {nodeJsonFound && (
+        <Modal node={nodeJsonFound} on_close={handleCloseModal} />
+      )}
     </div>
   );
 };
-
-
-
 
 export default Graph;
