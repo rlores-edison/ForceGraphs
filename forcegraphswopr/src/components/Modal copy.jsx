@@ -1,5 +1,13 @@
 import WOPRLogo from "../assets/WOPRLogo.png";
-import { GoInfo } from "react-icons/go";
+import { JSONTree } from "react-json-tree";
+
+// Customize JSONTree theme
+const customTheme = {
+  tree: {
+    backgroundColor: "#F3F4F6",
+  },
+};
+
 const Modal = ({ node, on_close }) => {
   if (!node) return null; // Don't render if no node selected
 
@@ -10,30 +18,9 @@ const Modal = ({ node, on_close }) => {
     }
   };
 
-  // Access node data
-  const nodeData = node ? node[1] : {};
-
-  // Function to render JSON data as form fields
-  const FormDisplay = ({ data }) => {
-    return (
-      <form>
-        {Object.entries(data).map(([key, value]) => (
-          <div key={key} className="form-field">
-            <label>{key}</label>
-            <input
-              type="text"
-              value={value}
-              readOnly
-              className="border p-2 rounded w-full mt-1"
-            />
-          </div>
-        ))}
-      </form>
-    );
-  };
-
   return (
-    // Dark background overlay
+
+    // Dark background
     <div
       className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50"
       role="dialog"
@@ -48,17 +35,18 @@ const Modal = ({ node, on_close }) => {
           <img alt="logo" src={WOPRLogo} className="w-9 h-9 mt-9" />
         </div>
 
-        <div className="flex flex-col justify-center items-center mt-5">
-          <h1 id="modal-title" className="text-xl font-bold flex items-center">
-            Node     
+
+        <div className="flex flex-col justify-center items-center mt-8">
+          <h1 id="modal-title" className="text-2xl font-bold">
+            {" "}
+            Node name
           </h1>
-          <div><GoInfo /></div>
           <hr className="h-px w-full max-w-xs my-4 bg-gray-200 border-0 dark:bg-gray-700" />
         </div>
 
         {/* JSON Data Display */}
-        <div className="overflow-y-auto max-h-[60vh] px-4">
-          <FormDisplay data={nodeData} />
+        <div className="ml-4 mr-4 flex-1 overflow-y-auto max-h-[50vh] overflow-x-auto max-w-[90vw] p-2 whitespace-nowrap">
+          {node && <JSONTree data={node} theme={customTheme} />}
         </div>
 
         {/* Close Icon */}
@@ -80,6 +68,8 @@ const Modal = ({ node, on_close }) => {
             Close
           </button>
         </div>
+
+
       </div>
     </div>
   );
