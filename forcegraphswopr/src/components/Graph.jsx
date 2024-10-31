@@ -44,6 +44,9 @@ const Graph = ({json_data, background_color, link_color}) => {
     group6: ["secEquip"],
     group7: ["point"],
   };
+
+  const arrayNodeType =["site","instalacion","instalZone","tipoEquipo","equip","secEquip","point"];
+   
   const getColorForNode = (group) => {
     const colors = {
       group1: "#812921",
@@ -318,7 +321,7 @@ const Graph = ({json_data, background_color, link_color}) => {
 
       {/* Modal with node info */}
       {nodeJsonFound && (
-        <Modal node={nodeJsonFound} on_close={handleCloseModal} groupedMarkers={groupedMarkers}/>
+        <Modal node={nodeJsonFound} on_close={handleCloseModal} array_node_type={arrayNodeType}/>
       )}
       
     </div>

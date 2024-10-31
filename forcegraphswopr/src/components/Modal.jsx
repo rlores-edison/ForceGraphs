@@ -1,5 +1,6 @@
 import WOPRLogo from "../assets/WOPRLogo.png";
 import { GoInfo } from "react-icons/go";
+
 const Modal = ({ node, on_close }) => {
   if (!node) return null; // Don't render if no node selected
 
@@ -13,6 +14,14 @@ const Modal = ({ node, on_close }) => {
   // Access node data
   const nodeData = node ? node[1] : {};
 
+  const arrayNodeType =["site","instalacion","instalZone","tipoEquipo","equip","secEquip","point"];
+  
+  console.log(nodeData.markers);
+  const defaultMarker = nodeData.markers.findIndex(item => arrayNodeType.includes(item))
+
+  console.log('default', defaultMarker);
+  console.log(arrayNodeType[defaultMarker]);
+  
   // Function to render JSON data as form fields
   const FormDisplay = ({ data }) => {
     return (
@@ -24,6 +33,7 @@ const Modal = ({ node, on_close }) => {
             {key === "markers" && Array.isArray(value) ? (
               <select
               id="markers-list"
+              defaultValue={nodeData.markers[defaultMarker]}
               className="border p-2 rounded w-full mt-1 border-gray-300">
                 {value.map((marker, index)=>(<option key={index} value={marker}>
                   {marker}
