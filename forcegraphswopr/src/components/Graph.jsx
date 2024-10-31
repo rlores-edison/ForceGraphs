@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import Modal from "./Modal.jsx";
+import { data } from "autoprefixer";
 
 const Graph = ({json_data, background_color, link_color}) => {
   const fgRef = useRef();
@@ -317,8 +318,9 @@ const Graph = ({json_data, background_color, link_color}) => {
 
       {/* Modal with node info */}
       {nodeJsonFound && (
-        <Modal node={nodeJsonFound} on_close={handleCloseModal} />
+        <Modal node={nodeJsonFound} on_close={handleCloseModal} groupedMarkers={groupedMarkers}/>
       )}
+      
     </div>
   );
 };
