@@ -1,3 +1,4 @@
+import React from "react";
 import WOPRLogo from "../assets/WOPRLogo.png";
 import { GoInfo } from "react-icons/go";
 

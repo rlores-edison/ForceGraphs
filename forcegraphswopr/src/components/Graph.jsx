@@ -1,26 +1,31 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import Modal from "./Modal.jsx";
-import { data } from "autoprefixer";
+
 
 const Graph = ({json_data, background_color, link_color}) => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-  // Recalculate dimensions on window resize
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
+  // Define larger virtual canvas dimensions to allow nodes to maintain size
+  const scalingFactor = 1;
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight * scalingFactor,
+  });
 
-  useEffect(() => {
+   // Recalculate dimensions on window resize
+   useEffect(() => {
     const handleResize = () => {
-      setDimensions({ width: window.innerWidth, height: window.innerHeight });
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight * scalingFactor,
+      });
     };
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -172,22 +177,28 @@ const Graph = ({json_data, background_color, link_color}) => {
     const layoutData = getLayout({ nodes, links });
     return layoutData;
   };
+  
   const getLayout = ({ nodes, links }) => {
-    // This function initializes a dagre graph.
+    // This function initializes a Dagre graph
     const graph = new dagre.graphlib.Graph();
-    graph.setGraph({
-      nodesep: 90,
-    });
+    graph.setGraph({ nodesep: 90 });
     graph.setDefaultEdgeLabel(() => ({}));
-    nodes.forEach((node) => {
-      //Add nodes and set default width/height
-      graph.setNode(node.id, { width: 20, height: 30 });
-    });
+    
+    // Set each node to fixed size
+      nodes.forEach((node) => {
+        graph.setNode(node.id, { 
+          width: 50, 
+          height: 50, 
+        });
+      });
+  
+    // Add edges
     links.forEach((link) => {
-      //Add edges
       graph.setEdge(link.source, link.target);
     });
-    dagre.layout(graph); //Run the layout
+
+    //Run the layout
+    dagre.layout(graph); 
 
     //Update node positions
     const updatedNodes = nodes.map((node) => {
@@ -196,6 +207,7 @@ const Graph = ({json_data, background_color, link_color}) => {
     });
     return { nodes: updatedNodes, links };
   };
+
   //Helper function to recursively collapse all descendants of a node
   const collapseBranch = (node, allNodes, collapsedNodes) => {
     // Collapse the current node
@@ -286,26 +298,25 @@ const Graph = ({json_data, background_color, link_color}) => {
     setNodeJsonFound(null);
   };
 
-  // Trigger zoomToFit after the graph data is updated
-  useEffect(() => {
+    useEffect(() => {
     if (fgRef.current && graphData.nodes.length > 0) {
-      fgRef.current.zoomToFit(400, 100); // Only after the data is loaded
+      fgRef.current.zoomToFit(0, 200); 
     }
   }, [graphData]);
 
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
       <ForceGraph2D
         graphData={getVisibleGraph()}
         width={dimensions.width}
         height={dimensions.height}
         backgroundColor={background_color}
         nodeAutoColorBy="group"
-        nodeRelSize={5}
+        nodeRelSize={10}
         linkColor={() => link_color}
         ref={fgRef}
         cooldownTicks={0}
-        onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
+        onEngineStop={() => fgRef.current.zoomToFit(0, 200)}
         onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
         onNodeRightClick={handleNodeRightClick}
         nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
@@ -313,7 +324,7 @@ const Graph = ({json_data, background_color, link_color}) => {
           const label = node.name;
           const fontSize = 14 / globalScale;
           ctx.beginPath();
-          ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+          ctx.arc(node.x, node.y, 5, 2 * Math.PI, false);
           ctx.fillStyle = getColorForNode(node.group);
           ctx.fill();
           ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
