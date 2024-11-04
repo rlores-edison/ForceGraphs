@@ -45,6 +45,12 @@ const Graph = ({json_data, background_color, link_color}) => {
     group7: ["point"],
   };
 
+  const groupToMarkerMap = Object.entries(groupedMarkers).reduce((acc, [group, markers]) => { 
+    markers.forEach((marker) => {
+    acc[group] = marker; // Reverse mapping of groupedMarkers to make it easy to access the marker by the node.group to display the marker in the node label.
+  });
+  return acc;
+  }, {});
   
   const getColorForNode = (group) => {
     const colors = {
@@ -302,7 +308,7 @@ const Graph = ({json_data, background_color, link_color}) => {
         onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
         onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
         onNodeRightClick={handleNodeRightClick}
-        nodeLabel={(node) => `Hover Label: ${node.group}`}
+        nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.name;
           const fontSize = 14 / globalScale;
