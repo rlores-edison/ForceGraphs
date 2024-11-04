@@ -1,11 +1,36 @@
 import Graph from "./Graph.jsx";
+import { useEffect, useState } from "react";
 
-export function Home() {
-  return (
+
+  
+const Home = () => {
+  const [jsonData, setJsonData] = useState({});
+
+
+  useEffect(() => {
+    fetch("../../server/db.json")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setJsonData(data);
+      })
+      .catch((error) => console.error("🤷 Error fetching data:", error));
+
+    }, [])
+
+   return (
+
     <div>
-      <Graph />
+      {/* Graph component is rendered here */}
+      <Graph 
+        json_data={jsonData}
+        background_color={"#fdfdfd"}
+        link_color={"#0000FF"}
+      />
     </div>
-  );
-}
+
+);
+};
 
 export default Home;
+
