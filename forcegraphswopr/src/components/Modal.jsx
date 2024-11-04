@@ -14,14 +14,13 @@ const Modal = ({ node, on_close }) => {
   // Access node data
   const nodeData = node ? node[1] : {};
 
-  const arrayNodeType =["site","instalacion","instalZone","tipoEquipo","equip","secEquip","point"];
-  
-  console.log(nodeData.markers);
-  const defaultMarker = nodeData.markers.findIndex(item => arrayNodeType.includes(item))
 
-  console.log('default', defaultMarker);
-  console.log(arrayNodeType[defaultMarker]);
+// To place the correct Marker - by default - in markers dropdown list
+  const arrayNodeType =["site","instalacion","instalZone","tipoEquipo","equip","secEquip","point"]; 
   
+  const defaultMarker = nodeData.markers.findIndex(item => arrayNodeType.includes(item))
+  
+
   // Function to render JSON data as form fields
   const FormDisplay = ({ data }) => {
     return (
