@@ -1,6 +1,6 @@
 import React from "react";
 import WOPRLogo from "../assets/WOPRLogo.png";
-import { GoInfo } from "react-icons/go";
+
 
 const Modal = ({ node, on_close }) => {
   if (!node) return null; // Don't render if no node selected
@@ -69,22 +69,18 @@ const Modal = ({ node, on_close }) => {
     >
       {/* Modal */}
       <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] mt-10 flex flex-col">
-
+        
         {/* Modal Header with Logo */}
         <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
           <img alt="logo" src={WOPRLogo} className="w-9 h-9 mt-9" />
         </div>
         <div className="flex space-x-3 flex- justify-center items-center mt-8">
           <h1 id="modal-title" className="text-xl font-bold flex items-center">
-            Node
+          {nodeData.markers[defaultMarker]} : {nodeData.id} 
           </h1>
-          <div>
-            <GoInfo />
-          </div>
         </div>
+
         <div className="mt-2 px-6 w-auto h-0.5 bg-gray-300 flex-grow mb-4"></div>
-
-
         {/* JSON Data Display */}
         <div className="overflow-y-auto max-h-[60vh] px-4">
           <FormDisplay data={nodeData} />
