@@ -10,20 +10,20 @@ const Graph = ({json_data, background_color, link_color}) => {
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
   // Define larger virtual canvas dimensions to allow nodes to maintain size
-  const scalingFactor = 1;
+ 
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
-    height: window.innerHeight * scalingFactor,
+    height: window.innerHeight,
   });
+  const initialZoom = 2;
+  const nodesepValue = 30;
 
    // Recalculate dimensions on window resize
    useEffect(() => {
     const handleResize = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight * scalingFactor,
-      });
+      setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -35,6 +35,7 @@ const Graph = ({json_data, background_color, link_color}) => {
       adaptedData.nodes.forEach((node) => {
         collapsed_nodes[node.id] = true;
       });
+
       setCollapsedNodes(collapsed_nodes);
       setGraphData(adaptedData);
     }
@@ -83,6 +84,7 @@ const Graph = ({json_data, background_color, link_color}) => {
         console.error(`Skipping item with missing fid:`, item);
         return; // Skip this item if 'fid' is missing
       }
+
       const nodeType = Object.keys(groupedMarkers).find((group) =>
         groupedMarkers[group].some(
           (marker) => item.markers && item.markers.includes(marker)
@@ -181,16 +183,13 @@ const Graph = ({json_data, background_color, link_color}) => {
   const getLayout = ({ nodes, links }) => {
     // This function initializes a Dagre graph
     const graph = new dagre.graphlib.Graph();
-    graph.setGraph({ nodesep: 90 });
+    graph.setGraph({ nodesep: nodesepValue, ranksep: 70 });
     graph.setDefaultEdgeLabel(() => ({}));
     
     // Set each node to fixed size
       nodes.forEach((node) => {
-        graph.setNode(node.id, { 
-          width: 50, 
-          height: 50, 
-        });
-      });
+        graph.setNode(node.id, { width: 20, height: 30 });
+    });
   
     // Add edges
     links.forEach((link) => {
@@ -285,6 +284,7 @@ const Graph = ({json_data, background_color, link_color}) => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
+  
   // Modal opens on right-click on the node
   const handleNodeRightClick = (node) => {
     const objectFound = Object.entries(json_data).find(
@@ -298,40 +298,46 @@ const Graph = ({json_data, background_color, link_color}) => {
     setNodeJsonFound(null);
   };
 
-    useEffect(() => {
-    if (fgRef.current && graphData.nodes.length > 0) {
-      fgRef.current.zoomToFit(0, 200); 
-    }
+  
+  useEffect(() => {
+    if (fgRef.current) {
+      fgRef.current.zoom(initialZoom); // Set initial zoom 
+      fgRef.current.centerAt(0, 0, 1000);
+    } // Center at (0,0) over 1s
   }, [graphData]);
 
   return (
-    <div style={{ width: "100%", height: "100%", overflow: "auto" }}>
+    
+    <div>
       <ForceGraph2D
         graphData={getVisibleGraph()}
         width={dimensions.width}
         height={dimensions.height}
         backgroundColor={background_color}
         nodeAutoColorBy="group"
-        nodeRelSize={10}
+        nodeRelSize={1}
+        nodeVal={4}
         linkColor={() => link_color}
         ref={fgRef}
         cooldownTicks={0}
-        onEngineStop={() => fgRef.current.zoomToFit(0, 200)}
+        // onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
         onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
         onNodeRightClick={handleNodeRightClick}
         nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.name;
           const fontSize = 14 / globalScale;
+          const radius = 10; // Set fixed radius for consistent node size
+
           ctx.beginPath();
-          ctx.arc(node.x, node.y, 5, 2 * Math.PI, false);
+          ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
           ctx.fillStyle = getColorForNode(node.group);
           ctx.fill();
           ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
           ctx.textAlign = "right";
           ctx.textBaseline = "right";
           ctx.fillStyle = "#0000FF";
-          ctx.fillText(label, node.x - 9, node.y + 1);
+          ctx.fillText(label, node.x - 15, node.y + 1);
         }}
       />
 
