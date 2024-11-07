@@ -15,9 +15,8 @@ const Graph = ({json_data, background_color, link_color}) => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const initialZoom = 1.5;
+  const initialZoom = 2;
   const nodesepValue = 30;
-  const ranksepValue = 40;
 
    // Recalculate dimensions on window resize
    useEffect(() => {
@@ -184,7 +183,7 @@ const Graph = ({json_data, background_color, link_color}) => {
   const getLayout = ({ nodes, links }) => {
     // This function initializes a Dagre graph
     const graph = new dagre.graphlib.Graph();
-    graph.setGraph({ nodesep: nodesepValue, ranksep : ranksepValue });
+    graph.setGraph({ nodesep: nodesepValue, ranksep: 70 });
     graph.setDefaultEdgeLabel(() => ({}));
     
     // Set each node to fixed size
@@ -299,29 +298,13 @@ const Graph = ({json_data, background_color, link_color}) => {
     setNodeJsonFound(null);
   };
 
-  const getInitialVisibleNodes = () => {
- return getVisibleGraph().nodes.filter((node) => node.group === "group1" || node.group === "site");
-};
-
-  // Use effect to zoom to fit only initial visible nodes and apply custom centering
-  // useEffect(() => {
-  //   if (fgRef.current) {
-  //     // Get initial visible "group1" or "site" nodes
-  //     const initialVisibleNodes = getInitialVisibleNodes();
-  //     fgRef.current.zoomToFit(1000, 150, (node) => initialVisibleNodes.includes(node));
-
-      // Apply initial zoom after zoomToFit
-  //     setTimeout(() => {
-  //       fgRef.current.zoom(initialZoom);
-  //     }, 1000);
-  //   }
-  // }, [graphData]);
+  
   useEffect(() => {
     if (fgRef.current) {
       fgRef.current.zoom(initialZoom); // Set initial zoom 
-      fgRef.current.centerAt(400, 150, 1);
+      fgRef.current.centerAt(0, 0, 1000);
     } // Center at (0,0) over 1s
-  }, [getInitialVisibleNodes]);
+  }, [graphData]);
 
   return (
     
