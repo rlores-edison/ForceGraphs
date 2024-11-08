@@ -1,12 +1,13 @@
 # React + Vite
 
-This project holds three components to enhace graphs visualization:
+Project Overview
+Contains three components to enhance graph visualization:
 
-- "Graph" is to render large graphs, with more than 30 nodes.
-- "Max30NodesGraph", renders graphs with a maximum of 30 nodes.
-- "Modal" component displays nodes details.
-  
-- Home is the actual App of the project.
+- "Graph" component: Renders large graphs with more than 30 nodes.
+- "Max30NodesGraph" component: Renders graphs with a maximum of 30 nodes.
+- "Modal" component: Displays node details.
 
-  Data:
-  Different json files are beeing used to test the renderization.
+"Home" serves as the main App of the project.
+
+Data
+Different JSON files are used to test the rendering capabilities of the components.
