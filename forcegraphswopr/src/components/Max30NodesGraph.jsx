@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
@@ -13,12 +12,12 @@ const Graph = ({json_data, background_color, link_color}) => {
   // Define larger virtual canvas dimensions to allow nodes to maintain size
  
   const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: visualViewport.width,
+    height: visualViewport.height,
   });
-  
-  const nodesepValue = 30;
-  const ranksepValue = 40;
+  const initialZoom = 1.5;
+  const nodesepValue = 40;
+  const ranksepValue = 28;
 
    // Recalculate dimensions on window resize
    useEffect(() => {
@@ -306,22 +305,23 @@ const Graph = ({json_data, background_color, link_color}) => {
   const getInitialVisibleNodes = () => {
     return getVisibleGraph().nodes.filter((node) => node.group === "group1" || node.group === "site");
    };
-     // Use effect to zoom to fit only initial visible nodes and apply custom centering
-     // useEffect(() => {
-     //   if (fgRef.current) {
-     //     // Get initial visible "group1" or "site" nodes
-     //     const initialVisibleNodes = getInitialVisibleNodes();
-     //     fgRef.current.zoomToFit(1000, 150, (node) => initialVisibleNodes.includes(node));
-         // Apply initial zoom after zoomToFit
-     //     setTimeout(() => {
-     //       fgRef.current.zoom(initialZoom);
-     //     }, 1000);
-     //   }
-     // }, [graphData]);
+  //    // Use effect to zoom to fit only initial visible nodes and apply custom centering
+  //    // useEffect(() => {
+  //    //   if (fgRef.current) {
+  //    //     // Get initial visible "group1" or "site" nodes
+  //    //     const initialVisibleNodes = getInitialVisibleNodes();
+  //    //     fgRef.current.zoomToFit(1000, 150, (node) => initialVisibleNodes.includes(node));
+  //        // Apply initial zoom after zoomToFit
+  //    //     setTimeout(() => {
+  //    //       fgRef.current.zoom(initialZoom);
+  //    //     }, 1000);
+  //    //   }
+  //    // }, [graphData]);
   
   useEffect(() => {
     if (fgRef.current) {
-      fgRef.current.centerAt(400, 150, 1);
+      fgRef.current.zoom(initialZoom); // Set initial zoom 
+      fgRef.current.centerAt(200, 200, 1);
     } 
   }, [getInitialVisibleNodes]);
 
@@ -334,20 +334,22 @@ const Graph = ({json_data, background_color, link_color}) => {
         height={dimensions.height}
         backgroundColor={background_color}
         nodeAutoColorBy="group"
-        nodeRelSize={300}
+        // nodeRelSize={1}
+        // nodeVal={4}
         linkColor={() => link_color}
         ref={fgRef}
         cooldownTicks={0}
-        onEngineStop={() => fgRef.current.zoomToFit(100, 100)}
+        // onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
         onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
         onNodeRightClick={handleNodeRightClick}
         nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
-        
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.name;
-          const fontSize = 14 / globalScale;
+          const fontSize = 11 / globalScale;
+          const radius = 8; // Set fixed radius for consistent node size
+
           ctx.beginPath();
-          ctx.arc(node.x, node.y, 300, 0, 2 * Math.PI, false);
+          ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
           ctx.fillStyle = getColorForNode(node.group);
           ctx.fill();
           ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
