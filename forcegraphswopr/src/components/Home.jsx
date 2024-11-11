@@ -1,4 +1,4 @@
-import Graph from "./Graph.jsx";
+import Graph from "./Max30NodesGraph.jsx";
 import { useEffect, useState } from "react";
 
 
@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/db_nodetres.json")
+    fetch("../../server/db_toShare.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
