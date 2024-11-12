@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
-import Modal from "./Modal.jsx";
 
 
 const Graph = ({json_data, background_color, link_color}) => {
@@ -305,19 +304,7 @@ const Graph = ({json_data, background_color, link_color}) => {
   const getInitialVisibleNodes = () => {
     return getVisibleGraph().nodes.filter((node) => node.group === "group1" || node.group === "site");
    };
-  //    // Use effect to zoom to fit only initial visible nodes and apply custom centering
-  //    // useEffect(() => {
-  //    //   if (fgRef.current) {
-  //    //     // Get initial visible "group1" or "site" nodes
-  //    //     const initialVisibleNodes = getInitialVisibleNodes();
-  //    //     fgRef.current.zoomToFit(1000, 150, (node) => initialVisibleNodes.includes(node));
-  //        // Apply initial zoom after zoomToFit
-  //    //     setTimeout(() => {
-  //    //       fgRef.current.zoom(initialZoom);
-  //    //     }, 1000);
-  //    //   }
-  //    // }, [graphData]);
-  
+   
   useEffect(() => {
     if (fgRef.current) {
       fgRef.current.zoom(initialZoom); // Set initial zoom 
@@ -325,46 +312,118 @@ const Graph = ({json_data, background_color, link_color}) => {
     } 
   }, [getInitialVisibleNodes]);
 
+  const Modal = ({ node, on_close }) => {
+    if (!node) return null;
+
+    const nodeData = node[1] || {};
+    const arrayNodeType = ["site", "instalacion", "instalZone", "tipoEquipo", "equip", "secEquip", "point"];
+    const defaultMarker = nodeData.markers.findIndex(item => arrayNodeType.includes(item));
+
+    const FormDisplay = ({ data }) => (
+      <form>
+        {Object.entries(data).map(([key, value]) => (
+          <div key={key} className="form-field mb-2">
+            <label className="font-bold">{key}</label>
+            {key === "markers" && Array.isArray(value) ? (
+              <select
+                id="markers-list"
+                defaultValue={nodeData.markers[defaultMarker]}
+                className="border p-2 rounded w-full mt-1 border-gray-300"
+              >
+                {value.map((marker, index) => (
+                  <option key={index} value={marker}>
+                    {marker}
+                  </option>
+                ))}
+              </select>
+            ) : typeof value === "object" && value !== null && value.fid && value.repr ? (
+              <div className="border p-2 rounded w-full mt-3 border-gray-300 bg-gray-100">
+                <p><strong>fid:</strong> {value.fid}</p>
+                <p><strong>repr:</strong> {value.repr}</p>
+              </div>
+            ) : (
+              <input
+                type="text"
+                value={typeof value === "object" && value !== null ? JSON.stringify(value) : value}
+                readOnly
+                className="border p-2 rounded w-full mt-1 border-gray-300"
+              />
+            )}
+          </div>
+        ))}
+      </form>
+    );
+
+    return (
+      <div className="flex justify-right z-50" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] mt-10 flex flex-col">
+          <div className="flex space-x-2 justify-center items-center mt-1.5">
+            <h1 id="modal-title" className="text-xl font-bold flex items-center">
+              {nodeData.markers[defaultMarker]} : {nodeData.id}
+            </h1>
+          </div>
+          <div className="mt-2 px-6 w-auto h-0.5 bg-gray-300 flex-grow mb-4"></div>
+          <div className="overflow-y-auto max-h-[60vh] px-4">
+            <FormDisplay data={nodeData} />
+          </div>
+          <button
+            className="absolute top-1 right-2 text-gray-600 hover:text-gray-800 p-1"
+            onClick={on_close}
+            aria-label="Close modal"
+          >
+            &#x2715;
+          </button>
+          <div className="flex flex-col items-center pt-3">
+            <button
+              className="rounded-lg w-96 h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all"
+              onClick={on_close}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
+    <div className="flex">
+      {/* Container for ForceGraph2D */}
+      <div className="flex-1 w-2/3">
+        <ForceGraph2D
+          graphData={getVisibleGraph()}
+          width={dimensions.width}
+          height={dimensions.height}
+          backgroundColor={background_color}
+          nodeAutoColorBy="group"
+          linkColor={() => link_color}
+          ref={fgRef}
+          cooldownTicks={0}
+          onNodeClick={handleNodeClick}
+          onNodeRightClick={handleNodeRightClick}
+          nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
+          nodeCanvasObject={(node, ctx, globalScale) => {
+            const label = node.name;
+            const fontSize = 11 / globalScale;
+            const radius = 8;
 
-    <div>
-      <ForceGraph2D
-        graphData={getVisibleGraph()}
-        width={dimensions.width}
-        height={dimensions.height}
-        backgroundColor={background_color}
-        nodeAutoColorBy="group"
-        // nodeRelSize={1}
-        // nodeVal={4}
-        linkColor={() => link_color}
-        ref={fgRef}
-        cooldownTicks={0}
-        // onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
-        onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
-        onNodeRightClick={handleNodeRightClick}
-        nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
-        nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node.name;
-          const fontSize = 11 / globalScale;
-          const radius = 8; // Set fixed radius for consistent node size
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
+            ctx.fillStyle = getColorForNode(node.group);
+            ctx.fill();
+            ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
+            ctx.textAlign = "right";
+            ctx.textBaseline = "right";
+            ctx.fillStyle = "#0000FF";
+            ctx.fillText(label, node.x - 15, node.y + 1);
+          }}
+        />
+      </div>
 
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
-          ctx.fillStyle = getColorForNode(node.group);
-          ctx.fill();
-          ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
-          ctx.textAlign = "right";
-          ctx.textBaseline = "right";
-          ctx.fillStyle = "#0000FF";
-          ctx.fillText(label, node.x - 15, node.y + 1);
-        }}
-      />
-
-      {/* Modal with node info */}
-      {nodeJsonFound && (
-        <Modal node={nodeJsonFound} on_close={handleCloseModal} />
-      )}
-
+      {/* Container for Modal */}
+      <div>
+        {nodeJsonFound && <Modal node={nodeJsonFound} on_close={handleCloseModal} />}
+      </div>
     </div>
   );
 };
