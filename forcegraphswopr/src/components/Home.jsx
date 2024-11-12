@@ -1,4 +1,4 @@
-import Graph from "./Max30NodesGraph copy.jsx";
+import Graph from "./Max30NodesGraph.jsx";
 import { useEffect, useState } from "react";
 
 
