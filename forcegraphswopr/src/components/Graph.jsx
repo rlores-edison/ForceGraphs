@@ -1,8 +1,7 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
-import Modal from "./Modal.jsx";
+import NodeCard from "./NodeCard.jsx";
 
 
 const Graph = ({json_data, background_color, link_color}) => {
@@ -360,7 +359,7 @@ const Graph = ({json_data, background_color, link_color}) => {
 
       {/* Modal with node info */}
       {nodeJsonFound && (
-        <Modal node={nodeJsonFound} on_close={handleCloseModal} />
+        <NodeCard node={nodeJsonFound} on_close={handleCloseModal} />
       )}
 
     </div>
