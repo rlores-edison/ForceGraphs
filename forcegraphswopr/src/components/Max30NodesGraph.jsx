@@ -314,9 +314,9 @@ const Graph = ({json_data, background_color, link_color}) => {
 
 
   return (
-    <div className="mx-8 min-w-[150px] flex rounded border-2 border-solid border-black">
+    <div className="mx-8 min-w-[150px] flex">
       {/* Container for ForceGraph2D */}
-      <div className="flex-1 w-2/3">
+      <div className="flex-1 w-2/3 rounded border-2 border-solid border-black">
         <ForceGraph2D
           graphData={getVisibleGraph()}
           width={dimensions.width}

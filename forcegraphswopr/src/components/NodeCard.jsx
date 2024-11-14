@@ -64,12 +64,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
   );
 
   return (
-    <div
-      className="flex justify-right z-50"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
+    <div>
       <div
         className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] mt-10 flex flex-col"
         style={{ height: `${graphHeight}px` }}
@@ -91,7 +86,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
           <FormDisplay data={nodeData} />
         </div>
         <button
-          className="absolute top-1 right-2 text-gray-600 hover:text-gray-800 p-1"
+          className="absolute top-1 right-2 text-gray-500 hover:text-gray-900 p-1"
           onClick={on_close}
           aria-label="Close modal"
         >
@@ -100,7 +95,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
 
         <div className="flex row justify-center mt-3">
           <button
-            className="rounded-lg w-96 h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-2"
+            className="rounded-lg w-96 h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-3"
             onClick={on_close}
           >
             Close

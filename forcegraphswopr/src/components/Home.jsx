@@ -1,4 +1,4 @@
-import Graph from "./Max30NodesGraph.jsx";
+import Graph from "./Graphs.jsx";
 import { useEffect, useState } from "react";
 
 
@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/db_nodedos.json")
+    fetch("../../server/db_nodetres.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -25,7 +25,8 @@ const Home = () => {
       <Graph 
         json_data={jsonData}
         background_color={"#fdfdfd"}
-        link_color={"#0000FF"}
+        link_color={"#0000FF"} 
+        graph_type={"standard"}
       />
     </div>
 
