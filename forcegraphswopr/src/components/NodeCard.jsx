@@ -74,15 +74,16 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
         className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] mt-10 flex flex-col"
         style={{ height: `${graphHeight}px` }}
       >
-        
-        <div>
-  <h1
-    id="modal-title"
-    className="ml-3 text-base font-bold flex overflow-wrap text-overflow ellipsis break-word"
-  >
-    {nodeData.markers[defaultMarker]} : {nodeData.id}
-  </h1>
-</div>
+
+        {/* Header title with animated sliding text (view tailwind.config.js) */}
+        <div className="overflow-hidden whitespace-nowrap w-full">
+          <h1
+            id="modal-title"
+            className="inline-block ml-3 text-base font-bold animate-marquee"
+          >
+            {nodeData.markers[defaultMarker]} : {nodeData.id}
+          </h1>
+        </div>
 
 
         <div className="mt-3"></div>
