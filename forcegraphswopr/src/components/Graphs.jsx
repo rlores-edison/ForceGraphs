@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
-import NodeCard from "./NodeCard.jsx";
+import NodeCard from "./NodeCard2.jsx";
 
 const Graph = ({ json_data, background_color, link_color, graph_type }) => {
   const fgRef = useRef();
@@ -475,7 +475,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
             // Apply a colored border if this node is the selected one
             if (selectedNodeIds.includes(node.id)) {
               ctx.lineWidth = 2;
-              ctx.strokeStyle = "#FF5733"; // Border color for selected nodes
+              ctx.strokeStyle = "#0f766e"; // Green border color on nodes right-clicked. 
               ctx.stroke();
             }
 
@@ -484,7 +484,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
             ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
             ctx.textAlign = "right";
             ctx.textBaseline = "right";
-            ctx.fillStyle = "#0000FF";
+            ctx.fillStyle = "#022c22";
             ctx.fillText(label, node.x - 9, node.y + 1);
           }}
         />

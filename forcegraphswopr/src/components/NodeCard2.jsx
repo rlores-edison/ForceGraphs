@@ -19,15 +19,33 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
 
   const FormDisplay = ({ data }) => {
     const handleCopy = (value) => {
-      navigator.clipboard.writeText(value);
-      alert("Copied!");
+      // Convert value to a string if it's an object
+      const textToCopy =
+        typeof value === "object" && value !== null ? JSON.stringify(value) : value;
+      navigator.clipboard.writeText(textToCopy);
+      //alert(`Copied to clipboard: ${textToCopy}`);
     };
+
 
     return (
       <form>
         {Object.entries(data).map(([key, value]) => (
-          <div key={key} className="form-field mb-1 flex items-center">
+          <div key={key} className="form-field mb-1 display-flex">
             <label className="font-bold mr-2">{key}</label>
+
+
+            {/* Button to copy data in input to clipboard */}
+            {(key === "instalacionRef" || key === "siteRef" || key === "tipoEquipoRef" || key === "instalZoneRef") && (
+              <button
+                type="button"
+                onClick={() => handleCopy(value)}
+                className="bg-gray-200 hover:bg-blue-900 hover:text-white text-gray-600 py-1 px-3 rounded-lg ml-1"
+                title="Copy to clipboard"
+              >
+                Copy
+              </button>
+            )}
+  
             {key === "markers" && Array.isArray(value) ? (
               <select
                 id="markers-list"
@@ -53,47 +71,31 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
                 </p>
               </div>
             ) : (
-              <div className="flex w-full items-center">
-                <input
-                  type="text"
-                  value={
-                    typeof value === "object" && value !== null
-                      ? JSON.stringify(value)
-                      : value
-                  }
-                  readOnly
-                  className="border p-2 rounded w-full border-gray-300 mt-1 mb-3"
-                />
-                {(key === "instalacionRef" || key === "siteRef") && (
-                  
-                  <div class="text-center min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(value)}
-                    className="text-indigo-500 background-transparent font-bold uppercase px-3 py-1 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-            With Text
-            </button>			
-              </div>
+              <input
+                type="text"
+                value={
+                  typeof value === "object" && value !== null
+                    ? JSON.stringify(value)
+                    : value
+                }
+                readOnly
+                className="border p-2 rounded w-full border-gray-300 mt-1 mb-3"
+              />
             )}
           </div>
         ))}
       </form>
     );
   };
-
+  
   return (
-    <div
-      className="flex justify-right z-50"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
+    <div>
       <div
         className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] mt-10 flex flex-col"
         style={{ height: `${graphHeight}px` }}
       >
-        {/* Header title with animated sliding text (view tailwind.config.js) */}
-        <div className="overflow-hidden whitespace-nowrap w-full">
+        {/* Header title with animated sliding text */}
+        <div className="overflow-hidden whitespace-nowrap w-full pb-5">
           <h1
             id="modal-title"
             className="inline-block ml-3 text-base font-bold animate-marquee"
@@ -102,21 +104,20 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
           </h1>
         </div>
 
-        <div className="mt-3"></div>
-        <div className="overflow-y-auto max-h-[70vh] px-3">
+        <div className="overflow-y-auto max-h-[75vh] px-3">
           <FormDisplay data={nodeData} />
         </div>
         <button
-          className="absolute top-1 right-2 text-gray-600 hover:text-gray-800 p-1"
+          className="absolute top-1 right-2 text-gray-500 hover:text-gray-900 p-1"
           onClick={on_close}
           aria-label="Close modal"
         >
           &#x2715;
         </button>
 
-        <div className="flex row justify-center mt-3">
+        <div className="flex row justify-center">
           <button
-            className="rounded-lg w-96 h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-2"
+            className="rounded-lg w-full h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-4"
             onClick={on_close}
           >
             Close
