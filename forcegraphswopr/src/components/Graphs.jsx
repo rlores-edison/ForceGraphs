@@ -10,7 +10,9 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
 
-  // Recalculate dimensions on window resize
+  // State to store the Ids of right-clicked nodes
+  const [selectedNodeIds, setSelectedNodeIds] = useState([]); 
+
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -385,14 +387,25 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
+
+
   // NodeCard opens on right-click on the node
   const handleNodeRightClick = (node) => {
     const objectFound = Object.entries(json_data).find(
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
+
+    // Add the node Id to the selectedNodesId array if not already there    
+    setSelectedNodeIds((prevSelectedNodeIds) => {
+      if (!prevSelectedNodeIds.includes(node.id)) {
+        return [...prevSelectedNodeIds, node.id];
+      }
+      return prevSelectedNodeIds;
+    });
   };
 
+   
   //Function to close the Modal
   const handleCloseModal = () => {
     setNodeJsonFound(null);
@@ -447,14 +460,27 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
           onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
           onNodeRightClick={handleNodeRightClick}
           nodeLabel={(node) => `${groupToMarkerMap[node.group]}: ${node.name}`}
+          
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.name;
             const fontSize = 14 / globalScale;
+
+           
+            // Draw node circle
             ctx.beginPath();
             ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
             ctx.fillStyle = getColorForNode(node.group);
             ctx.fill();
 
+            // Apply a colored border if this node is the selected one
+            if (selectedNodeIds.includes(node.id)) {
+              ctx.lineWidth = 2;
+              ctx.strokeStyle = "#FF5733"; // Border color for selected nodes
+              ctx.stroke();
+            }
+
+
+            // Draw the label  
             ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
             ctx.textAlign = "right";
             ctx.textBaseline = "right";
@@ -465,7 +491,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
       </div>
 
       {/* Container for NodeCard or Modal */}
-      <div className="w-1/3 max-h-screen overflow-y-auto px-4">
+      <div className="w-1/3 max-h-screen overflow-y-auto bg-[#fdfdfd]">
         {nodeJsonFound && (
           <NodeCard
             node={nodeJsonFound}

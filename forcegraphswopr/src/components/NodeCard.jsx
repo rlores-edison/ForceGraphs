@@ -71,7 +71,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
       >
 
         {/* Header title with animated sliding text (view tailwind.config.js) */}
-        <div className="overflow-hidden whitespace-nowrap w-full">
+        <div className="overflow-hidden whitespace-nowrap w-full pb-5">
           <h1
             id="modal-title"
             className="inline-block ml-3 text-base font-bold animate-marquee"
@@ -82,7 +82,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
 
 
         <div className="mt-3"></div>
-        <div className="overflow-y-auto max-h-[70vh] px-3">
+        <div className="overflow-y-auto max-h-[75vh] px-3">
           <FormDisplay data={nodeData} />
         </div>
         <button
@@ -93,9 +93,9 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
           &#x2715;
         </button>
 
-        <div className="flex row justify-center mt-3">
+        <div className="flex row justify-center">
           <button
-            className="rounded-lg w-96 h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-3"
+            className="rounded-lg w-full h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-4"
             onClick={on_close}
           >
             Close
