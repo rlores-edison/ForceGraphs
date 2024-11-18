@@ -12,9 +12,6 @@ export default {
           '100%': { transform: 'translateX(-100%)' },
         },
       },
-      animation: {
-        marquee: 'marquee 11s linear infinite',
-      },
       margin: {
        '30': '20px',
       },

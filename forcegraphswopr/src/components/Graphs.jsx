@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
-import NodeCard from "./NodeCard2.jsx";
+import NodeCard from "./NodeCard.jsx";
 
 const Graph = ({ json_data, background_color, link_color, graph_type }) => {
   const fgRef = useRef();
@@ -18,6 +18,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
     height: window.innerHeight,
   });
 
+  
   useEffect(() => {
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -28,15 +29,20 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
     return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
   }, []);
 
+  var extraWidth = 0
+
   useEffect(() => {
     if (json_data && Object.keys(json_data).length > 0) {
       const adaptedData = adaptDbToGraph(json_data);
       setGraphDataFull(adaptedData);
 
       const graph_data = {
-        nodes: adaptedData.nodes.filter((node) => node.group === "group1"),
-        links: [],
+        nodes: adaptedData.nodes
+            .filter(node => node.group === 'group1')
+            .map(node => ({ ...node })),
+        links: []
       };
+
       setGraphData(getLayout(graph_data));
 
       const collapsed_nodes = {};
@@ -187,16 +193,30 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
     return { nodes, links };
   };
 
-  const getLayout = ({ nodes, links }, parent) => {
-    // This function initializes a dagre graph.
+
+  const textWidth = (text) => {  //NEW
+    // Create a temporary canvas to perform the measurement
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Setting the font style
+    const fontSize = 12; // Size in pixels
+    ctx.font = `${fontSize}px Arial, Sans-Serif`;
+
+    return ctx.measureText(text).width;
+  }
+
+  // Function to calculate the positions of nodes using dagre
+  const getLayout = ({ nodes, links } ) => {
+    // Initialize dagre
     const graph = new dagre.graphlib.Graph();
     graph.setGraph({
-      rankdir: "TB", // Direction of the graph, in this case top to bottom"
-      nodesep: 50, // Minimum horizontal spacing between nodes, in units of pixels
-      ranksep: 20, // Minimum vertical spacing between graph levels, in units of pixels
-      edgesep: 50, // Minimum spacing between edges (links or connections)
+      rankdir: 'TB',      // Direction of the graph, in this case top to bottom"
+      nodesep: 60,        // Minimum horizontal spacing between nodes, in units of pixels
+      ranksep: 20,        // Minimum vertical spacing between graph levels, in units of pixels
+      edgesep: 50         // Minimum spacing between edges (links or connections)
     });
-
+  
     graph.setDefaultEdgeLabel(() => ({}));
 
     nodes.forEach((node) => {
@@ -211,15 +231,74 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
 
     dagre.layout(graph); //Run the layout
 
+    /* Adjust number of rows in last branch */
+    // Step 1: Find the maximum value of 'y'
+    const maxY = Math.max(...Object.values(graph['_nodes']).map(item => item.y));
+
+    // Step 2: Filter items with the maximum value of 'y'
+    const elementsWithMaxY = Object.entries(graph['_nodes']).filter(([key, value]) => value.y === maxY)
+
+    // Step 3: Filter items with 'y' value less than the maximum value
+    const elementsLTMaxY = Object.entries(graph['_nodes']).filter(([key, value]) => value.y < maxY);
+
+    // Step 4: Calculates the number of pixels to add to center the graph
+    const foundNode = nodes.find(node => node.id === elementsWithMaxY[0][0]);
+
+    extraWidth = textWidth(foundNode.name);
+
+    let initColumnMaxY = 0;
+    // Step5: If there are more than 8 elements, recalculate their positions
+    if (elementsWithMaxY.length > 8) {
+      const itemsPerRow = 8; // Limit to 8 items per row
+      const rowHeight = 20; // Vertical space between rows
+      const itemWidth = 70; // Horizontal space between elements
+
+      let initColumnMaxY = elementsWithMaxY[Math.floor(elementsWithMaxY.length / 2) - 4][1]['y'];
+
+      if (elementsWithMaxY.length % 2 == 0) {
+          initColumnMaxY = initColumnMaxY - itemWidth / 2;
+      }
+
+      elementsWithMaxY.forEach(([key, item], index) => {
+        const row = Math.floor(index / itemsPerRow);
+        const column = index % itemsPerRow;
+
+        item.x = column * itemWidth;
+        item.y = maxY + row * rowHeight;
+      });
+
+      elementsLTMaxY.forEach(([key, item], index) => {
+        item.x = elementsWithMaxY[3][1].x + itemWidth / 2;
+      });
+
+    }
+
     //Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
+
+      let reduceName = false;
+      if (elementsLTMaxY.length === 0 && elementsWithMaxY.length > 1) {
+        reduceName = true;
+      }
+      else {
+        if (elementsWithMaxY.length > 1) {
+          reduceName = elementsWithMaxY.some(item => item[0] === node.id);
+        }
+
+      }
+
+      if (node.name.length > 15 && reduceName) {
+        node.name = node.name.substring(0, 12) + '...';
+      }
 
       return { ...node, x: dagreNode.x, y: dagreNode.y };
     });
 
     return { nodes: updatedNodes, links };
   };
+
+  
 
   // Function to build the dynamic graph
   function buildBranch(node, graph, collapsed_nodes, last_level) {
@@ -423,7 +502,8 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
     const maxY = Math.max(...nodes.map((node) => node.y || 0));
 
     // Calculate the width and height
-    const width = maxX - minX;
+    
+    const width = maxX - minX + extraWidth;
     const height = maxY - minY;
 
     return { width, height };
@@ -436,7 +516,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
 
       fgRef.current.zoom(2, 500); // Only after the data is loaded
 
-      fgRef.current.centerAt(Math.trunc(width / 2) + 16, 200, 100);
+      fgRef.current.centerAt(Math.trunc(width / 2), 200, 100);
     }
   }, [graphData]);
 
@@ -446,7 +526,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
       <div
         className={`${
           nodeJsonFound ? "w-2/3" : "w-full"  
-        } flex justify-center items-center rounded border-2 border-solid transition-all duration-300`}
+        } flex justify-center items-center transition-all duration-300`}
       >
         <ForceGraph2D
           graphData={getVisibleGraph()}
@@ -463,7 +543,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
           
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.name;
-            const fontSize = 14 / globalScale;
+            const fontSize = 12 / globalScale;
 
            
             // Draw node circle
@@ -481,7 +561,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
 
 
             // Draw the label  
-            ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
+            ctx.font = `${fontSize}px 'Arial', 'Sans-Serif'`;
             ctx.textAlign = "right";
             ctx.textBaseline = "right";
             ctx.fillStyle = "#022c22";
