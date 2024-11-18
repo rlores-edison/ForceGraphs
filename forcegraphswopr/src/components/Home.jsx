@@ -1,4 +1,4 @@
-import Graph from "./Graph.jsx";
+import Graph from "./Graphs.jsx";
 import { useEffect, useState } from "react";
 
 
@@ -25,7 +25,8 @@ const Home = () => {
       <Graph 
         json_data={jsonData}
         background_color={"#fdfdfd"}
-        link_color={"#0000FF"}
+        link_color={"#0000FF"} 
+        graph_type={"standard"}
       />
     </div>
 
