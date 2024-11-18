@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/db.json")
+    fetch("../../server/db_nodetres.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -19,15 +19,20 @@ const Home = () => {
     }, [])
 
    return (
-
-    <div>
+<div>
+    <div className="flex mx-8 my-4 h-[86vh] text-base overflow-hidden border-gray-300 border rounded-lg">
+      <div className="relative w-full">
       {/* Graph component is rendered here */}
       <Graph 
         json_data={jsonData}
         background_color={"#fdfdfd"}
-        link_color={"#0000FF"}
+        link_color={"#BDBDBD"}
+        label_color={"#0000FF"} 
+        graph_type={"standard"}
       />
+      </div>
     </div>
+  </div>
 
 );
 };

@@ -1,37 +1,57 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
-import Modal from "./Modal.jsx";
-import { data } from "autoprefixer";
+import NodeCard from "./NodeCard.jsx";
 
-const Graph = ({json_data, background_color, link_color}) => {
+const Graph = ({ json_data, background_color, label_color, link_color, graph_type }) => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+  const [graphDataFull, setGraphDataFull] = useState({ nodes: [], links: [] });
+  const [collapsedNodes, setCollapsedNodes] = useState({});
+  const [nodeJsonFound, setNodeJsonFound] = useState(null);
+
+  // State to store the Ids of right-clicked nodes
+  const [selectedNodeId, setSelectedNodeId] = useState([]); 
+
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  // Recalculate dimensions on window resize
-  const [collapsedNodes, setCollapsedNodes] = useState({});
-  const [nodeJsonFound, setNodeJsonFound] = useState(null);
 
+  
   useEffect(() => {
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
+
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
   }, []);
+
+  var extraWidth = 0
+
 
   useEffect(() => {
     if (json_data && Object.keys(json_data).length > 0) {
       const adaptedData = adaptDbToGraph(json_data);
+      setGraphDataFull(adaptedData);
+
+      const graph_data = {
+        nodes: adaptedData.nodes
+            .filter(node => node.group === 'group1')
+            .map(node => ({ ...node })),
+        links: []
+      };
+
+      setGraphData(getLayout(graph_data));
+
       const collapsed_nodes = {};
-      adaptedData.nodes.forEach((node) => {
+      graph_data.nodes.forEach((node) => {
         collapsed_nodes[node.id] = true;
       });
+
       setCollapsedNodes(collapsed_nodes);
-      setGraphData(adaptedData);
     }
   }, [json_data]);
 
@@ -45,13 +65,16 @@ const Graph = ({json_data, background_color, link_color}) => {
     group7: ["point"],
   };
 
-  const groupToMarkerMap = Object.entries(groupedMarkers).reduce((acc, [group, markers]) => { 
-    markers.forEach((marker) => {
-    acc[group] = marker; // Reverse mapping of groupedMarkers to make it easy to access the marker by the node.group to display the marker in the node label.
-  });
-  return acc;
-  }, {});
-  
+  const groupToMarkerMap = Object.entries(groupedMarkers).reduce(
+    (acc, [group, markers]) => {
+      markers.forEach((marker) => {
+        acc[group] = marker; // Reverse mapping of groupedMarkers to make it easy to access the marker by the node.group to display the marker in the node label.
+      });
+      return acc;
+    },
+    {}
+  );
+
   const getColorForNode = (group) => {
     const colors = {
       group1: "#812921",
@@ -168,35 +191,159 @@ const Graph = ({json_data, background_color, link_color}) => {
       }
     });
 
-    //Use dagre to calculate the layout
-    const layoutData = getLayout({ nodes, links });
-    return layoutData;
+    return { nodes, links };
   };
-  const getLayout = ({ nodes, links }) => {
-    // This function initializes a dagre graph.
+
+
+  const textWidth = (text) => {  //NEW
+    // Create a temporary canvas to perform the measurement
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // Setting the font style
+    const fontSize = 12; // Size in pixels
+    ctx.font = `${fontSize}px Arial, Sans-Serif`;
+
+    return ctx.measureText(text).width;
+  }
+
+  // Function to calculate the positions of nodes using dagre
+  const getLayout = ({ nodes, links } ) => {
+    // Initialize dagre
     const graph = new dagre.graphlib.Graph();
     graph.setGraph({
-      nodesep: 90,
+      rankdir: 'TB',      // Direction of the graph, in this case top to bottom"
+      nodesep: 60,        // Minimum horizontal spacing between nodes, in units of pixels
+      ranksep: 20,        // Minimum vertical spacing between graph levels, in units of pixels
+      edgesep: 50         // Minimum spacing between edges (links or connections)
     });
+  
     graph.setDefaultEdgeLabel(() => ({}));
+
     nodes.forEach((node) => {
       //Add nodes and set default width/height
       graph.setNode(node.id, { width: 20, height: 30 });
     });
+
     links.forEach((link) => {
       //Add edges
       graph.setEdge(link.source, link.target);
     });
+
     dagre.layout(graph); //Run the layout
+
+    /* Adjust number of rows in last branch */
+    // Step 1: Find the maximum value of 'y'
+    const maxY = Math.max(...Object.values(graph['_nodes']).map(item => item.y));
+
+    // Step 2: Filter items with the maximum value of 'y'
+    const elementsWithMaxY = Object.entries(graph['_nodes']).filter(([key, value]) => value.y === maxY)
+
+    // Step 3: Filter items with 'y' value less than the maximum value
+    const elementsLTMaxY = Object.entries(graph['_nodes']).filter(([key, value]) => value.y < maxY);
+
+    // Step 4: Calculates the number of pixels to add to center the graph
+    const foundNode = nodes.find(node => node.id === elementsWithMaxY[0][0]);
+
+    extraWidth = textWidth(foundNode.name);
+
+    let initColumnMaxY = 0;
+    // Step5: If there are more than 8 elements, recalculate their positions
+    if (elementsWithMaxY.length > 8) {
+      const itemsPerRow = 8; // Limit to 8 items per row
+      const rowHeight = 20; // Vertical space between rows
+      const itemWidth = 70; // Horizontal space between elements
+
+      let initColumnMaxY = elementsWithMaxY[Math.floor(elementsWithMaxY.length / 2) - 4][1]['y'];
+
+      if (elementsWithMaxY.length % 2 == 0) {
+          initColumnMaxY = initColumnMaxY - itemWidth / 2;
+      }
+
+      elementsWithMaxY.forEach(([key, item], index) => {
+        const row = Math.floor(index / itemsPerRow);
+        const column = index % itemsPerRow;
+
+        item.x = column * itemWidth;
+        item.y = maxY + row * rowHeight;
+      });
+
+      elementsLTMaxY.forEach(([key, item], index) => {
+        item.x = elementsWithMaxY[3][1].x + itemWidth / 2;
+      });
+
+    }
 
     //Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
+
+      let reduceName = false;
+      if (elementsLTMaxY.length === 0 && elementsWithMaxY.length > 1) {
+        reduceName = true;
+      }
+      else {
+        if (elementsWithMaxY.length > 1) {
+          reduceName = elementsWithMaxY.some(item => item[0] === node.id);
+        }
+
+      }
+
+      if (node.name.length > 15 && reduceName) {
+        node.name = node.name.substring(0, 12) + '...';
+      }
+
       return { ...node, x: dagreNode.x, y: dagreNode.y };
     });
+
     return { nodes: updatedNodes, links };
   };
-  //Helper function to recursively collapse all descendants of a node
+
+  
+
+  // Function to build the dynamic graph
+  function buildBranch(node, graph, collapsed_nodes, last_level) {
+    let nodes = [node];
+    let links = [];
+
+    collapsed_nodes[node.id] = true;
+
+    for (var i = 0; i < graph.links.length; i++) {
+      if (graph.links[i].source === node.id) {
+        links.push(graph.links[i]);
+
+        let nod = graph.nodes.filter((n) => n.id === graph.links[i].target);
+        nodes.push(nod[0]);
+
+        collapsed_nodes[nod[0].id] = true;
+
+        last_level["parent"] = nod[0].parent;
+      }
+    }
+
+    // Recursive function
+    const upperBranch = (node) => {
+      if (node.parent) {
+        collapsed_nodes[node.parent] = false;
+
+        let nod = graph.nodes.filter((n) => n.id === node.parent);
+        nodes.push(nod[0]);
+
+        let lin = graph.links.filter(
+          (n) => n.source === node.parent && n.target === node.id
+        );
+        links.push(lin[0]);
+
+        upperBranch(nod[0]);
+      }
+    };
+
+    upperBranch(node);
+
+    return { nodes: nodes, links: links };
+  }
+
+  // Function to recursively collapse all descendants of a node
   const collapseBranch = (node, allNodes, collapsedNodes) => {
     // Collapse the current node
     let updatedCollapsedNodes = {
@@ -214,23 +361,69 @@ const Graph = ({json_data, background_color, link_color}) => {
         updatedCollapsedNodes
       );
     });
+
     return updatedCollapsedNodes;
   };
 
   // Function to collapse/expand a node
   const handleNodeClick = (node) => {
-    setCollapsedNodes((prev) => {
-      // If the node is collapsed, expand it
-      if (prev[node.id]) {
-        return {
-          ...prev,
-          [node.id]: false, // Expand the node
+    let graph_data = structuredClone(graphDataFull);
+    let collapsed_nodes = {};
+    let last_level = { parent: "" };
+    let action = true;
+
+    if (collapsedNodes[node.id]) {
+      graph_data = buildBranch(node, graph_data, collapsed_nodes, last_level);
+    } else {
+      let node_prev = graph_data.nodes.filter((n) => n.id === node.parent);
+
+      if (node.group === "group1" || node_prev[0].group === "group1") {
+        graph_data = {
+          nodes: graph_data.nodes.filter((node) => node.group === "group1"),
+          links: [],
         };
+
+        graph_data.nodes.forEach((nod) => {
+          collapsed_nodes[nod.id] = true;
+        });
+
+        last_level["parent"] = "";
+
+        action = false;
       } else {
-        // If the node is being collapsed, collapse the node and all its child nodes
-        return collapseBranch(node, graphData.nodes, prev);
+        node_prev = graph_data.nodes.filter(
+          (n) => n.id === node_prev[0].parent
+        );
+
+        graph_data = buildBranch(
+          node_prev[0],
+          graph_data,
+          collapsed_nodes,
+          last_level
+        );
+
+        node = node_prev[0];
       }
-    });
+    }
+
+    setGraphData(getLayout(graph_data, last_level["parent"]));
+
+    setCollapsedNodes(collapsed_nodes);
+
+    if (action) {
+      setCollapsedNodes((prev) => {
+        // If the node is collapsed, expand it
+        if (prev[node.id]) {
+          return {
+            ...prev,
+            [node.id]: false, // Expand the node
+          };
+        } else {
+          // If the node is being collapsed, collapse the node and all its child nodes
+          return collapseBranch(node, graph_data.nodes, prev);
+        }
+      });
+    }
   };
 
   // Function to determine which nodes are down
@@ -270,65 +463,123 @@ const Graph = ({json_data, background_color, link_color}) => {
         visibleLinks.push(link);
       }
     });
+
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-  // Modal opens on right-click on the node
+
+
+  // NodeCard opens on right-click on the node
   const handleNodeRightClick = (node) => {
     const objectFound = Object.entries(json_data).find(
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
+
+    // Set the currently right-cliked node ID
+    setSelectedNodeId(node.id);
   };
 
-  //Function to close the Modal
+   
+
+  // Function to close the Modal
   const handleCloseModal = () => {
     setNodeJsonFound(null);
+
+    // Clear the right-clicked node ID
+    setSelectedNodeId(null);
   };
 
-  // Trigger zoomToFit after the graph data is updated
+
+  const calculateGraphDimensions = () => {
+    const nodes = graphData.nodes;
+
+    if (nodes.length === 0) return { width: 0, height: 0 };
+
+    // Find the minimum and maximum coordinates of the nodes
+    const minX = Math.min(...nodes.map((node) => node.x || 0));
+    const maxX = Math.max(...nodes.map((node) => node.x || 0));
+    const minY = Math.min(...nodes.map((node) => node.y || 0));
+    const maxY = Math.max(...nodes.map((node) => node.y || 0));
+
+    // Calculate the width and height
+    
+    const width = maxX - minX + extraWidth;
+    const height = maxY - minY;
+
+    return { width, height };
+  };
+
+  // Trigger methods after the graph data is updated
   useEffect(() => {
     if (fgRef.current && graphData.nodes.length > 0) {
-      fgRef.current.zoomToFit(400, 100); // Only after the data is loaded
+      const { width, height } = calculateGraphDimensions();
+
+      fgRef.current.zoom(2, 500); // Only after the data is loaded
+
+      fgRef.current.centerAt(Math.trunc(width / 2), 200, 100);
     }
   }, [graphData]);
 
   return (
-    <div>
-      <ForceGraph2D
-        graphData={getVisibleGraph()}
-        width={dimensions.width}
-        height={dimensions.height}
-        backgroundColor={background_color}
-        nodeAutoColorBy="group"
-        nodeRelSize={5}
-        linkColor={() => link_color}
-        ref={fgRef}
-        cooldownTicks={0}
-        onEngineStop={() => fgRef.current.zoomToFit(400, 100)}
-        onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
-        onNodeRightClick={handleNodeRightClick}
-        nodeLabel={(node) => `${groupToMarkerMap[node.group]}`}
-        nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node.name;
-          const fontSize = 14 / globalScale;
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
-          ctx.fillStyle = getColorForNode(node.group);
-          ctx.fill();
-          ctx.font = `${fontSize}px 'Sans-Serif', 'Helvetica'`;
-          ctx.textAlign = "right";
-          ctx.textBaseline = "right";
-          ctx.fillStyle = "#0000FF";
-          ctx.fillText(label, node.x - 9, node.y + 1);
-        }}
-      />
+    <div className="w-full flex">
+      {/* Container for ForceGraph2D */}
+      <div
+        className={`${
+          nodeJsonFound ? "w-2/3" : "w-full"  
+        } flex justify-center items-center transition-all duration-300`}
+      >
+        <ForceGraph2D
+          graphData={getVisibleGraph()}
+          width={nodeJsonFound ? dimensions.width * (2 / 3) : dimensions.width}
+          height={dimensions.height}
+          backgroundColor={background_color}
+          nodeAutoColorBy="group"
+          linkColor={() => link_color}
+          ref={fgRef}
+          cooldownTicks={0}
+          onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
+          onNodeRightClick={handleNodeRightClick}
+          nodeLabel={(node) => `${groupToMarkerMap[node.group]}: ${node.name}`}
+          
+          nodeCanvasObject={(node, ctx, globalScale) => {
+            const label = node.name;
+            const fontSize = 12 / globalScale;
 
-      {/* Modal with node info */}
-      {nodeJsonFound && (
-        <Modal node={nodeJsonFound} on_close={handleCloseModal} />
-      )}
-      
+           
+            // Draw node circle
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
+            ctx.fillStyle = getColorForNode(node.group);
+            ctx.fill();
+
+            // Apply a colored border if this node is the selected one
+            if (node.id === selectedNodeId) {
+              ctx.lineWidth = 2;
+              ctx.strokeStyle = "##404040"; // Gray border color on nodes right-clicked. 
+              ctx.stroke();
+            }
+
+
+            // Draw the label  
+            ctx.font = `${fontSize}px 'Arial', 'Sans-Serif'`;
+            ctx.textAlign = "right";
+            ctx.textBaseline = "right";
+            ctx.fillStyle = label_color;
+            ctx.fillText(label, node.x - 9, node.y + 1);
+          }}
+        />
+      </div>
+
+      {/* Container for NodeCard or Modal */}
+      <div className="w-1/3 max-h-screen overflow-y-auto bg-[#fdfdfd]">
+        {nodeJsonFound && (
+          <NodeCard
+            node={nodeJsonFound}
+            on_close={handleCloseModal}
+          />
+        )}
+      </div>
     </div>
   );
 };
