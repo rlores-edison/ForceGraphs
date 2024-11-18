@@ -3,7 +3,7 @@ import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import NodeCard from "./NodeCard.jsx";
 
-const Graph = ({ json_data, background_color, link_color, graph_type }) => {
+const Graph = ({ json_data, background_color, label_color, link_color, graph_type }) => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [graphDataFull, setGraphDataFull] = useState({ nodes: [], links: [] });
@@ -11,7 +11,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
 
   // State to store the Ids of right-clicked nodes
-  const [selectedNodeIds, setSelectedNodeIds] = useState([]); 
+  const [selectedNodeId, setSelectedNodeId] = useState([]); 
 
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
@@ -30,6 +30,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
   }, []);
 
   var extraWidth = 0
+
 
   useEffect(() => {
     if (json_data && Object.keys(json_data).length > 0) {
@@ -475,20 +476,20 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
     );
     setNodeJsonFound(objectFound);
 
-    // Add the node Id to the selectedNodesId array if not already there    
-    setSelectedNodeIds((prevSelectedNodeIds) => {
-      if (!prevSelectedNodeIds.includes(node.id)) {
-        return [...prevSelectedNodeIds, node.id];
-      }
-      return prevSelectedNodeIds;
-    });
+    // Set the currently right-cliked node ID
+    setSelectedNodeId(node.id);
   };
 
    
-  //Function to close the Modal
+
+  // Function to close the Modal
   const handleCloseModal = () => {
     setNodeJsonFound(null);
+
+    // Clear the right-clicked node ID
+    setSelectedNodeId(null);
   };
+
 
   const calculateGraphDimensions = () => {
     const nodes = graphData.nodes;
@@ -521,7 +522,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
   }, [graphData]);
 
   return (
-    <div className="w-screen flex min-w-[150px] mx-8">
+    <div className="w-full flex">
       {/* Container for ForceGraph2D */}
       <div
         className={`${
@@ -553,9 +554,9 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
             ctx.fill();
 
             // Apply a colored border if this node is the selected one
-            if (selectedNodeIds.includes(node.id)) {
+            if (node.id === selectedNodeId) {
               ctx.lineWidth = 2;
-              ctx.strokeStyle = "#0f766e"; // Green border color on nodes right-clicked. 
+              ctx.strokeStyle = "##404040"; // Gray border color on nodes right-clicked. 
               ctx.stroke();
             }
 
@@ -564,7 +565,7 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
             ctx.font = `${fontSize}px 'Arial', 'Sans-Serif'`;
             ctx.textAlign = "right";
             ctx.textBaseline = "right";
-            ctx.fillStyle = "#022c22";
+            ctx.fillStyle = label_color;
             ctx.fillText(label, node.x - 9, node.y + 1);
           }}
         />
@@ -576,7 +577,6 @@ const Graph = ({ json_data, background_color, link_color, graph_type }) => {
           <NodeCard
             node={nodeJsonFound}
             on_close={handleCloseModal}
-            graphHeight={dimensions.height}
           />
         )}
       </div>

@@ -91,7 +91,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
 
   const widthName = (node) => {
 
-    let name = node.markers[defaultMarker] + ": " + node.id;
+    let name = node.markers[defaultMarker] + ": " + node.navName;
     if (name.length > 50) {
       name = name.substring(0, 27) + '...';
     }
@@ -103,8 +103,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
   return (
     <div>
       <div
-        className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] mt-10 flex flex-col"
-        style={{ height: `${graphHeight}px` }}
+        className="bg-gray-100 p-8 shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] flex flex-col"
       >
         {/* Header title */}
         <div className="w-full pb-5 flex justify-center items-center overflow-hidden whitespace-nowrap">
@@ -119,6 +118,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
         <div className="overflow-y-auto max-h-[75vh] px-3">
           <FormDisplay data={nodeData} />
         </div>
+
         <button
           className="absolute top-1 right-2 text-gray-500 hover:text-gray-900 p-1"
           onClick={on_close}
@@ -126,16 +126,8 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
         >
           &#x2715;
         </button>
-
-        <div className="flex row justify-center">
-          <button
-            className="rounded-lg w-full h-10 bg-blue-900 text-white shadow-md hover:shadow-lg transition-all mt-4"
-            onClick={on_close}
-          >
-            Close
-          </button>
-        </div>
       </div>
+
     </div>
   );
 };
