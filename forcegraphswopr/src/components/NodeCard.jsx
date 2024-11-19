@@ -1,6 +1,6 @@
 import React from "react";
 
-const NodeCard = ({ node, on_close, graphHeight }) => {
+const NodeCard = ({ node, on_close }) => {
   if (!node) return null;
 
   const nodeData = node[1] || {};
@@ -30,11 +30,11 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
     return (
       <form>
         {Object.entries(data).map(([key, value]) => (
-          <div key={key} className="form-field mb-1 display-flex">
-            <label className="font-bold mr-2">{key}</label>
+          <div key={key} className="h-full">
+            <label className="font-bold mr-4">{key}</label>
 
 
-            {/* Button to copy data in input to clipboard */}
+            {/* Button to copy data to clipboard */}
             {(key === "instalacionRef" || key === "siteRef" || key === "tipoEquipoRef" || key === "instalZoneRef" || key === "fid") && (
               <button
                 type="button"
@@ -45,12 +45,13 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
                 Copy
               </button>
             )}
+
   
             {key === "markers" && Array.isArray(value) ? (
               <select
                 id="markers-list"
                 defaultValue={nodeData.markers[defaultMarker]}
-                className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white overflow-x-auto break-word"
+                className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white"
               >
                 {value.map((marker, index) => (
                   <option key={index} value={marker}>
@@ -62,7 +63,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
               value !== null &&
               value.fid &&
               value.repr ? (
-              <div className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white overflow-x-auto break-word">
+              <div className="border p-2 rounded w-full mt-1 mb-3 bg-white">
                 <p>
                   <strong>fid:</strong> {value.fid}
                 </p>
@@ -79,7 +80,7 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
                     : value
                 }
                 readOnly
-                className="border p-2 rounded w-full border-gray-300 mt-1 mb-3"
+                className="border p-2 rounded w-full mt-1 mb-3 border-gray-300"
               />
             )}
           </div>
@@ -103,10 +104,10 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
   return (
     <div>
       <div
-        className="bg-gray-100 p-8 shadow-lg max-w-screen-lg w-full relative min-h-[430px] max-h-[90vh] flex flex-col"
+        className="bg-gray-100 p-8 max-w-screen-lg w-full relative h-[74vh] flex flex-col"
       >
         {/* Header title */}
-        <div className="w-full pb-5 flex justify-center items-center overflow-hidden whitespace-nowrap">
+        <div className="w-full pb-5 flex justify-center items-center ">
           <h1
             id="modal-title"
             className="text-base font-bold mt-2"
@@ -115,12 +116,12 @@ const NodeCard = ({ node, on_close, graphHeight }) => {
           </h1>
         </div>
 
-        <div className="overflow-y-auto max-h-[75vh] px-3">
+        <div className="overflow-y-auto px-3">
           <FormDisplay data={nodeData} />
         </div>
 
         <button
-          className="absolute top-1 right-2 text-gray-500 hover:text-gray-900 p-1"
+          className="absolute top-1 right-2 text-gray-600 hover:text-black p-1"
           onClick={on_close}
           aria-label="Close modal"
         >

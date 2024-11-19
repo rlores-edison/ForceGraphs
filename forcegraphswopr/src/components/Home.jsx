@@ -20,7 +20,7 @@ const Home = () => {
 
    return (
 <div>
-    <div className="flex mx-8 my-4 h-[86vh] text-base overflow-hidden border-gray-300 border rounded-lg">
+    <div className="flex mx-8 my-4 h-[74vh] text-base overflow-hidden border-gray-300 border rounded-lg">
       <div className="relative w-full">
       {/* Graph component is rendered here */}
       <Graph 

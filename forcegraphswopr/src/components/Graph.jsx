@@ -527,7 +527,7 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       <div
         className={`${
           nodeJsonFound ? "w-2/3" : "w-full"  
-        } flex justify-center items-center transition-all duration-300`}
+        } flex justify-center items-center`}
       >
         <ForceGraph2D
           graphData={getVisibleGraph()}
@@ -571,8 +571,8 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
         />
       </div>
 
-      {/* Container for NodeCard or Modal */}
-      <div className="w-1/3 max-h-screen overflow-y-auto bg-[#fdfdfd]">
+      {/* Container for NodeCard to scroll inside */}
+      <div className="w-1/3 h-full overflow-hidden">
         {nodeJsonFound && (
           <NodeCard
             node={nodeJsonFound}
