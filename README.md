@@ -1,4 +1,3 @@
-# React + Vite
 
 # ForceGraphs WOPR
 
@@ -7,16 +6,22 @@ This project enhances graph visualization with components:
 ## Components
 
 ### Graph
-- Renders large graphs with more than 30 nodes
+- Renders graphs dynamically from data sets
 
-### Max30NodesGraph  
-- Renders graphs with a maximum of 30 nodes
+### NodeCard
+- On node right-click, node details are displayed on the right hand side
+- The markers have a drop-down list and show the default marker in card
+- Copy to clipboard feature 
 
-### Modal
-- Displays node details
-
-## Home 
+### Home 
 This page serves as the main App of the project
 
+
 ## Data
-- Uses different JSON files for testing renderization
+- Different size JSON files for testing performance
+
+## Libraries
+- React JS + Vite framework
+- Tailwind CSS
+- Vasturiano
+- Dagree for the graph layout
