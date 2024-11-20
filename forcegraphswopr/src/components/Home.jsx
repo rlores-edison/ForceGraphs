@@ -20,7 +20,7 @@ const Home = () => {
 
    return (
 <div>
-    <div className="flex mx-8 my-4 h-[86vh] text-base overflow-hidden border-gray-300 border rounded-lg">
+    <div className="flex mx-8 my-4 h-[74vh] text-base overflow-hidden border-gray-300 border rounded-lg">
       <div className="relative w-full">
       {/* Graph component is rendered here */}
       <Graph 
@@ -28,7 +28,7 @@ const Home = () => {
         background_color={"#fdfdfd"}
         link_color={"#BDBDBD"}
         label_color={"#0000FF"} 
-        graph_type={"standard"}
+        graph_type={"standard"} // Three types of graphs depending on the data type: standard, location_group, bmslytics
       />
       </div>
     </div>
