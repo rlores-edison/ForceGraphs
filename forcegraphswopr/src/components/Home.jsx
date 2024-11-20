@@ -1,4 +1,4 @@
-import Graph from "./Graph.jsx";
+import Graph from "./GraphCopy.jsx";
 import { useEffect, useState } from "react";
 
 
@@ -28,7 +28,7 @@ const Home = () => {
         background_color={"#fdfdfd"}
         link_color={"#BDBDBD"}
         label_color={"#0000FF"} 
-        graph_type={"standard"}
+        graph_type={"standard"} // Three types of graphs depending on the data type: standard, location_group, bmslytics
       />
       </div>
     </div>
