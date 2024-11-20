@@ -515,7 +515,7 @@ const Graph = ({
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
-    // Set the currently right-cliked node ID
+    // Set the currently right-clicked node ID
     setSelectedNodeId(node.id);
     setSelectedNodeGroup(node.group);
   };
