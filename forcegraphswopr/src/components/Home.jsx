@@ -1,4 +1,4 @@
-import Graph from "./GraphCopy.jsx";
+import Graph from "./Graph.jsx";
 import { useEffect, useState } from "react";
 
 
