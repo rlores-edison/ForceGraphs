@@ -3,7 +3,13 @@ import { ForceGraph2D } from "react-force-graph";
 import dagre from "@dagrejs/dagre";
 import NodeCard from "./NodeCard.jsx";
 
-const Graph = ({ json_data, background_color, label_color, link_color, graph_type }) => {
+const Graph = ({
+  json_data,
+  background_color,
+  label_color,
+  link_color,
+  graph_type,
+}) => {
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
   const [graphDataFull, setGraphDataFull] = useState({ nodes: [], links: [] });
@@ -11,14 +17,14 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
 
   // State to store the Ids of right-clicked nodes
-  const [selectedNodeId, setSelectedNodeId] = useState([]); 
+  const [selectedNodeId, setSelectedNodeId] = useState([]);
+  const [selectedNodeGroup, setSelectedNodeGroup] = useState([]);
 
   const [dimensions, setDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
 
-  
   useEffect(() => {
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -29,8 +35,7 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     return () => window.removeEventListener("resize", handleResize); // Clean up the event listener
   }, []);
 
-  var extraWidth = 0
-
+  var extraWidth = 0;
 
   useEffect(() => {
     if (json_data && Object.keys(json_data).length > 0) {
@@ -39,9 +44,9 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
 
       const graph_data = {
         nodes: adaptedData.nodes
-            .filter(node => node.group === 'group1')
-            .map(node => ({ ...node })),
-        links: []
+          .filter((node) => node.group === "group1")
+          .map((node) => ({ ...node })),
+        links: [],
       };
 
       setGraphData(getLayout(graph_data));
@@ -53,19 +58,40 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
 
       setCollapsedNodes(collapsed_nodes);
     }
-  }, [json_data]);
+  }, [json_data, graph_type]);
 
+  // Adapt to different data structures
   const groupedMarkers = {
-    group1: ["site"],
-    group2: ["instalacion"],
-    group3: ["instalZone"],
-    group4: ["tipoEquipo"],
-    group5: ["equip"],
-    group6: ["secEquip"],
-    group7: ["point"],
+    standard: {
+      group1: ["site"],
+      group2: ["instalacion"],
+      group3: ["instalZone"],
+      group4: ["tipoEquipo"],
+      group5: ["equip"],
+      group6: ["secEquip"],
+      group7: ["point"],
+    },
+
+    location_group: {
+      group1: ["locationGroup"],
+      group2: ["site"],
+      group3: ["instalacion"],
+      group4: ["instalZone"],
+      group5: ["tipoEquipo"],
+      group6: ["equip"],
+      group7: ["secEquip"],
+      group8: ["point"],
+    },
+
+    bmslytics: {
+      group1: ["BMS"],
+      group2: ["station"],
+      group3: ["controller"],
+      group4: ["point"],
+    },
   };
 
-  const groupToMarkerMap = Object.entries(groupedMarkers).reduce(
+  const groupToMarkerMap = Object.entries(groupedMarkers[graph_type]).reduce(
     (acc, [group, markers]) => {
       markers.forEach((marker) => {
         acc[group] = marker; // Reverse mapping of groupedMarkers to make it easy to access the marker by the node.group to display the marker in the node label.
@@ -75,8 +101,8 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     {}
   );
 
-  const getColorForNode = (group) => {
-    const colors = {
+  const getColorForNode = {
+    standard: {
       group1: "#812921",
       group2: "#0c63ef",
       group3: "#f4bb00",
@@ -84,8 +110,23 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       group5: "#79e5f5",
       group6: "#9200f4",
       group7: "#e61806",
-    };
-    return colors[group] || "#f94dbd";
+    },
+    location_group: {
+      group1: "#0d9488",
+      group2: "#812921",
+      group3: "#0c63ef",
+      group4: "#f4bb00",
+      group5: "#85db15",
+      group6: "#79e5f5",
+      group7: "#9200f4",
+      group8: "#e61806",
+    },
+    bmslytics: {
+      group1: "#84cc16",
+      group2: "#c026d3",
+      group3: "#7c3aed",
+      group4: "#e61806",
+    },
   };
 
   // Function to adapt the database data into the graph format
@@ -101,8 +142,8 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
         console.error(`Skipping item with missing fid:`, item);
         return; // Skip this item if 'fid' is missing
       }
-      const nodeType = Object.keys(groupedMarkers).find((group) =>
-        groupedMarkers[group].some(
+      const nodeType = Object.keys(groupedMarkers[graph_type]).find((group) =>
+        groupedMarkers[graph_type][group].some(
           (marker) => item.markers && item.markers.includes(marker)
         )
       );
@@ -194,8 +235,7 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     return { nodes, links };
   };
 
-
-  const textWidth = (text) => {  //NEW
+  const textWidth = (text) => {
     // Create a temporary canvas to perform the measurement
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -205,19 +245,19 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     ctx.font = `${fontSize}px Arial, Sans-Serif`;
 
     return ctx.measureText(text).width;
-  }
+  };
 
   // Function to calculate the positions of nodes using dagre
-  const getLayout = ({ nodes, links } ) => {
+  const getLayout = ({ nodes, links }) => {
     // Initialize dagre
     const graph = new dagre.graphlib.Graph();
     graph.setGraph({
-      rankdir: 'TB',      // Direction of the graph, in this case top to bottom"
-      nodesep: 60,        // Minimum horizontal spacing between nodes, in units of pixels
-      ranksep: 20,        // Minimum vertical spacing between graph levels, in units of pixels
-      edgesep: 50         // Minimum spacing between edges (links or connections)
+      rankdir: "TB", // Direction of the graph, in this case top to bottom
+      nodesep: 60, // Minimum horizontal spacing between nodes, in units of pixels
+      ranksep: 20, // Minimum vertical spacing between graph levels, in units of pixels
+      edgesep: 50, // Minimum spacing between edges (links or connections)
     });
-  
+
     graph.setDefaultEdgeLabel(() => ({}));
 
     nodes.forEach((node) => {
@@ -234,16 +274,22 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
 
     /* Adjust number of rows in last branch */
     // Step 1: Find the maximum value of 'y'
-    const maxY = Math.max(...Object.values(graph['_nodes']).map(item => item.y));
+    const maxY = Math.max(
+      ...Object.values(graph["_nodes"]).map((item) => item.y)
+    );
 
     // Step 2: Filter items with the maximum value of 'y'
-    const elementsWithMaxY = Object.entries(graph['_nodes']).filter(([key, value]) => value.y === maxY)
+    const elementsWithMaxY = Object.entries(graph["_nodes"]).filter(
+      ([key, value]) => value.y === maxY
+    );
 
     // Step 3: Filter items with 'y' value less than the maximum value
-    const elementsLTMaxY = Object.entries(graph['_nodes']).filter(([key, value]) => value.y < maxY);
+    const elementsLTMaxY = Object.entries(graph["_nodes"]).filter(
+      ([key, value]) => value.y < maxY
+    );
 
     // Step 4: Calculates the number of pixels to add to center the graph
-    const foundNode = nodes.find(node => node.id === elementsWithMaxY[0][0]);
+    const foundNode = nodes.find((node) => node.id === elementsWithMaxY[0][0]);
 
     extraWidth = textWidth(foundNode.name);
 
@@ -254,10 +300,11 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       const rowHeight = 20; // Vertical space between rows
       const itemWidth = 70; // Horizontal space between elements
 
-      let initColumnMaxY = elementsWithMaxY[Math.floor(elementsWithMaxY.length / 2) - 4][1]['y'];
+      let initColumnMaxY =
+        elementsWithMaxY[Math.floor(elementsWithMaxY.length / 2) - 4][1]["y"];
 
       if (elementsWithMaxY.length % 2 == 0) {
-          initColumnMaxY = initColumnMaxY - itemWidth / 2;
+        initColumnMaxY = initColumnMaxY - itemWidth / 2;
       }
 
       elementsWithMaxY.forEach(([key, item], index) => {
@@ -271,7 +318,6 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       elementsLTMaxY.forEach(([key, item], index) => {
         item.x = elementsWithMaxY[3][1].x + itemWidth / 2;
       });
-
     }
 
     //Update node positions
@@ -281,16 +327,14 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       let reduceName = false;
       if (elementsLTMaxY.length === 0 && elementsWithMaxY.length > 1) {
         reduceName = true;
-      }
-      else {
+      } else {
         if (elementsWithMaxY.length > 1) {
-          reduceName = elementsWithMaxY.some(item => item[0] === node.id);
+          reduceName = elementsWithMaxY.some((item) => item[0] === node.id);
         }
-
       }
 
       if (node.name.length > 15 && reduceName) {
-        node.name = node.name.substring(0, 12) + '...';
+        node.name = node.name.substring(0, 12) + "...";
       }
 
       return { ...node, x: dagreNode.x, y: dagreNode.y };
@@ -298,8 +342,6 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
 
     return { nodes: updatedNodes, links };
   };
-
-  
 
   // Function to build the dynamic graph
   function buildBranch(node, graph, collapsed_nodes, last_level) {
@@ -467,20 +509,17 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
-
-
   // NodeCard opens on right-click on the node
   const handleNodeRightClick = (node) => {
     const objectFound = Object.entries(json_data).find(
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
-
     // Set the currently right-cliked node ID
     setSelectedNodeId(node.id);
+    setSelectedNodeGroup(node.group);
   };
-
-   
+  
 
   // Function to close the Modal
   const handleCloseModal = () => {
@@ -489,7 +528,6 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     // Clear the right-clicked node ID
     setSelectedNodeId(null);
   };
-
 
   const calculateGraphDimensions = () => {
     const nodes = graphData.nodes;
@@ -503,7 +541,7 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
     const maxY = Math.max(...nodes.map((node) => node.y || 0));
 
     // Calculate the width and height
-    
+
     const width = maxX - minX + extraWidth;
     const height = maxY - minY;
 
@@ -526,7 +564,7 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       {/* Container for ForceGraph2D */}
       <div
         className={`${
-          nodeJsonFound ? "w-2/3" : "w-full"  
+          nodeJsonFound ? "w-2/3" : "w-full"
         } flex justify-center items-center`}
       >
         <ForceGraph2D
@@ -541,27 +579,24 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
           onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
           onNodeRightClick={handleNodeRightClick}
           nodeLabel={(node) => `${groupToMarkerMap[node.group]}: ${node.name}`}
-          
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.name;
             const fontSize = 12 / globalScale;
 
-           
             // Draw node circle
             ctx.beginPath();
             ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false);
-            ctx.fillStyle = getColorForNode(node.group);
+            ctx.fillStyle = getColorForNode[graph_type][node.group];
             ctx.fill();
 
             // Apply a colored border if this node is the selected one
             if (node.id === selectedNodeId) {
               ctx.lineWidth = 2;
-              ctx.strokeStyle = "##404040"; // Gray border color on nodes right-clicked. 
+              ctx.strokeStyle = "##404040"; // Gray border color on nodes right-clicked.
               ctx.stroke();
             }
 
-
-            // Draw the label  
+            // Draw the label
             ctx.font = `${fontSize}px 'Arial', 'Sans-Serif'`;
             ctx.textAlign = "right";
             ctx.textBaseline = "right";
@@ -574,10 +609,13 @@ const Graph = ({ json_data, background_color, label_color, link_color, graph_typ
       {/* Container for NodeCard to scroll inside */}
       <div className="w-1/3 h-full overflow-hidden">
         {nodeJsonFound && (
-          <NodeCard
-            node={nodeJsonFound}
-            on_close={handleCloseModal}
-            get_color_for_node={getColorForNode}
+          <NodeCard 
+          node={nodeJsonFound} 
+          on_close={handleCloseModal}
+          grouped_markers={groupedMarkers}
+          get_color_for_node={getColorForNode}
+          graph_type={graph_type}
+          selected_node_group={selectedNodeGroup}
           />
         )}
       </div>

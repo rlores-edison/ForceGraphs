@@ -1,4 +1,3 @@
-
 # ForceGraphs WOPR
 
 This project enhances graph visualization with components:
