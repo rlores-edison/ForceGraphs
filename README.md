@@ -7,11 +7,13 @@ This project enhances graph visualization with components:
 
 ### Graph
 - Renders graphs dynamically from data sets
+- Data management: JSON data is the input for nodeJsonFound, data is transformed to be used by the graph - typeOfNode
 
 ### NodeCard
 - On node right-click, node details are displayed on the right hand side
 - The markers have a drop-down list and show the default marker in card
-- Copy to clipboard feature 
+- Copy to clipboard feature
+- Dynamic card title, with marker in node color
 
 ### Home 
 This page serves as the main App of the project
@@ -19,6 +21,7 @@ This page serves as the main App of the project
 
 ## Data
 - Different size JSON files for testing performance
+
 
 ## Libraries
 - React JS + Vite framework
