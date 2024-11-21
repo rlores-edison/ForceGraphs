@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/db_nodetres.json")
+    fetch("../../server/dataDis.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

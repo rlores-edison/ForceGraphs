@@ -1,0 +1,1788 @@
+{
+  "-- WARNINGS --": {
+      "ALMERÍA-04009-ESTAÑO_105": {
+          "Instal + Equip + SecEquip + Point not defined in MasterDict dictionary": {
+              "Elec + AcometElec + None + EnerActDelta": [
+                  "EdisonNext_Datadis;Datadis;Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + EnerActDelta__RAW": [
+                  "EdisonNext_Datadis;Datadis__RAW;Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + OcupEner_FREE": [
+                  "EdisonNext_Datadis;EdisonNext_Datadis_FREE;ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031104668058001JT0F/OcupEner_FREE"
+              ]
+          }
+      },
+      "BARCELONA-08007-UNIVERSITAT_16_LOC": {
+          "Instal + Equip + SecEquip + Point not defined in MasterDict dictionary": {
+              "Elec + AcometElec + None + EnerActDelta": [
+                  "EdisonNext_Datadis;Datadis;Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + EnerActDelta__RAW": [
+                  "EdisonNext_Datadis;Datadis__RAW;Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + OcupEner_FREE": [
+                  "EdisonNext_Datadis;EdisonNext_Datadis_FREE;ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405472268018HH0F/OcupEner_FREE"
+              ]
+          }
+      },
+      "BARCELONA-08040-MOTORS_170_LOC_1": {
+          "Instal + Equip + SecEquip + Point not defined in MasterDict dictionary": {
+              "Elec + AcometElec + None + EnerActDelta": [
+                  "EdisonNext_Datadis;Datadis;Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + EnerActDelta__RAW": [
+                  "EdisonNext_Datadis;Datadis__RAW;Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + OcupEner_FREE": [
+                  "EdisonNext_Datadis;EdisonNext_Datadis_FREE;ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405974680002KW0F/OcupEner_FREE"
+              ]
+          }
+      },
+      "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17": {
+          "Instal + Equip + SecEquip + Point not defined in MasterDict dictionary": {
+              "Elec + AcometElec + None + EnerActDelta": [
+                  "EdisonNext_Datadis;Datadis;Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + EnerActDelta__RAW": [
+                  "EdisonNext_Datadis;Datadis__RAW;Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta"
+              ],
+              "Elec + AcometElec + None + OcupEner_FREE": [
+                  "EdisonNext_Datadis;EdisonNext_Datadis_FREE;ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0021000012315107RF/OcupEner_FREE"
+              ]
+          }
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105": {
+      "area": "1m2",
+      "areaHVAC": "1m2",
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "dis": "ALMERÍA-04009-ESTAÑO_105",
+      "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+      "geoAddr": "ESTAÑO_105",
+      "geoCity": "ALMERÍA",
+      "geoCountry": "ES",
+      "geoPostalCode": "04009",
+      "geoState": "Almería",
+      "id": "ALMERÍA-04009-ESTAÑO_105",
+      "kwhRate": "0.2",
+      "locationGroup": "Almería",
+      "markers": [
+          "site"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "ALMERÍA-04009-ESTAÑO_105",
+      "siteType": "Industrial",
+      "tz": "Madrid"
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:56f3abf6-2e8b-3f3c-a1eb-69af56bd6500",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Clima",
+      "markers": [
+          "clima",
+          "hvac",
+          "instalacion"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Clima Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:6bbdcc3d-ca20-3774-acce-99f3ce1c5a5f",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Clima Clima",
+      "instalacionRef": {
+          "fid": "p:{}:r:56f3abf6-2e8b-3f3c-a1eb-69af56bd6500",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:84cb7e9c-423d-322a-9f46-dc162d350f39",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt",
+      "instalZoneRef": {
+          "fid": "p:{}:r:6bbdcc3d-ca20-3774-acce-99f3ce1c5a5f",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:56f3abf6-2e8b-3f3c-a1eb-69af56bd6500",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "CondExt",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt ..": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:a4cebd00-0860-39f2-b73b-5ec88b137d2b",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt ..",
+      "instalZoneRef": {
+          "fid": "p:{}:r:6bbdcc3d-ca20-3774-acce-99f3ce1c5a5f",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:56f3abf6-2e8b-3f3c-a1eb-69af56bd6500",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima"
+      },
+      "markers": [
+          "air",
+          "condext",
+          "conditions",
+          "equip",
+          "outside",
+          "zone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "..",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:84cb7e9c-423d-322a-9f46-dc162d350f39",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Elec",
+      "markers": [
+          "elec",
+          "instalacion",
+          "lowVoltage"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Elec Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:bf5c2230-1310-37bd-88d1-2fd8213b08cf",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Elec Elec",
+      "instalacionRef": {
+          "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:63baa2d9-fdd0-37c3-99b1-b237b0ee46e9",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec",
+      "instalZoneRef": {
+          "fid": "p:{}:r:bf5c2230-1310-37bd-88d1-2fd8213b08cf",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "AcometElec",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      }
+  },
+  "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec ES0031104668058001JT0F": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "cups": "ES0031104668058001JT0F",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:ea3e1d5c-7e84-34d0-b726-eaaec6484c1a",
+      "id": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec ES0031104668058001JT0F",
+      "instalZoneRef": {
+          "fid": "p:{}:r:bf5c2230-1310-37bd-88d1-2fd8213b08cf",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec"
+      },
+      "markers": [
+          "acometelec",
+          "elec",
+          "equip",
+          "main",
+          "siteMeter"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "ES0031104668058001JT0F",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:63baa2d9-fdd0-37c3-99b1-b237b0ee46e9",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC": {
+      "area": "1m2",
+      "areaHVAC": "1m2",
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "dis": "BARCELONA-08007-UNIVERSITAT_16_LOC",
+      "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+      "geoAddr": "UNIVERSITAT_16_LOC",
+      "geoCity": "BARCELONA",
+      "geoCountry": "ES",
+      "geoPostalCode": "08007",
+      "geoState": "Barcelona",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC",
+      "kwhRate": "0.2",
+      "locationGroup": "Barcelona",
+      "markers": [
+          "site"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "BARCELONA-08007-UNIVERSITAT_16_LOC",
+      "siteType": "Industrial",
+      "tz": "Madrid"
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:edd0e8d5-d91c-3358-ab2a-2f0616b4f83d",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima",
+      "markers": [
+          "clima",
+          "hvac",
+          "instalacion"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:b6ef2eea-6b16-3b04-867e-0bf5aadc44d1",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima",
+      "instalacionRef": {
+          "fid": "p:{}:r:edd0e8d5-d91c-3358-ab2a-2f0616b4f83d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:f66f76b4-ee13-3875-881a-e19d4b894521",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt",
+      "instalZoneRef": {
+          "fid": "p:{}:r:b6ef2eea-6b16-3b04-867e-0bf5aadc44d1",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edd0e8d5-d91c-3358-ab2a-2f0616b4f83d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "CondExt",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt ..": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:936eb694-16b1-3ca1-a807-95a542ebea5d",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt ..",
+      "instalZoneRef": {
+          "fid": "p:{}:r:b6ef2eea-6b16-3b04-867e-0bf5aadc44d1",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edd0e8d5-d91c-3358-ab2a-2f0616b4f83d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima"
+      },
+      "markers": [
+          "air",
+          "condext",
+          "conditions",
+          "equip",
+          "outside",
+          "zone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "..",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:f66f76b4-ee13-3875-881a-e19d4b894521",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec",
+      "markers": [
+          "elec",
+          "instalacion",
+          "lowVoltage"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:4ee34ef8-4d46-335e-b0a4-687b951cfd3c",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec",
+      "instalacionRef": {
+          "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:d64a2972-c713-39d4-ae11-1d0f8562ce3d",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec",
+      "instalZoneRef": {
+          "fid": "p:{}:r:4ee34ef8-4d46-335e-b0a4-687b951cfd3c",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "AcometElec",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      }
+  },
+  "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec ES0031405472268018HH0F": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "cups": "ES0031405472268018HH0F",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:8c8c6a46-81b2-3660-9fd1-3d87a02a74f8",
+      "id": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec ES0031405472268018HH0F",
+      "instalZoneRef": {
+          "fid": "p:{}:r:4ee34ef8-4d46-335e-b0a4-687b951cfd3c",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec"
+      },
+      "markers": [
+          "acometelec",
+          "elec",
+          "equip",
+          "main",
+          "siteMeter"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "ES0031405472268018HH0F",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:d64a2972-c713-39d4-ae11-1d0f8562ce3d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1": {
+      "area": "1m2",
+      "areaHVAC": "1m2",
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "dis": "BARCELONA-08040-MOTORS_170_LOC_1",
+      "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+      "geoAddr": "MOTORS_170_LOC_1",
+      "geoCity": "BARCELONA",
+      "geoCountry": "ES",
+      "geoPostalCode": "08040",
+      "geoState": "Barcelona",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1",
+      "kwhRate": "0.2",
+      "locationGroup": "Barcelona",
+      "markers": [
+          "site"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "BARCELONA-08040-MOTORS_170_LOC_1",
+      "siteType": "Industrial",
+      "tz": "Madrid"
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:1374a02c-2842-3283-ba59-f8399feae49f",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Clima",
+      "markers": [
+          "clima",
+          "hvac",
+          "instalacion"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:131c3b8f-1d8f-32b8-925f-891226f54cb1",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima",
+      "instalacionRef": {
+          "fid": "p:{}:r:1374a02c-2842-3283-ba59-f8399feae49f",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:a2b2399c-02e1-3498-9dae-dbfb4eac467e",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt",
+      "instalZoneRef": {
+          "fid": "p:{}:r:131c3b8f-1d8f-32b8-925f-891226f54cb1",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:1374a02c-2842-3283-ba59-f8399feae49f",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "CondExt",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt ..": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:84588a29-c629-30a4-8495-17bf3226f676",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt ..",
+      "instalZoneRef": {
+          "fid": "p:{}:r:131c3b8f-1d8f-32b8-925f-891226f54cb1",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:1374a02c-2842-3283-ba59-f8399feae49f",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima"
+      },
+      "markers": [
+          "air",
+          "condext",
+          "conditions",
+          "equip",
+          "outside",
+          "zone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "..",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:a2b2399c-02e1-3498-9dae-dbfb4eac467e",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Elec",
+      "markers": [
+          "elec",
+          "instalacion",
+          "lowVoltage"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:8c9a421b-6e98-33d8-8f82-77a76b5ccbb6",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec",
+      "instalacionRef": {
+          "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:9d39727d-1187-3b01-ba27-9adb46c9eb85",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec",
+      "instalZoneRef": {
+          "fid": "p:{}:r:8c9a421b-6e98-33d8-8f82-77a76b5ccbb6",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "AcometElec",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      }
+  },
+  "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec ES0031405974680002KW0F": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "cups": "ES0031405974680002KW0F",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:2d4810ef-fc79-318e-a786-0aed18e7b173",
+      "id": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec ES0031405974680002KW0F",
+      "instalZoneRef": {
+          "fid": "p:{}:r:8c9a421b-6e98-33d8-8f82-77a76b5ccbb6",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec"
+      },
+      "markers": [
+          "acometelec",
+          "elec",
+          "equip",
+          "main",
+          "siteMeter"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "ES0031405974680002KW0F",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:9d39727d-1187-3b01-ba27-9adb46c9eb85",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17": {
+      "area": "1m2",
+      "areaHVAC": "1m2",
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "dis": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17",
+      "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+      "geoAddr": "GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17",
+      "geoCity": "BILBAO",
+      "geoCountry": "ES",
+      "geoPostalCode": "48001",
+      "geoState": "Vizcaya",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17",
+      "kwhRate": "0.2",
+      "locationGroup": "Vizcaya",
+      "markers": [
+          "site"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17",
+      "siteType": "Industrial",
+      "tz": "Madrid"
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:acd441c1-c02a-329f-8605-702d066c8c8b",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima",
+      "markers": [
+          "clima",
+          "hvac",
+          "instalacion"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:dacba243-6428-3cfc-9605-4b29fed822e7",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima",
+      "instalacionRef": {
+          "fid": "p:{}:r:acd441c1-c02a-329f-8605-702d066c8c8b",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Clima",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:50fcbf41-5a6f-306b-af9b-006b437e59a5",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt",
+      "instalZoneRef": {
+          "fid": "p:{}:r:dacba243-6428-3cfc-9605-4b29fed822e7",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:acd441c1-c02a-329f-8605-702d066c8c8b",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "CondExt",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt ..": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:5f6e3b2a-0600-3536-ae63-460e8aa4b691",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt ..",
+      "instalZoneRef": {
+          "fid": "p:{}:r:dacba243-6428-3cfc-9605-4b29fed822e7",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:acd441c1-c02a-329f-8605-702d066c8c8b",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima"
+      },
+      "markers": [
+          "air",
+          "condext",
+          "conditions",
+          "equip",
+          "outside",
+          "zone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "..",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:50fcbf41-5a6f-306b-af9b-006b437e59a5",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec",
+      "markers": [
+          "elec",
+          "instalacion",
+          "lowVoltage"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$siteRef $navName",
+      "fid": "p:{}:r:1afedcd2-62b3-36f6-b195-a800ee377860",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec",
+      "instalacionRef": {
+          "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec"
+      },
+      "markers": [
+          "instalZone"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "Elec",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "disMacro": "$instalZoneRef $navName",
+      "fid": "p:{}:r:e9bb6f7f-3d18-3814-ac33-dcc1965f30b5",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec",
+      "instalZoneRef": {
+          "fid": "p:{}:r:1afedcd2-62b3-36f6-b195-a800ee377860",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec"
+      },
+      "markers": [
+          "tipoEquipo"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "AcometElec",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      }
+  },
+  "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec ES0021000012315107RF": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "consumptionOn": "0kWh",
+      "cups": "ES0021000012315107RF",
+      "disMacro": "$tipoEquipoRef $navName",
+      "fid": "p:{}:r:95a3d2cd-fb11-3949-a3f4-4a7bcea6ddde",
+      "id": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec ES0021000012315107RF",
+      "instalZoneRef": {
+          "fid": "p:{}:r:1afedcd2-62b3-36f6-b195-a800ee377860",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec"
+      },
+      "markers": [
+          "acometelec",
+          "elec",
+          "equip",
+          "main",
+          "siteMeter"
+      ],
+      "model_name": "edison_datadist",
+      "navName": "ES0021000012315107RF",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      },
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:e9bb6f7f-3d18-3814-ac33-dcc1965f30b5",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec"
+      }
+  },
+  "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "SRC_DATA_QUALITY_PROC:/Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:95a3d2cd-fb11-3949-a3f4-4a7bcea6ddde",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec ES0021000012315107RF"
+      },
+      "fid": "p:{}:r:f39ae8ca-1b40-3685-9f2a-3d0be6b9c1c0",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:1afedcd2-62b3-36f6-b195-a800ee377860",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "clean",
+          "delta",
+          "elec",
+          "eneractdelta",
+          "energy",
+          "his",
+          "kwh",
+          "point",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta",
+      "pointType": "eneractdelta",
+      "pointTypeDis": "EnerActDelta",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta",
+      "sampleRate": "60min",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      },
+      "stationName": "Datadis",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:e9bb6f7f-3d18-3814-ac33-dcc1965f30b5",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "SRC_DATA_QUALITY_PROC:/Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:ea3e1d5c-7e84-34d0-b726-eaaec6484c1a",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec ES0031104668058001JT0F"
+      },
+      "fid": "p:{}:r:504735ff-ab6a-37f6-9cf6-59e89e391803",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:bf5c2230-1310-37bd-88d1-2fd8213b08cf",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "clean",
+          "delta",
+          "elec",
+          "eneractdelta",
+          "energy",
+          "his",
+          "kwh",
+          "point",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta",
+      "pointType": "eneractdelta",
+      "pointTypeDis": "EnerActDelta",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta",
+      "sampleRate": "60min",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      },
+      "stationName": "Datadis",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:63baa2d9-fdd0-37c3-99b1-b237b0ee46e9",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "SRC_DATA_QUALITY_PROC:/Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:8c8c6a46-81b2-3660-9fd1-3d87a02a74f8",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec ES0031405472268018HH0F"
+      },
+      "fid": "p:{}:r:241f2d70-1b9d-3407-8570-fc57ce650586",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:4ee34ef8-4d46-335e-b0a4-687b951cfd3c",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "clean",
+          "delta",
+          "elec",
+          "eneractdelta",
+          "energy",
+          "his",
+          "kwh",
+          "point",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta",
+      "pointType": "eneractdelta",
+      "pointTypeDis": "EnerActDelta",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta",
+      "sampleRate": "60min",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      },
+      "stationName": "Datadis",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:d64a2972-c713-39d4-ae11-1d0f8562ce3d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "SRC_DATA_QUALITY_PROC:/Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:2d4810ef-fc79-318e-a786-0aed18e7b173",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec ES0031405974680002KW0F"
+      },
+      "fid": "p:{}:r:349501ba-6e29-3bcf-9494-ca54a3ef8025",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:8c9a421b-6e98-33d8-8f82-77a76b5ccbb6",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "clean",
+          "delta",
+          "elec",
+          "eneractdelta",
+          "energy",
+          "his",
+          "kwh",
+          "point",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta",
+      "pointType": "eneractdelta",
+      "pointTypeDis": "EnerActDelta",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta",
+      "sampleRate": "60min",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      },
+      "stationName": "Datadis",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:9d39727d-1187-3b01-ba27-9adb46c9eb85",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "/Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta",
+      "cleanRef": {
+          "fid": "p:{}:r:f39ae8ca-1b40-3685-9f2a-3d0be6b9c1c0",
+          "repr": "EdisonNext_Datadis|Datadis|Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta"
+      },
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:95a3d2cd-fb11-3949-a3f4-4a7bcea6ddde",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec ES0021000012315107RF"
+      },
+      "fid": "p:{}:r:475dc394-7f88-37e6-86f4-47f838dda59f",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:1afedcd2-62b3-36f6-b195-a800ee377860",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "delta",
+          "elec",
+          "eneractdelta__raw",
+          "energy",
+          "hidden",
+          "his",
+          "kwh",
+          "point",
+          "raw",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta__RAW",
+      "pointType": "eneractdelta__raw",
+      "pointTypeDis": "EnerActDelta__RAW",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0021000012315107RF/EnerActDelta",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      },
+      "stationName": "Datadis__RAW",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:e9bb6f7f-3d18-3814-ac33-dcc1965f30b5",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "/Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta",
+      "cleanRef": {
+          "fid": "p:{}:r:504735ff-ab6a-37f6-9cf6-59e89e391803",
+          "repr": "EdisonNext_Datadis|Datadis|Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta"
+      },
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:ea3e1d5c-7e84-34d0-b726-eaaec6484c1a",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec ES0031104668058001JT0F"
+      },
+      "fid": "p:{}:r:a1c65819-fe9e-3102-9a89-fd47b3d52cdc",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:bf5c2230-1310-37bd-88d1-2fd8213b08cf",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "delta",
+          "elec",
+          "eneractdelta__raw",
+          "energy",
+          "hidden",
+          "his",
+          "kwh",
+          "point",
+          "raw",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta__RAW",
+      "pointType": "eneractdelta__raw",
+      "pointTypeDis": "EnerActDelta__RAW",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0031104668058001JT0F/EnerActDelta",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      },
+      "stationName": "Datadis__RAW",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:63baa2d9-fdd0-37c3-99b1-b237b0ee46e9",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "/Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta",
+      "cleanRef": {
+          "fid": "p:{}:r:241f2d70-1b9d-3407-8570-fc57ce650586",
+          "repr": "EdisonNext_Datadis|Datadis|Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta"
+      },
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:8c8c6a46-81b2-3660-9fd1-3d87a02a74f8",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec ES0031405472268018HH0F"
+      },
+      "fid": "p:{}:r:7b225a96-1ab3-3c27-a898-7e79dd235f56",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:4ee34ef8-4d46-335e-b0a4-687b951cfd3c",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "delta",
+          "elec",
+          "eneractdelta__raw",
+          "energy",
+          "hidden",
+          "his",
+          "kwh",
+          "point",
+          "raw",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta__RAW",
+      "pointType": "eneractdelta__raw",
+      "pointTypeDis": "EnerActDelta__RAW",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0031405472268018HH0F/EnerActDelta",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      },
+      "stationName": "Datadis__RAW",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:d64a2972-c713-39d4-ae11-1d0f8562ce3d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "/Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta",
+      "cleanRef": {
+          "fid": "p:{}:r:349501ba-6e29-3bcf-9494-ca54a3ef8025",
+          "repr": "EdisonNext_Datadis|Datadis|Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta"
+      },
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:2d4810ef-fc79-318e-a786-0aed18e7b173",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec ES0031405974680002KW0F"
+      },
+      "fid": "p:{}:r:9a57f59b-480c-3d8e-a341-1228c8955cf3",
+      "hisMode": "consumption",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis Datadis__RAW Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta",
+      "instalZoneRef": {
+          "fid": "p:{}:r:8c9a421b-6e98-33d8-8f82-77a76b5ccbb6",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec"
+      },
+      "kind": "Number",
+      "markers": [
+          "analytics",
+          "delta",
+          "elec",
+          "eneractdelta__raw",
+          "energy",
+          "hidden",
+          "his",
+          "kwh",
+          "point",
+          "raw",
+          "swp"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "EnerActDelta__RAW",
+      "pointType": "eneractdelta__raw",
+      "pointTypeDis": "EnerActDelta__RAW",
+      "pointUri": "Datadis/NIF_W0117310C/CUPS_ES0031405974680002KW0F/EnerActDelta",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      },
+      "stationName": "Datadis__RAW",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:9d39727d-1187-3b01-ba27-9adb46c9eb85",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec"
+      },
+      "tz": "Madrid",
+      "unit": "kWh"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:a4cebd00-0860-39f2-b73b-5ec88b137d2b",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt .."
+      },
+      "fid": "p:{}:r:edcb3d3a-7d28-32a5-a187-bb68a2b91f84",
+      "hisFunc": "hisFuncVirtualDegreeDay",
+      "hisMode": "cov",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:6bbdcc3d-ca20-3774-acce-99f3ce1c5a5f",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:56f3abf6-2e8b-3f3c-a1eb-69af56bd6500",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima"
+      },
+      "kind": "Number",
+      "lowBound": "-43",
+      "lowBoundClass": "-28",
+      "markers": [
+          "air",
+          "analytics",
+          "demand",
+          "energy",
+          "gradosdia_free",
+          "his",
+          "outside",
+          "point",
+          "sensor",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "GradosDia_FREE",
+      "pointType": "gradosdia_free",
+      "pointTypeDis": "GradosDia_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:84cb7e9c-423d-322a-9f46-dc162d350f39",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Clima Clima CondExt"
+      },
+      "tz": "Madrid",
+      "unit": "°daysC",
+      "upBound": "42",
+      "upBoundClass": "27"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031104668058001JT0F/OcupEner_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031104668058001JT0F/OcupEner_FREE",
+      "disMacro": "$equipRef $navName",
+      "enum": "Desocup,Ocup",
+      "equipRef": {
+          "fid": "p:{}:r:ea3e1d5c-7e84-34d0-b726-eaaec6484c1a",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec ES0031104668058001JT0F"
+      },
+      "fid": "p:{}:r:5a2b92c6-6a3f-3f89-97af-64e1400791d4",
+      "hisFunc": "hisFuncOcupEner",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031104668058001JT0F/OcupEner_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:bf5c2230-1310-37bd-88d1-2fd8213b08cf",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:7fe802b8-e4a6-38a7-8b12-7a00f326b210",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec"
+      },
+      "kind": "Bool",
+      "markers": [
+          "analytics",
+          "elec",
+          "his",
+          "occ",
+          "ocupener_free",
+          "point",
+          "run",
+          "swp",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "OcupEner_FREE",
+      "pointType": "ocupener_free",
+      "pointTypeDis": "OcupEner_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/ALMERÍA-04009-ESTAÑO_105/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031104668058001JT0F/OcupEner_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:c562778b-b691-3fd6-bab3-096844cb5d15",
+          "repr": "ALMERÍA-04009-ESTAÑO_105"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:63baa2d9-fdd0-37c3-99b1-b237b0ee46e9",
+          "repr": "ALMERÍA-04009-ESTAÑO_105 Elec Elec AcometElec"
+      },
+      "tz": "Madrid"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:936eb694-16b1-3ca1-a807-95a542ebea5d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt .."
+      },
+      "fid": "p:{}:r:62ea2621-97ec-3009-907b-92711b5ee7e5",
+      "hisFunc": "hisFuncVirtualDegreeDay",
+      "hisMode": "cov",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:b6ef2eea-6b16-3b04-867e-0bf5aadc44d1",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edd0e8d5-d91c-3358-ab2a-2f0616b4f83d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima"
+      },
+      "kind": "Number",
+      "lowBound": "-43",
+      "lowBoundClass": "-28",
+      "markers": [
+          "air",
+          "analytics",
+          "demand",
+          "energy",
+          "gradosdia_free",
+          "his",
+          "outside",
+          "point",
+          "sensor",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "GradosDia_FREE",
+      "pointType": "gradosdia_free",
+      "pointTypeDis": "GradosDia_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:f66f76b4-ee13-3875-881a-e19d4b894521",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Clima Clima CondExt"
+      },
+      "tz": "Madrid",
+      "unit": "°daysC",
+      "upBound": "42",
+      "upBoundClass": "27"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405472268018HH0F/OcupEner_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405472268018HH0F/OcupEner_FREE",
+      "disMacro": "$equipRef $navName",
+      "enum": "Desocup,Ocup",
+      "equipRef": {
+          "fid": "p:{}:r:8c8c6a46-81b2-3660-9fd1-3d87a02a74f8",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec ES0031405472268018HH0F"
+      },
+      "fid": "p:{}:r:539691f9-ee24-3e9a-8626-f76da2c2151b",
+      "hisFunc": "hisFuncOcupEner",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405472268018HH0F/OcupEner_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:4ee34ef8-4d46-335e-b0a4-687b951cfd3c",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:f90de8bd-73fd-3286-8875-179122a0a832",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec"
+      },
+      "kind": "Bool",
+      "markers": [
+          "analytics",
+          "elec",
+          "his",
+          "occ",
+          "ocupener_free",
+          "point",
+          "run",
+          "swp",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "OcupEner_FREE",
+      "pointType": "ocupener_free",
+      "pointTypeDis": "OcupEner_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08007-UNIVERSITAT_16_LOC/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405472268018HH0F/OcupEner_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:dafd2ba8-8882-365b-9800-c097ffbc6b15",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:d64a2972-c713-39d4-ae11-1d0f8562ce3d",
+          "repr": "BARCELONA-08007-UNIVERSITAT_16_LOC Elec Elec AcometElec"
+      },
+      "tz": "Madrid"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:84588a29-c629-30a4-8495-17bf3226f676",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt .."
+      },
+      "fid": "p:{}:r:be7bedda-a366-3acb-912f-725ea4174182",
+      "hisFunc": "hisFuncVirtualDegreeDay",
+      "hisMode": "cov",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:131c3b8f-1d8f-32b8-925f-891226f54cb1",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:1374a02c-2842-3283-ba59-f8399feae49f",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima"
+      },
+      "kind": "Number",
+      "lowBound": "-43",
+      "lowBoundClass": "-28",
+      "markers": [
+          "air",
+          "analytics",
+          "demand",
+          "energy",
+          "gradosdia_free",
+          "his",
+          "outside",
+          "point",
+          "sensor",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "GradosDia_FREE",
+      "pointType": "gradosdia_free",
+      "pointTypeDis": "GradosDia_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:a2b2399c-02e1-3498-9dae-dbfb4eac467e",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Clima Clima CondExt"
+      },
+      "tz": "Madrid",
+      "unit": "°daysC",
+      "upBound": "42",
+      "upBoundClass": "27"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405974680002KW0F/OcupEner_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405974680002KW0F/OcupEner_FREE",
+      "disMacro": "$equipRef $navName",
+      "enum": "Desocup,Ocup",
+      "equipRef": {
+          "fid": "p:{}:r:2d4810ef-fc79-318e-a786-0aed18e7b173",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec ES0031405974680002KW0F"
+      },
+      "fid": "p:{}:r:c93405e5-0e4e-32b2-9fbc-31a985880a5f",
+      "hisFunc": "hisFuncOcupEner",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405974680002KW0F/OcupEner_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:8c9a421b-6e98-33d8-8f82-77a76b5ccbb6",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:edcb3250-3d12-389f-806f-c10ce0c25392",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec"
+      },
+      "kind": "Bool",
+      "markers": [
+          "analytics",
+          "elec",
+          "his",
+          "occ",
+          "ocupener_free",
+          "point",
+          "run",
+          "swp",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "OcupEner_FREE",
+      "pointType": "ocupener_free",
+      "pointTypeDis": "OcupEner_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/BARCELONA-08040-MOTORS_170_LOC_1/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0031405974680002KW0F/OcupEner_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:72f3c18b-55c3-3049-95b4-80df1ae12f9b",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:9d39727d-1187-3b01-ba27-9adb46c9eb85",
+          "repr": "BARCELONA-08040-MOTORS_170_LOC_1 Elec Elec AcometElec"
+      },
+      "tz": "Madrid"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "disMacro": "$equipRef $navName",
+      "equipRef": {
+          "fid": "p:{}:r:5f6e3b2a-0600-3536-ae63-460e8aa4b691",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt .."
+      },
+      "fid": "p:{}:r:29af4fa9-9b51-342f-841f-66e50eb46fbb",
+      "hisFunc": "hisFuncVirtualDegreeDay",
+      "hisMode": "cov",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:dacba243-6428-3cfc-9605-4b29fed822e7",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:acd441c1-c02a-329f-8605-702d066c8c8b",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima"
+      },
+      "kind": "Number",
+      "lowBound": "-43",
+      "lowBoundClass": "-28",
+      "markers": [
+          "air",
+          "analytics",
+          "demand",
+          "energy",
+          "gradosdia_free",
+          "his",
+          "outside",
+          "point",
+          "sensor",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "GradosDia_FREE",
+      "pointType": "gradosdia_free",
+      "pointTypeDis": "GradosDia_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Clima/CondExt/GradosDia_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:50fcbf41-5a6f-306b-af9b-006b437e59a5",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Clima Clima CondExt"
+      },
+      "tz": "Madrid",
+      "unit": "°daysC",
+      "upBound": "42",
+      "upBoundClass": "27"
+  },
+  "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0021000012315107RF/OcupEner_FREE": {
+      "bdm_ts": "2024-11-05T11:38:14.379878+01:00",
+      "bdm_version": 1,
+      "bmsUri": "ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0021000012315107RF/OcupEner_FREE",
+      "disMacro": "$equipRef $navName",
+      "enum": "Desocup,Ocup",
+      "equipRef": {
+          "fid": "p:{}:r:95a3d2cd-fb11-3949-a3f4-4a7bcea6ddde",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec ES0021000012315107RF"
+      },
+      "fid": "p:{}:r:84fcc12f-c040-374f-88ce-231533d7c90f",
+      "hisFunc": "hisFuncOcupEner",
+      "hisOnWrite": "howConvertTz",
+      "id": "EdisonNext_Datadis EdisonNext_Datadis_FREE ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0021000012315107RF/OcupEner_FREE",
+      "instalZoneRef": {
+          "fid": "p:{}:r:1afedcd2-62b3-36f6-b195-a800ee377860",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec"
+      },
+      "instalacionRef": {
+          "fid": "p:{}:r:fb60c3fb-bc8d-31c2-900e-14afa51803c1",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec"
+      },
+      "kind": "Bool",
+      "markers": [
+          "analytics",
+          "elec",
+          "his",
+          "occ",
+          "ocupener_free",
+          "point",
+          "run",
+          "swp",
+          "virtual"
+      ],
+      "maxInacTime": "1000",
+      "model_name": "edison_datadist",
+      "navName": "OcupEner_FREE",
+      "pointType": "ocupener_free",
+      "pointTypeDis": "OcupEner_FREE",
+      "pointUri": "ETL:/calculated/EdisonNext_Datadis/BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17/EdisonNext_Datadis_FREE/histories/Elec/AcometElec/ES0021000012315107RF/OcupEner_FREE",
+      "siteRef": {
+          "fid": "p:{}:r:1422c226-cfd4-35d3-9050-bad8442b582e",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17"
+      },
+      "stationName": "EdisonNext_Datadis_FREE",
+      "tipoEquipoRef": {
+          "fid": "p:{}:r:e9bb6f7f-3d18-3814-ac33-dcc1965f30b5",
+          "repr": "BILBAO-48001-GRAN_VIA_DON_DIEGO_LOPEZ_DE_HARO_17 Elec Elec AcometElec"
+      },
+      "tz": "Madrid"
+  }
+}
