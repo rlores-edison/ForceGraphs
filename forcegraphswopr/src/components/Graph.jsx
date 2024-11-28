@@ -39,9 +39,10 @@ const Graph = ({
 
   useEffect(() => {
     if (json_data && Object.keys(json_data).length > 0) {
-      const adaptedData = adaptDbToGraph(json_data);
+      const adaptedData = adaptDbToGraph(json_data, groupedMarkers, graph_type);
       setGraphDataFull(adaptedData);
 
+      // Filter to show only "group1" nodes initially
       const graph_data = {
         nodes: adaptedData.nodes
           .filter((node) => node.group === "group1")
@@ -84,7 +85,7 @@ const Graph = ({
     },
 
     bmslytics: {
-      group1: ["BMS"],
+      group1: ["bms"],
       group2: ["station"],
       group3: ["controller"],
       group4: ["point"],
@@ -129,111 +130,156 @@ const Graph = ({
     },
   };
 
+  
+
   // Function to adapt the database data into the graph format
-  const adaptDbToGraph = (json_data) => {
+  const adaptDbToGraph = (json_data, groupedMarkers, graph_type) => {
     const nodes = [];
     const links = [];
-    // Store existing links to avoid duplicates
     const existingLinks = new Set();
-    Object.keys(json_data).forEach((key) => {
-      const item = json_data[key];
-      // Ensure the item has a 'fid' before processing
-      if (!item || !item.fid) {
-        console.error(`Skipping item with missing fid:`, item);
-        return; // Skip this item if 'fid' is missing
-      }
-      const nodeType = Object.keys(groupedMarkers[graph_type]).find((group) =>
-        groupedMarkers[graph_type][group].some(
-          (marker) => item.markers && item.markers.includes(marker)
-        )
-      );
 
-      // Helper function to determine parent based on group
-      const getParentGroup = (nodeType) => {
-        if (nodeType === "group2") {
-          return item.siteRef.fid;
-        } else if (nodeType === "group3") {
-          return item.instalacionRef.fid;
-        } else if (nodeType === "group4") {
-          return item.instalZoneRef.fid;
-        } else if (nodeType === "group5") {
-          return item.tipoEquipoRef.fid;
-        } else if (nodeType === "group6") {
-          return item.equipRef.fid;
-        } else if (nodeType === "group7") {
-          if (item.secEquipRef?.fid) {
-            return item.secEquipRef.fid;
-          } else {
-            return item.equipRef.fid;
+    // Get the last group dynamically from groupedMarkers for the current graph_type
+    const groupKeys = Object.keys(groupedMarkers[graph_type]);
+    const lastGroup = groupKeys[groupKeys.length - 1]; // identify it for parents' links (secEquip & equip) logic for point nodes
+ 
+    Object.entries(json_data).forEach(([key, item]) => {
+      // Validate item structure
+      if (!item.fid) {
+        console.error("Skipping item with missing fid:", item);
+        return;
+      }
+    
+      // Determine the node type based on markers and group type
+      const nodeType = groupKeys.find((group) =>
+        groupedMarkers[graph_type][group]?.some((marker) =>
+          item.markers?.includes(marker)
+        )
+      ) || (item.markers?.length === 0 && "group1");
+
+
+
+      const getParentGroup = (nodeType, item, groupedMarkers, graph_type) => {
+        // Retrieve all groups for the current graph type
+        const keys = Object.keys(groupedMarkers[graph_type]);
+      
+        // Find the index of the current group
+        const currentGroupIndex = keys.indexOf(nodeType);
+      
+        if (currentGroupIndex === -1) {
+          console.warn(`NodeType ${nodeType} not found in groupedMarkers for graph_type: ${graph_type}`);
+          return null;
+        }
+      
+        if (currentGroupIndex === 0) {
+          // If it's the first group, no parent exists
+          console.log(`No parent group for the first group: ${nodeType}`);
+          return null;
+        }
+      
+        // Get the previous group in the sequence
+        const previousGroup = keys[currentGroupIndex - 1];
+        const previousMarkers = groupedMarkers[graph_type][previousGroup];
+      
+        if (!previousMarkers || previousMarkers.length === 0) {
+          console.warn(`No markers found for the previous group ${previousGroup}`);
+          return null;
+        }
+      
+        // Check the item for references based on the previous group's marker
+        for (const marker of previousMarkers) {
+          const refKey = `${marker}Ref`; // Construct reference key dynamically
+          console.log(`Checking reference key: ${refKey} for marker: ${marker}`);
+      
+          if (item[refKey]?.fid) {
+            console.log(`Found reference for marker: ${marker}, key: ${refKey}, fid: ${item[refKey].fid}`);
+            return item[refKey].fid; // Return the reference ID if found
           }
         }
       };
-
-      if (nodeType) {
-        // Create the node
-        nodes.push({
-          id: item.fid, // Unique identifier for the node
-          name: item.navName,
-          group: nodeType,
-          parent: getParentGroup(nodeType), // To reference the parent node
-        });
-        // Helper function to create unique links
-        const createUniqueLink = (source, target, group) => {
-          const linkKey = `${source}-${target}-${group}`;
-          if (!existingLinks.has(linkKey)) {
-            links.push({ source, target, group }); // Include the group in the link
-            existingLinks.add(linkKey);
+    
+      if (!nodeType) {
+        console.warn("No nodeType determined for item:", key, item);
+        return; // Skip items with no matching node type
+      }
+    
+      let parent = null;
+    
+      if (graph_type === "standard" || graph_type === "location_group") {
+        // Use secEquipRef or equipRef logic for the last groups: point
+        const groupKeys = Object.keys(groupedMarkers[graph_type]);
+        const lastGroup = groupKeys[groupKeys.length - 1];
+    
+        if (nodeType === lastGroup) {
+          // Check for secEquipRef first, then fallback to equipRef to resolve parent for "point"
+          parent = item.secEquipRef?.fid || item.equipRef?.fid || null;
+    
+          // If secEquip exists, add a link from equip to secEquip
+          if (item.secEquipRef) {
+            const equipParent = item.equipRef?.fid || null;
+            if (equipParent) {
+              const equipLinkKey = `${equipParent}-${item.secEquipRef.fid}`;
+              if (!existingLinks.has(equipLinkKey)) {
+                links.push({
+                  source: equipParent,
+                  target: item.secEquipRef.fid,
+                  group: "secEquip",
+                });
+                existingLinks.add(equipLinkKey);
+              }
+            }
           }
-        };
-        if (item.markers.includes("instalacion") && item.siteRef?.fid) {
-          createUniqueLink(
-            item.siteRef.fid,//Source: Parent node (previous marker in group1)
-            item.fid, // Target: Current node
-            "group1",
-            item.siteRef.fid
-          ); // Link instalacion to site using siteRef.fid
+        } else if (nodeType === "group6") {
+          if (graph_type === "standard") {
+            // Handle "secEquip" logic for standard graph_type
+            parent = item.equipRef?.fid || null; // Equip is parent of secEquip
+          } else if (graph_type === "location_group") {
+            // Handle "equip" logic for location_group graph_type
+            parent = item.instalZoneRef?.fid || null; // Example: Adjust based on location_group structure
+          } else {
+            console.warn(
+              `Unhandled logic for group6 in graph_type: ${graph_type}`
+            );
+            parent = null;
+          }
+        } else {
+          // Resolve parent dynamically for all groups
+          parent = getParentGroup(nodeType, item, groupedMarkers, graph_type);
         }
-        if (item.secEquipRef) {
-          createUniqueLink(
-            item.secEquipRef.fid,
-            item.fid,
-            "group6",
-            item.secEquipRef.fid
-          ); // Connect secEquip to point
-        } else if (item.equipRef) {
-          createUniqueLink(
-            item.equipRef.fid,
-            item.fid,
-            "group5",
-            item.equipRef.fid
-          ); // Connect equip to point if no secEquip
-        } else if (item.tipoEquipoRef) {
-          createUniqueLink(
-            item.tipoEquipoRef.fid,
-            item.fid,
-            "group4",
-            item.tipoEquipoRef.fid
-          ); // Connect tipoEquipo to equip
-        } else if (item.instalZoneRef) {
-          createUniqueLink(
-            item.instalZoneRef.fid,
-            item.fid,
-            "group3",
-            item.instalZoneRef.fid
-          ); // Connect instalZone to tipoEquipo
-        } else if (item.instalacionRef) {
-          createUniqueLink(
-            item.instalacionRef.fid, //Source: Parent node (previous marker)
-            item.fid, // Target: Current node fid
-            "group2",
-            item.instalacionRef.fid  // For grouping logic
-          ); // Connect instalacion to instalZone
+      } else if (graph_type === "bmslytics") {
+        const groupKeys = Object.keys(groupedMarkers[graph_type]);
+        const currentGroupIndex = groupKeys.indexOf(nodeType);
+    
+        if (currentGroupIndex > 0) {
+          // Sequential parent resolution for bmslytics
+          const parentGroup = groupKeys[currentGroupIndex - 1];
+          const markerKey = groupedMarkers[graph_type][parentGroup]?.[0];
+          if (markerKey) {
+            parent = item[`${markerKey}Ref`]?.fid || null;
+          }
+        }
+      }
+    
+      // Add the current node to the nodes array
+      nodes.push({
+        id: item.fid,
+        name: item.navName || item.id || item.locationGroup,
+        group: nodeType,
+        parent,
+      });
+    
+      // Add a link to the parent, if it exists
+      if (parent) {
+        const linkKey = `${parent}-${item.fid}-${nodeType}`;
+        if (!existingLinks.has(linkKey)) {
+          links.push({ source: parent, target: item.fid, group: nodeType });
+          existingLinks.add(linkKey);
         }
       }
     });
-
+    
     return { nodes, links };
-  };
+  }
+  
 
   const textWidth = (text) => {
     // Create a temporary canvas to perform the measurement
@@ -291,7 +337,7 @@ const Graph = ({
     // Step 4: Calculates the number of pixels to add to center the graph
     const foundNode = nodes.find((node) => node.id === elementsWithMaxY[0][0]);
 
-    extraWidth = textWidth(foundNode.name);
+    // extraWidth = textWidth(foundNode.name);                  //COMMENTED CODE BECAUSE NAME RETURNS UNDEFINED
 
     let initColumnMaxY = 0;
     // Step5: If there are more than 8 elements, recalculate their positions
@@ -519,7 +565,6 @@ const Graph = ({
     setSelectedNodeId(node.id);
     setSelectedNodeGroup(node.group);
   };
-  
 
   // Function to close the Modal
   const handleCloseModal = () => {
@@ -609,13 +654,13 @@ const Graph = ({
       {/* Container for NodeCard to scroll inside */}
       <div className="w-1/3 h-full overflow-hidden">
         {nodeJsonFound && (
-          <NodeCard 
-          node={nodeJsonFound} 
-          on_close={handleCloseModal}
-          grouped_markers={groupedMarkers}
-          get_color_for_node={getColorForNode}
-          graph_type={graph_type}
-          selected_node_group={selectedNodeGroup}
+          <NodeCard
+            node={nodeJsonFound}
+            on_close={handleCloseModal}
+            grouped_markers={groupedMarkers}
+            get_color_for_node={getColorForNode}
+            graph_type={graph_type}
+            selected_node_group={selectedNodeGroup}
           />
         )}
       </div>
