@@ -1,0 +1,476 @@
+{
+    "ContElecExt": {
+        "dis": "ContElecExt",
+        "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+        "id": "ContElecExt",
+        "locationGroup": "ContElecExt",
+        "markers": [],
+        "model_name": "rivas"
+    },
+    "ContElecExt CM-007_AlumbPub": {
+        "area": "100m2",
+        "areaHVAC": "100m2",
+        "avgOccupancy": "1",
+        "climaticZone": "D3",
+        "disMacro": "$locationGroupRef $navName",
+        "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+        "geoAddr": "Calle_Alicia_Alonso_3",
+        "geoCity": "Mejorada_Del_Campo",
+        "geoCountry": "ES",
+        "geoState": "Madrid",
+        "id": "ContElecExt CM-007_AlumbPub",
+        "kwhRate": "0.2",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "site"
+        ],
+        "model_name": "rivas",
+        "navName": "CM-007_AlumbPub",
+        "operatingRegion": "Centro",
+        "siteType": "AlumbradoPublico",
+        "tz": "Madrid",
+        "yearlyElecEnerConsumption": "1kWh",
+        "yearlyEnerConsumption": "1kWh"
+    },
+    "ContElecExt CM-007_AlumbPub Clima": {
+        "disMacro": "$siteRef $navName",
+        "fid": "p:{}:r:4316c769-aaa7-3563-a931-dcc39318a641",
+        "id": "ContElecExt CM-007_AlumbPub Clima",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "clima",
+            "hvac",
+            "instalacion"
+        ],
+        "model_name": "rivas",
+        "navName": "Clima",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Clima Clima": {
+        "disMacro": "$siteRef $navName",
+        "fid": "p:{}:r:0cb8b282-0e74-3b9e-b0fd-42c54028a90b",
+        "id": "ContElecExt CM-007_AlumbPub Clima Clima",
+        "instalacionRef": {
+            "fid": "p:{}:r:4316c769-aaa7-3563-a931-dcc39318a641",
+            "repr": "ContElecExt CM-007_AlumbPub Clima"
+        },
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "instalZone"
+        ],
+        "model_name": "rivas",
+        "navName": "Clima",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Clima Clima CondExt": {
+        "disMacro": "$instalZoneRef $navName",
+        "fid": "p:{}:r:76ca57b7-2e5b-34c3-848a-422a77a8a708",
+        "id": "ContElecExt CM-007_AlumbPub Clima Clima CondExt",
+        "instalZoneRef": {
+            "fid": "p:{}:r:0cb8b282-0e74-3b9e-b0fd-42c54028a90b",
+            "repr": "ContElecExt CM-007_AlumbPub Clima Clima"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:4316c769-aaa7-3563-a931-dcc39318a641",
+            "repr": "ContElecExt CM-007_AlumbPub Clima"
+        },
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "tipoEquipo"
+        ],
+        "model_name": "rivas",
+        "navName": "CondExt",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Clima Clima CondExt ..": {
+        "consumptionOn": "0kWh",
+        "disMacro": "$tipoEquipoRef $navName",
+        "fid": "p:{}:r:02dc025a-f936-3c6e-bc71-5462118a2a8a",
+        "id": "ContElecExt CM-007_AlumbPub Clima Clima CondExt ..",
+        "instalZoneRef": {
+            "fid": "p:{}:r:0cb8b282-0e74-3b9e-b0fd-42c54028a90b",
+            "repr": "ContElecExt CM-007_AlumbPub Clima Clima"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:4316c769-aaa7-3563-a931-dcc39318a641",
+            "repr": "ContElecExt CM-007_AlumbPub Clima"
+        },
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "air",
+            "condext",
+            "conditions",
+            "equip",
+            "outside",
+            "zone"
+        ],
+        "model_name": "rivas",
+        "navName": "..",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        },
+        "tipoEquipoRef": {
+            "fid": "p:{}:r:76ca57b7-2e5b-34c3-848a-422a77a8a708",
+            "repr": "ContElecExt CM-007_AlumbPub Clima Clima CondExt"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Elec": {
+        "disMacro": "$siteRef $navName",
+        "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+        "id": "ContElecExt CM-007_AlumbPub Elec",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "elec",
+            "instalacion",
+            "lowVoltage"
+        ],
+        "model_name": "rivas",
+        "navName": "Elec",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Elec Elec": {
+        "disMacro": "$siteRef $navName",
+        "fid": "p:{}:r:410693e2-efbf-3c0d-9636-fc0a8c240532",
+        "id": "ContElecExt CM-007_AlumbPub Elec Elec",
+        "instalacionRef": {
+            "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+            "repr": "ContElecExt CM-007_AlumbPub Elec"
+        },
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "instalZone"
+        ],
+        "model_name": "rivas",
+        "navName": "Elec",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Elec Elec CGBT": {
+        "disMacro": "$instalZoneRef $navName",
+        "fid": "p:{}:r:88ca10d3-e668-3a2c-abca-460406d5759f",
+        "id": "ContElecExt CM-007_AlumbPub Elec Elec CGBT",
+        "instalZoneRef": {
+            "fid": "p:{}:r:410693e2-efbf-3c0d-9636-fc0a8c240532",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+            "repr": "ContElecExt CM-007_AlumbPub Elec"
+        },
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "tipoEquipo"
+        ],
+        "model_name": "rivas",
+        "navName": "CGBT",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        }
+    },
+    "ContElecExt CM-007_AlumbPub Elec Elec CGBT ..": {
+        "consumptionOn": "0kWh",
+        "cups": "ES0022000008807208WN1P",
+        "disMacro": "$tipoEquipoRef $navName",
+        "fid": "p:{}:r:60be02c2-6da9-3736-b3e7-fe113cfa06da",
+        "id": "ContElecExt CM-007_AlumbPub Elec Elec CGBT ..",
+        "instalZoneRef": {
+            "fid": "p:{}:r:410693e2-efbf-3c0d-9636-fc0a8c240532",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+            "repr": "ContElecExt CM-007_AlumbPub Elec"
+        },
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "cgbt",
+            "elec",
+            "elecPanel",
+            "equip",
+            "meter",
+            "panel",
+            "siteMeter",
+            "sitePanel"
+        ],
+        "model_name": "rivas",
+        "navName": "..",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        },
+        "tipoEquipoRef": {
+            "fid": "p:{}:r:88ca10d3-e668-3a2c-abca-460406d5759f",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT"
+        }
+    },
+    "Rivas AytoRivas /Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct": {
+        "bmsUri": "SRC_DATA_QUALITY_PROC:/AytoRivas/CM$2d007$2eCElec$2eEneAct",
+        "disMacro": "$equipRef $navName",
+        "equipRef": {
+            "fid": "p:{}:r:60be02c2-6da9-3736-b3e7-fe113cfa06da",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT .."
+        },
+        "fid": "p:{}:r:b04de0e8-f21a-3595-b7d9-35de695e847f",
+        "hisMode": "consumption",
+        "hisOnWrite": "howConvertTz",
+        "id": "Rivas AytoRivas /Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct",
+        "instalZoneRef": {
+            "fid": "p:{}:r:410693e2-efbf-3c0d-9636-fc0a8c240532",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+            "repr": "ContElecExt CM-007_AlumbPub Elec"
+        },
+        "kind": "Number",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "analytics",
+            "clean",
+            "elec",
+            "eneract",
+            "energy",
+            "his",
+            "hisTotalized",
+            "kwh",
+            "occupied",
+            "point",
+            "sensor"
+        ],
+        "maxInacTime": "1000",
+        "model_name": "rivas",
+        "navName": "EnerAct",
+        "pointType": "eneract",
+        "pointTypeDis": "EnerAct",
+        "pointUri": "/Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct",
+        "sampleRate": "15min",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        },
+        "stationName": "AytoRivas",
+        "tipoEquipoRef": {
+            "fid": "p:{}:r:88ca10d3-e668-3a2c-abca-460406d5759f",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT"
+        },
+        "tz": "Madrid",
+        "unit": "kWh"
+    },
+    "Rivas AytoRivas__RAW /Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct": {
+        "bmsUri": "/AytoRivas/CM$2d007$2eCElec$2eEneAct",
+        "cleanRef": {
+            "fid": "p:{}:r:b04de0e8-f21a-3595-b7d9-35de695e847f",
+            "repr": "Rivas|AytoRivas|/Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct"
+        },
+        "disMacro": "$equipRef $navName",
+        "equipRef": {
+            "fid": "p:{}:r:60be02c2-6da9-3736-b3e7-fe113cfa06da",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT .."
+        },
+        "fid": "p:{}:r:3a619446-f668-35a2-ba89-109a11675148",
+        "hisMode": "consumption",
+        "hisOnWrite": "howConvertTz",
+        "id": "Rivas AytoRivas__RAW /Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct",
+        "instalZoneRef": {
+            "fid": "p:{}:r:410693e2-efbf-3c0d-9636-fc0a8c240532",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+            "repr": "ContElecExt CM-007_AlumbPub Elec"
+        },
+        "kind": "Number",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "analytics",
+            "elec",
+            "eneract__raw",
+            "energy",
+            "hidden",
+            "his",
+            "hisTotalized",
+            "kwh",
+            "point",
+            "raw",
+            "sensor"
+        ],
+        "maxInacTime": "1000",
+        "model_name": "rivas",
+        "navName": "EnerAct__RAW",
+        "pointType": "eneract__raw",
+        "pointTypeDis": "EnerAct__RAW",
+        "pointUri": "/Drivers/ModbusTcpNetwork3/ContElecExt/AlumbPub/CM$2d007/Cirwatt/points/CElec/EneAct",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        },
+        "stationName": "AytoRivas__RAW",
+        "tipoEquipoRef": {
+            "fid": "p:{}:r:88ca10d3-e668-3a2c-abca-460406d5759f",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT"
+        },
+        "tz": "Madrid",
+        "unit": "kWh"
+    },
+    "Rivas Rivas_FREE ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Clima/CondExt/GradosDia_FREE": {
+        "bmsUri": "ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Clima/CondExt/GradosDia_FREE",
+        "disMacro": "$equipRef $navName",
+        "equipRef": {
+            "fid": "p:{}:r:02dc025a-f936-3c6e-bc71-5462118a2a8a",
+            "repr": "ContElecExt CM-007_AlumbPub Clima Clima CondExt .."
+        },
+        "fid": "p:{}:r:4f17dce5-0fb9-3b8b-a75a-15bb09289367",
+        "hisFunc": "hisFuncVirtualDegreeDay",
+        "hisMode": "cov",
+        "hisOnWrite": "howConvertTz",
+        "id": "Rivas Rivas_FREE ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Clima/CondExt/GradosDia_FREE",
+        "instalZoneRef": {
+            "fid": "p:{}:r:0cb8b282-0e74-3b9e-b0fd-42c54028a90b",
+            "repr": "ContElecExt CM-007_AlumbPub Clima Clima"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:4316c769-aaa7-3563-a931-dcc39318a641",
+            "repr": "ContElecExt CM-007_AlumbPub Clima"
+        },
+        "kind": "Number",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "lowBound": "-43",
+        "lowBoundClass": "-28",
+        "markers": [
+            "air",
+            "analytics",
+            "demand",
+            "energy",
+            "gradosdia_free",
+            "his",
+            "outside",
+            "point",
+            "sensor",
+            "virtual"
+        ],
+        "maxInacTime": "1000",
+        "model_name": "rivas",
+        "navName": "GradosDia_FREE",
+        "pointType": "gradosdia_free",
+        "pointTypeDis": "GradosDia_FREE",
+        "pointUri": "ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Clima/CondExt/GradosDia_FREE",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        },
+        "stationName": "Rivas_FREE",
+        "tipoEquipoRef": {
+            "fid": "p:{}:r:76ca57b7-2e5b-34c3-848a-422a77a8a708",
+            "repr": "ContElecExt CM-007_AlumbPub Clima Clima CondExt"
+        },
+        "tz": "Madrid",
+        "unit": "°daysC",
+        "upBound": "42",
+        "upBoundClass": "27"
+    },
+    "Rivas Rivas_FREE ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Elec/CGBT/OcupEner_FREE": {
+        "bmsUri": "ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Elec/CGBT/OcupEner_FREE",
+        "disMacro": "$equipRef $navName",
+        "enum": "Desocup,Ocup",
+        "equipRef": {
+            "fid": "p:{}:r:60be02c2-6da9-3736-b3e7-fe113cfa06da",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT .."
+        },
+        "fid": "p:{}:r:8ba818fe-47ce-377d-9a70-192ff5c54fa7",
+        "hisFunc": "hisFuncOcupEner",
+        "hisOnWrite": "howConvertTz",
+        "id": "Rivas Rivas_FREE ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Elec/CGBT/OcupEner_FREE",
+        "instalZoneRef": {
+            "fid": "p:{}:r:410693e2-efbf-3c0d-9636-fc0a8c240532",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec"
+        },
+        "instalacionRef": {
+            "fid": "p:{}:r:2f4ea590-50e0-3b72-a0ce-a9ebd701a320",
+            "repr": "ContElecExt CM-007_AlumbPub Elec"
+        },
+        "kind": "Bool",
+        "locationGroupRef": {
+            "fid": "p:{}:r:2f8dd31e-3dd0-3fdb-b3dd-61322ae73427",
+            "repr": "ContElecExt"
+        },
+        "markers": [
+            "analytics",
+            "elec",
+            "his",
+            "occ",
+            "ocupener_free",
+            "point",
+            "run",
+            "swp",
+            "virtual"
+        ],
+        "maxInacTime": "1000",
+        "model_name": "rivas",
+        "navName": "OcupEner_FREE",
+        "pointType": "ocupener_free",
+        "pointTypeDis": "OcupEner_FREE",
+        "pointUri": "ETL:/calculated/Rivas/CM-007_AlumbPub/Rivas_FREE/histories/Elec/CGBT/OcupEner_FREE",
+        "siteRef": {
+            "fid": "p:{}:r:c92098c0-2435-35bd-a047-faad68e9745c",
+            "repr": "ContElecExt CM-007_AlumbPub"
+        },
+        "stationName": "Rivas_FREE",
+        "tipoEquipoRef": {
+            "fid": "p:{}:r:88ca10d3-e668-3a2c-abca-460406d5759f",
+            "repr": "ContElecExt CM-007_AlumbPub Elec Elec CGBT"
+        },
+        "tz": "Madrid"
+    }
+}

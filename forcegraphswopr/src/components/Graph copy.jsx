@@ -99,7 +99,7 @@ const Graph = ({
       return acc;
     },
     {}
-);
+  );
 
   const getColorForNode = {
     standard: {
@@ -135,68 +135,48 @@ const Graph = ({
     const links = [];
     // Store existing links to avoid duplicates
     const existingLinks = new Set();
-    Object.keys(json_data).forEach((key, item) => {
+    Object.keys(json_data).forEach((key) => {
       const item = json_data[key];
       // Ensure the item has a 'fid' before processing
       if (!item || !item.fid) {
         console.error(`Skipping item with missing fid:`, item);
         return; // Skip this item if 'fid' is missing
       }
-
-      // Find the group, nodeType based on markers 
       const nodeType = Object.keys(groupedMarkers[graph_type]).find((group) =>
-        groupedMarkers[graph_type][group]?.some(
-          (marker) => item.markers?.includes(marker)
+        groupedMarkers[graph_type][group].some(
+          (marker) => item.markers && item.markers.includes(marker)
         )
       );
-      
-      // Helper function to determine parent based on group           NEW NEW
-      
-      // Get the parent group dynamically
-    const parent = nodeType ? getParentGroup(nodeType, item, groupedMarkers, graph_type) : null;
 
-    // Add the current node to the nodes array
-    nodes.push({
-      id: item.fid,
-      name: item.navName || "Unnamed Node",
-      group: nodeType,
-      parent,
-    });
-
-
-      // const getParentGroup = (nodeType) => {
-      //   if (nodeType === "group2") {
-      //     return item.siteRef.fid;
-      //   } else if (nodeType === "group3") {
-      //     return item.instalacionRef.fid;
-      //   } else if (nodeType === "group4") {
-      //     return item.instalZoneRef.fid;
-      //   } else if (nodeType === "group5") {
-      //     return item.tipoEquipoRef.fid;
-      //   } else if (nodeType === "group6") {
-      //     return item.equipRef.fid;
-      //   } else if (nodeType === "group7") {
-      //     if (item.secEquipRef?.fid) {
-      //       return item.secEquipRef.fid;
-      //     } else {
-      //       return item.equipRef.fid;
-      //     }
-      //   }
-      // };
-
-      
+      // Helper function to determine parent based on group
+      const getParentGroup = (nodeType) => {
+        if (nodeType === "group2") {
+          return item.siteRef.fid;
+        } else if (nodeType === "group3") {
+          return item.instalacionRef.fid;
+        } else if (nodeType === "group4") {
+          return item.instalZoneRef.fid;
+        } else if (nodeType === "group5") {
+          return item.tipoEquipoRef.fid;
+        } else if (nodeType === "group6") {
+          return item.equipRef.fid;
+        } else if (nodeType === "group7") {
+          if (item.secEquipRef?.fid) {
+            return item.secEquipRef.fid;
+          } else {
+            return item.equipRef.fid;
+          }
+        }
+      };
 
       if (nodeType) {
         // Create the node
         nodes.push({
           id: item.fid, // Unique identifier for the node
-          name: item.navName, 
+          name: item.navName,
           group: nodeType,
           parent: getParentGroup(nodeType), // To reference the parent node
         });
-
-
-
         // Helper function to create unique links
         const createUniqueLink = (source, target, group) => {
           const linkKey = `${source}-${target}-${group}`;
@@ -205,15 +185,55 @@ const Graph = ({
             existingLinks.add(linkKey);
           }
         };
-        if (parent) {
-          const linkKey = `${parent}-${item.fid}-${nodeType}`;
-          if (!existingLinks.has(linkKey)) {
-            links.push({ source: parent, target: item.fid, group: nodeType });
-            existingLinks.add(linkKey);
-          }
-        };
+        if (item.markers.includes("instalacion") && item.siteRef?.fid) {
+          createUniqueLink(
+            item.siteRef.fid,//Source: Parent node (previous marker in group1)
+            item.fid, // Target: Current node
+            "group1",
+            item.siteRef.fid
+          ); // Link instalacion to site using siteRef.fid
+        }
+        if (item.secEquipRef) {
+          createUniqueLink(
+            item.secEquipRef.fid,
+            item.fid,
+            "group6",
+            item.secEquipRef.fid
+          ); // Connect secEquip to point
+        } else if (item.equipRef) {
+          createUniqueLink(
+            item.equipRef.fid,
+            item.fid,
+            "group5",
+            item.equipRef.fid
+          ); // Connect equip to point if no secEquip
+        } else if (item.tipoEquipoRef) {
+          createUniqueLink(
+            item.tipoEquipoRef.fid,
+            item.fid,
+            "group4",
+            item.tipoEquipoRef.fid
+          ); // Connect tipoEquipo to equip
+        } else if (item.instalZoneRef) {
+          createUniqueLink(
+            item.instalZoneRef.fid,
+            item.fid,
+            "group3",
+            item.instalZoneRef.fid
+          ); // Connect instalZone to tipoEquipo
+        } else if (item.instalacionRef) {
+          createUniqueLink(
+            item.instalacionRef.fid, //Source: Parent node (previous marker)
+            item.fid, // Target: Current node fid
+            "group2",
+            item.instalacionRef.fid  // For grouping logic
+          ); // Connect instalacion to instalZone
+        }
+      }
+    });
+
     return { nodes, links };
-    }});
+  };
 
   const textWidth = (text) => {
     // Create a temporary canvas to perform the measurement
@@ -271,7 +291,7 @@ const Graph = ({
     // Step 4: Calculates the number of pixels to add to center the graph
     const foundNode = nodes.find((node) => node.id === elementsWithMaxY[0][0]);
 
-    // extraWidth = textWidth(foundNode.name);
+    extraWidth = textWidth(foundNode.name);
 
     let initColumnMaxY = 0;
     // Step5: If there are more than 8 elements, recalculate their positions

@@ -1,4 +1,4 @@
-import Graph from "./Graph.jsx";
+import Graph from "./GraphAdapt.jsx";
 import { useEffect, useState } from "react";
 
 
@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/dataDis.json")
+    fetch("../../server/db.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -28,7 +28,7 @@ const Home = () => {
         background_color={"#fdfdfd"}
         link_color={"#BDBDBD"}
         label_color={"#0000FF"} 
-        graph_type={"standard"} // Three types of graphs depending on the data type: standard, location_group, bmslytics
+        graph_type={"standard"} // Three types of db: standard, location_group, bmslytics
       />
       </div>
     </div>
