@@ -85,7 +85,7 @@ const Graph = ({
     },
 
     bmslytics: {
-      group1: ["BMS"],
+      group1: ["bms"],
       group2: ["station"],
       group3: ["controller"],
       group4: ["point"],
@@ -210,12 +210,10 @@ const Graph = ({
         return; // Skip items with no matching node type
       }
     
-      
-      // For the last groups: "point" in bmslytics and standard graph_type
       let parent = null;
     
       if (graph_type === "standard" || graph_type === "location_group") {
-        // Use secEquipRef or equipRef logic for the last group
+        // Use secEquipRef or equipRef logic for the last groups: point
         const groupKeys = Object.keys(groupedMarkers[graph_type]);
         const lastGroup = groupKeys[groupKeys.length - 1];
     
@@ -253,7 +251,7 @@ const Graph = ({
           }
         } else {
           // Resolve parent dynamically for other groups
-          parent = getParentGroup(nodeType, item, groupedMarkers, graph_type);
+          parent = getParentGroup({nodeType}, item, groupedMarkers, graph_type);
         }
       } else if (graph_type === "bmslytics") {
         const groupKeys = Object.keys(groupedMarkers[graph_type]);
