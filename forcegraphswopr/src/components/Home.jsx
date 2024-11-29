@@ -1,4 +1,4 @@
-import Graph from "./GraphAdapt.jsx";
+import Graph from "./Graph.jsx";
 import { useEffect, useState } from "react";
 
 
@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/locationGroup.json")
+    fetch("../../server/db_tenenciaNuevaRivas.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

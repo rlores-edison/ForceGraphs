@@ -36,97 +36,106 @@ const NodeCard = ({
 
     return (
       <form>
-        {Object.entries(data).map(
-          ([key, value]) => (
-            console.log(key, value),
-            (
-              <div key={key} className="h-full">
-                <label className="font-bold mr-4">{key}</label>
+  {Object.entries(data).map(([key, value]) => {
+    // Check if markers exist in arrayNodeType
+    const shouldRenderMarkers =
+      key === "markers" &&
+      Array.isArray(value) &&
+      defaultMarker !== -1 &&
+      value.length > 0;
 
-                {/* Button to copy data to clipboard */}
-                {[
-                  "instalacionRef",
-                  "siteRef",
-                  "tipoEquipoRef",
-                  "instalZoneRef",
-                  "fid",
-                  "equipRef",
-                  "secEquipRef",
-                  "cleanRef",
-                ].includes(key) && (
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(value)}
-                    className="bg-gray-200 hover:bg-blue-900 hover:text-white text-gray-600 py-1 px-3 rounded-lg ml-1"
-                    title="Copy to clipboard"
-                  >
-                    Copy
-                  </button>
-                )}
+    const shouldRenderInputField =
+      key !== "markers" || (key === "markers" && shouldRenderMarkers);
 
-                {/* Dropdown list for markers, with node marker as default */}
-                {key === "markers" && Array.isArray(value) ? (
-                  <select
-                    id="markers-list"
-                    defaultValue={nodeData.markers[defaultMarker]}
-                    className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white"
-                  >
-                    {value.map((marker, index) => (
-                      <option key={index} value={marker}>
-                        {marker}
-                      </option>
-                    ))}
-                  </select>
-                ) : typeof value === "object" &&
-                value !== null &&
-                Object.keys(value).includes("fid") &&
-                Object.keys(value).includes("repr") ? (
-                  <div className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white">
-                    {/* Row for fid */}
-                    <div className="flex items-center mb-2">
-                      <p className="font-bold mr-2">fid:</p>
-                      <input
-                        type="text"
-                        value={value.fid}
-                        readOnly
-                        className="flex-grow p-1 rounded w-full"
-                        title={value.fid} // Tooltip for full visibility on hover
-                      />
-                    </div>
-                
-                    {/* Row for repr */}
-                    <div className="flex items-center">
-                      <p className="font-bold mr-2">repr:</p>
-                      <input
-                        type="text"
-                        value={value.repr}
-                        readOnly
-                        className="flex-grow p-1 rounded w-full"
-                        title={value.repr} // Tooltip for full visibility on hover
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <input
-                    type="text"
-                    value={
-                      typeof value === "object" && value !== null
-                        ? JSON.stringify(value)
-                        : value
-                    }
-                    readOnly
-                    className="border p-2 rounded w-full mt-1 mb-3 border-gray-300"
-                  />
-                )}
-              </div>
-            )
-          )
+    return (
+      <div key={key} className="h-full">
+        {/* Render label only for valid keys */}
+        {shouldRenderInputField && <label className="font-bold mr-4">{key}</label>}
+
+        {/* Button to copy data to clipboard */}
+        {[
+          "locationGroupRef",
+          "siteRef",
+          "instalacionRef",
+          "instalZoneRef",
+          "tipoEquipoRef",
+          "equipRef",
+          "secEquipRef",
+          "cleanRef",
+          "fid",
+        ].includes(key) && (
+          <button
+            type="button"
+            onClick={() => handleCopy(value)}
+            className="bg-gray-200 hover:bg-blue-900 hover:text-white text-gray-600 py-1 px-3 rounded-lg ml-1"
+            title="Copy to clipboard"
+          >
+            Copy
+          </button>
         )}
-      </form>
+
+        {/* Render markers dropdown only if markers exist in arrayNodeType */}
+        {shouldRenderMarkers ? (
+          <select
+            id="markers-list"
+            defaultValue={nodeData.markers[defaultMarker]}
+            className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white"
+          >
+            {value.map((marker, index) => (
+              <option key={index} value={marker}>
+                {marker}
+              </option>
+            ))}
+          </select>
+        ) : typeof value === "object" &&
+          value !== null &&
+          Object.keys(value).includes("fid") &&
+          Object.keys(value).includes("repr") ? (
+          <div className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white">
+            {/* Row for fid */}
+            <div className="flex items-center mb-2">
+              <p className="font-bold mr-2">fid:</p>
+              <input
+                type="text"
+                value={value.fid}
+                readOnly
+                className="flex-grow p-1 rounded w-full"
+                title={value.fid}
+              />
+            </div>
+
+            {/* Row for repr */}
+            <div className="flex items-center">
+              <p className="font-bold mr-2">repr:</p>
+              <input
+                type="text"
+                value={value.repr}
+                readOnly
+                className="flex-grow p-1 rounded w-full"
+                title={value.repr}
+              />
+            </div>
+          </div>
+        ) : shouldRenderInputField ? (
+          <input
+            type="text"
+            value={
+              typeof value === "object" && value !== null
+                ? JSON.stringify(value)
+                : value
+            }
+            readOnly
+            className="border p-2 rounded w-full mt-1 mb-3 border-gray-300"
+          />
+        ) : null}
+      </div>
+    );
+  })}
+</form>
     );
   };
 
-  // Card title
+  // Card title on top
   const widthName = (
     node,
     get_color_for_node,
@@ -142,7 +151,7 @@ const NodeCard = ({
     if (id.length > 50) {
       id = id.substring(0, 47) + "...";
     }
-    // Add color to the first line of card title - marker - based on the node group
+    // Add color to the first line of card title - marker - based on node group
     const color = get_color_for_node[graph_type]?.[selected_node_group];
     return (
       <div className="text-center">
