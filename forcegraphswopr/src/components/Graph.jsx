@@ -234,7 +234,7 @@ const Graph = ({
             parent = item.equipRef?.fid || null; // Equip is parent of secEquip
           } else if (graph_type === "location_group") {
             // Handle "equip" logic for location_group graph_type
-            parent = item.instalZoneRef?.fid || null; // Example: Adjust based on location_group structure
+            parent = item.tipoEquipoRef?.fid || null; // Example: Adjust based on location_group structure
           } else {
             console.warn(
               `Unhandled logic for group6 in graph_type: ${graph_type}`
