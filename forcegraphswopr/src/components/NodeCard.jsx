@@ -24,8 +24,10 @@ const NodeCard = ({
     arrayNodeType.includes(item)
   );
 
+
   const FormDisplay = ({ data }) => {
     const handleCopy = (value) => {
+      
       // Convert value from object to string
       const textToCopy =
         typeof value === "object" && value !== null
@@ -34,104 +36,112 @@ const NodeCard = ({
       navigator.clipboard.writeText(textToCopy);
     };
 
+
     return (
       <form>
-  {Object.entries(data).map(([key, value]) => {
-    // Check if markers exist in arrayNodeType
-    const shouldRenderMarkers =
-      key === "markers" &&
-      Array.isArray(value) &&
-      defaultMarker !== -1 &&
-      value.length > 0;
+        {Object.entries(data).map(([key, value]) => {
+          // Check if markers exist in arrayNodeType
+          const shouldRenderMarkers =
+            key === "markers" &&
+            Array.isArray(value) &&
+            defaultMarker !== -1 &&
+            value.length > 0;
 
-    const shouldRenderInputField =
-      key !== "markers" || (key === "markers" && shouldRenderMarkers);
+          const shouldRenderInputField =
+            key !== "markers" || (key === "markers" && shouldRenderMarkers);
 
-    return (
-      <div key={key} className="h-full">
-        {/* Render label only for valid keys */}
-        {shouldRenderInputField && <label className="font-bold mr-4">{key}</label>}
 
-        {/* Button to copy data to clipboard */}
-        {[
-          "locationGroupRef",
-          "siteRef",
-          "instalacionRef",
-          "instalZoneRef",
-          "tipoEquipoRef",
-          "equipRef",
-          "secEquipRef",
-          "cleanRef",
-          "fid",
-        ].includes(key) && (
-          <button
-            type="button"
-            onClick={() => handleCopy(value)}
-            className="bg-gray-200 hover:bg-blue-900 hover:text-white text-gray-600 py-1 px-3 rounded-lg ml-1"
-            title="Copy to clipboard"
-          >
-            Copy
-          </button>
-        )}
+          return (
+            <div key={key} className="h-full">
+              {/* Render label only for valid keys */}
+              {shouldRenderInputField && (
+                <label className="font-bold mr-4">{key}</label>
+              )}
 
-        {/* Render markers dropdown only if markers exist in arrayNodeType */}
-        {shouldRenderMarkers ? (
-          <select
-            id="markers-list"
-            defaultValue={nodeData.markers[defaultMarker]}
-            className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white"
-          >
-            {value.map((marker, index) => (
-              <option key={index} value={marker}>
-                {marker}
-              </option>
-            ))}
-          </select>
-        ) : typeof value === "object" &&
-          value !== null &&
-          Object.keys(value).includes("fid") &&
-          Object.keys(value).includes("repr") ? (
-          <div className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white">
-            {/* Row for fid */}
-            <div className="flex items-center mb-2">
-              <p className="font-bold mr-2">fid:</p>
-              <input
-                type="text"
-                value={value.fid}
-                readOnly
-                className="flex-grow p-1 rounded w-full"
-                title={value.fid}
-              />
+              {/* Button to copy data to clipboard */}
+              {[
+                "locationGroupRef",
+                "siteRef",
+                "instalacionRef",
+                "instalZoneRef",
+                "tipoEquipoRef",
+                "equipRef",
+                "secEquipRef",
+                "cleanRef",
+                "fid",
+              ].includes(key) && (
+                <button
+                  type="button"
+                  onClick={() => handleCopy(value)}
+                  className="bg-gray-200 hover:bg-blue-900 hover:text-white text-gray-600 py-1 px-3 rounded-lg ml-1"
+                  title="Copy to clipboard"
+                >
+                  Copy
+                </button>
+              )}
+
+              {/* Render markers as a bulleted list in two columns */}
+              {shouldRenderMarkers ? (
+                <div
+                  className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                    gap: "10px",
+                  }}
+                >
+                  {value.map((marker, index) => (
+                    <div key={index} className="flex items-start">
+                      <span className="mr-2">•</span>
+                      <span>{marker}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : typeof value === "object" &&
+                value !== null &&
+                Object.keys(value).includes("fid") &&
+                Object.keys(value).includes("repr") ? (
+                <div className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white">
+                  {/* Row for fid */}
+                  <div className="flex items-center mb-2">
+                    <p className="font-bold mr-2">fid:</p>
+                    <input
+                      type="text"
+                      value={value.fid}
+                      readOnly
+                      className="flex-grow p-1 rounded w-full"
+                      title={value.fid}
+                    />
+                  </div>
+
+                  {/* Row for repr */}
+                  <div className="flex items-center">
+                    <p className="font-bold mr-2">repr:</p>
+                    <input
+                      type="text"
+                      value={value.repr}
+                      readOnly
+                      className="flex-grow p-1 rounded w-full"
+                      title={value.repr}
+                    />
+                  </div>
+                </div>
+              ) : shouldRenderInputField ? (
+                <input
+                  type="text"
+                  value={
+                    typeof value === "object" && value !== null
+                      ? JSON.stringify(value)
+                      : value
+                  }
+                  readOnly
+                  className="border p-2 rounded w-full mt-1 mb-3 border-gray-300"
+                />
+              ) : null}
             </div>
-
-            {/* Row for repr */}
-            <div className="flex items-center">
-              <p className="font-bold mr-2">repr:</p>
-              <input
-                type="text"
-                value={value.repr}
-                readOnly
-                className="flex-grow p-1 rounded w-full"
-                title={value.repr}
-              />
-            </div>
-          </div>
-        ) : shouldRenderInputField ? (
-          <input
-            type="text"
-            value={
-              typeof value === "object" && value !== null
-                ? JSON.stringify(value)
-                : value
-            }
-            readOnly
-            className="border p-2 rounded w-full mt-1 mb-3 border-gray-300"
-          />
-        ) : null}
-      </div>
-    );
-  })}
-</form>
+          );
+        })}
+      </form>
     );
   };
 
@@ -145,14 +155,17 @@ const NodeCard = ({
     const name = node.markers[defaultMarker];
     let id = node.id;
 
-    // Split the name into two lines
+    // Split the name in two lines
     const firstLine = `${name}`;
     const secondLine = `${id}`;
     if (id.length > 50) {
       id = id.substring(0, 47) + "...";
     }
+
     // Add color to the first line of card title - marker - based on node group
     const color = get_color_for_node[graph_type]?.[selected_node_group];
+
+
     return (
       <div className="text-center">
         <p>
@@ -164,6 +177,7 @@ const NodeCard = ({
       </div>
     );
   };
+
 
   return (
     <div>
