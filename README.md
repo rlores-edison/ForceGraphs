@@ -7,7 +7,7 @@ This project enhances graph visualization with components:
 ### Graph
 - Renders graphs dynamically from different data sets.
 - Data management: JSON data is the input for nodeJsonFound, data is transformed to be used by the graph - typeOfNode
-- Custom tooltip on node hover. Takes into account changes in graph dimensions - node coordinates - and vieport coords
+- Custom tooltip on node hover. Takes into account changes in graph dimensions - node coordinates - and viewport coords
 
 ### NodeCard
 - On node right-click, node details are displayed on the right hand side
