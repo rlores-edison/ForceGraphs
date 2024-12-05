@@ -15,6 +15,8 @@ const Graph = ({
   const [graphDataFull, setGraphDataFull] = useState({ nodes: [], links: [] });
   const [collapsedNodes, setCollapsedNodes] = useState({});
   const [nodeJsonFound, setNodeJsonFound] = useState(null);
+  const [hoveredNode, setHoveredNode] = useState(null);
+
 
   // State to store the Ids of right-clicked nodes
   const [selectedNodeId, setSelectedNodeId] = useState([]);
@@ -61,6 +63,7 @@ const Graph = ({
     }
   }, [json_data, graph_type]);
 
+
   // Adapt to different data structures
   const groupedMarkers = {
     standard: {
@@ -95,7 +98,7 @@ const Graph = ({
   const groupToMarkerMap = Object.entries(groupedMarkers[graph_type]).reduce(
     (acc, [group, markers]) => {
       markers.forEach((marker) => {
-        acc[group] = marker; // Reverse mapping of groupedMarkers to make it easy to access the marker by the node.group to display the marker in the node label.
+        acc[group] = marker; // Reverse mapping of groupedMarkers to make it easy to access the marker by the node.group; to display the marker in the node label.
       });
       return acc;
     },
@@ -130,7 +133,6 @@ const Graph = ({
     },
   };
 
-  
 
   // Function to adapt the database data into the graph format
   const adaptDbToGraph = (json_data, groupedMarkers, graph_type) => {
@@ -141,78 +143,83 @@ const Graph = ({
     // Get the last group dynamically from groupedMarkers for the current graph_type
     const groupKeys = Object.keys(groupedMarkers[graph_type]);
     const lastGroup = groupKeys[groupKeys.length - 1]; // identify it for parents' links (secEquip & equip) logic for point nodes
- 
+
     Object.entries(json_data).forEach(([key, item]) => {
+      
       // Validate item structure
       if (!item.fid) {
         console.error("Skipping item with missing fid:", item);
         return;
       }
-    
+
+
       // Determine the node type based on markers and group type
-      const nodeType = groupKeys.find((group) =>
-        groupedMarkers[graph_type][group]?.some((marker) =>
-          item.markers?.includes(marker)
-        )
-      ) || (item.markers?.length === 0 && "group1");
-
-
+      const nodeType =
+        groupKeys.find((group) =>
+          groupedMarkers[graph_type][group]?.some((marker) =>
+            item.markers?.includes(marker)
+          )
+        ) ||
+        (item.markers?.length === 0 && "group1");
 
       const getParentGroup = (nodeType, item, groupedMarkers, graph_type) => {
+
         // Retrieve all groups for the current graph type
         const keys = Object.keys(groupedMarkers[graph_type]);
-      
+
         // Find the index of the current group
         const currentGroupIndex = keys.indexOf(nodeType);
-      
+
         if (currentGroupIndex === -1) {
-          console.warn(`NodeType ${nodeType} not found in groupedMarkers for graph_type: ${graph_type}`);
+          console.warn(
+            `NodeType ${nodeType} not found in groupedMarkers for graph_type: ${graph_type}`
+          );
           return null;
         }
-      
+
         if (currentGroupIndex === 0) {
+
           // If it's the first group, no parent exists
           console.log(`No parent group for the first group: ${nodeType}`);
           return null;
         }
-      
+
         // Get the previous group in the sequence
         const previousGroup = keys[currentGroupIndex - 1];
         const previousMarkers = groupedMarkers[graph_type][previousGroup];
-      
+
         if (!previousMarkers || previousMarkers.length === 0) {
-          console.warn(`No markers found for the previous group ${previousGroup}`);
+          console.warn(
+            `No markers found for the previous group ${previousGroup}`
+          );
           return null;
         }
-      
+
         // Check the item for references based on the previous group's marker
         for (const marker of previousMarkers) {
           const refKey = `${marker}Ref`; // Construct reference key dynamically
-          console.log(`Checking reference key: ${refKey} for marker: ${marker}`);
-      
           if (item[refKey]?.fid) {
-            console.log(`Found reference for marker: ${marker}, key: ${refKey}, fid: ${item[refKey].fid}`);
-            return item[refKey].fid; // Return the reference ID if found
+          return item[refKey].fid; // Return the reference ID if found
           }
         }
       };
-    
+
       if (!nodeType) {
         console.warn("No nodeType determined for item:", key, item);
         return; // Skip items with no matching node type
       }
-    
+
       let parent = null;
-    
+
       if (graph_type === "standard" || graph_type === "location_group") {
         // Use secEquipRef or equipRef logic for the last groups: point
         const groupKeys = Object.keys(groupedMarkers[graph_type]);
         const lastGroup = groupKeys[groupKeys.length - 1];
-    
+
         if (nodeType === lastGroup) {
           // Check for secEquipRef first, then fallback to equipRef to resolve parent for "point"
           parent = item.secEquipRef?.fid || item.equipRef?.fid || null;
-    
+
           // If secEquip exists, add a link from equip to secEquip
           if (item.secEquipRef) {
             const equipParent = item.equipRef?.fid || null;
@@ -234,7 +241,7 @@ const Graph = ({
             parent = item.equipRef?.fid || null; // Equip is parent of secEquip
           } else if (graph_type === "location_group") {
             // Handle "equip" logic for location_group graph_type
-            parent = item.instalZoneRef?.fid || null; // Example: Adjust based on location_group structure
+            parent = item.tipoEquipoRef?.fid || null; // Example: Adjust based on location_group structure
           } else {
             console.warn(
               `Unhandled logic for group6 in graph_type: ${graph_type}`
@@ -248,7 +255,7 @@ const Graph = ({
       } else if (graph_type === "bmslytics") {
         const groupKeys = Object.keys(groupedMarkers[graph_type]);
         const currentGroupIndex = groupKeys.indexOf(nodeType);
-    
+
         if (currentGroupIndex > 0) {
           // Sequential parent resolution for bmslytics
           const parentGroup = groupKeys[currentGroupIndex - 1];
@@ -258,7 +265,8 @@ const Graph = ({
           }
         }
       }
-    
+
+
       // Add the current node to the nodes array
       nodes.push({
         id: item.fid,
@@ -266,7 +274,8 @@ const Graph = ({
         group: nodeType,
         parent,
       });
-    
+
+
       // Add a link to the parent, if it exists
       if (parent) {
         const linkKey = `${parent}-${item.fid}-${nodeType}`;
@@ -276,10 +285,11 @@ const Graph = ({
         }
       }
     });
-    
+
     return { nodes, links };
-  }
-  
+  };
+
+
 
   const textWidth = (text) => {
     // Create a temporary canvas to perform the measurement
@@ -292,6 +302,7 @@ const Graph = ({
 
     return ctx.measureText(text).width;
   };
+
 
   // Function to calculate the positions of nodes using dagre
   const getLayout = ({ nodes, links }) => {
@@ -337,7 +348,6 @@ const Graph = ({
     // Step 4: Calculates the number of pixels to add to center the graph
     const foundNode = nodes.find((node) => node.id === elementsWithMaxY[0][0]);
 
-    // extraWidth = textWidth(foundNode.name);                  //COMMENTED CODE BECAUSE NAME RETURNS UNDEFINED
 
     let initColumnMaxY = 0;
     // Step5: If there are more than 8 elements, recalculate their positions
@@ -366,6 +376,7 @@ const Graph = ({
       });
     }
 
+
     // Update node positions
     const updatedNodes = nodes.map((node) => {
       const dagreNode = graph.node(node.id);
@@ -389,6 +400,7 @@ const Graph = ({
     return { nodes: updatedNodes, links };
   };
 
+
   // Function to build the dynamic graph
   function buildBranch(node, graph, collapsed_nodes, last_level) {
     let nodes = [node];
@@ -408,6 +420,7 @@ const Graph = ({
         last_level["parent"] = nod[0].parent;
       }
     }
+
 
     // Recursive function
     const upperBranch = (node) => {
@@ -431,6 +444,7 @@ const Graph = ({
     return { nodes: nodes, links: links };
   }
 
+
   // Function to recursively collapse all descendants of a node
   const collapseBranch = (node, allNodes, collapsedNodes) => {
     // Collapse the current node
@@ -452,6 +466,7 @@ const Graph = ({
 
     return updatedCollapsedNodes;
   };
+
 
   // Function to collapse/expand a node
   const handleNodeClick = (node) => {
@@ -514,6 +529,7 @@ const Graph = ({
     }
   };
 
+
   // Function to determine which nodes are down
   const getVisibleGraph = () => {
     // List of visible (not collapsed) nodes
@@ -538,6 +554,7 @@ const Graph = ({
       }
     });
 
+
     // Adding visible links
     graphData.links.forEach((link) => {
       const found = visibleNodes.some((node) => {
@@ -555,16 +572,19 @@ const Graph = ({
     return { nodes: visibleNodes, links: visibleLinks };
   };
 
+
   // NodeCard opens on right-click on the node
   const handleNodeRightClick = (node) => {
     const objectFound = Object.entries(json_data).find(
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
-    // Set the currently right-clicked node ID
+
+    // Set the currently right-cliked node ID
     setSelectedNodeId(node.id);
     setSelectedNodeGroup(node.group);
   };
+
 
   // Function to close the Modal
   const handleCloseModal = () => {
@@ -604,6 +624,24 @@ const Graph = ({
     }
   }, [graphData]);
 
+  const formatNodeLabel = (node) => {
+    const groupMarker = groupToMarkerMap[node.group] || "Unknown Group";
+    
+    const objectFound = Object.entries(json_data).find(
+      ([key, value]) => value.fid === node.id
+    );
+    // Handle undefined `objectFound`
+    const labelContent = objectFound
+      ? objectFound[1].navName || objectFound[1].id || "Unknown"
+      : "Unknown";
+
+    return (
+      <div className="bg-gray-500 text-white px-4 py-1 rounded-lg">
+        <strong>{groupMarker}</strong>: {labelContent}
+      </div>
+    );
+  };
+
   return (
     <div className="w-full flex">
       {/* Container for ForceGraph2D */}
@@ -612,6 +650,8 @@ const Graph = ({
           nodeJsonFound ? "w-2/3" : "w-full"
         } flex justify-center items-center`}
       >
+
+
         <ForceGraph2D
           graphData={getVisibleGraph()}
           width={nodeJsonFound ? dimensions.width * (2 / 3) : dimensions.width}
@@ -623,7 +663,12 @@ const Graph = ({
           cooldownTicks={0}
           onNodeClick={handleNodeClick} // Call handleNodeClick in the nodes
           onNodeRightClick={handleNodeRightClick}
-          nodeLabel={(node) => `${groupToMarkerMap[node.group]}: ${node.name}`}
+          onNodeHover={(node) => {
+            if (hoveredNode?.id !== node?.id) {
+              setHoveredNode(node || null);
+            }
+          }}
+          nodeLabel={() => ""} // Disable default tooltip. Do not delete this line.
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.name;
             const fontSize = 12 / globalScale;
@@ -641,7 +686,7 @@ const Graph = ({
               ctx.stroke();
             }
 
-            // Draw the label
+            // Draw the blue name on the right of each node
             ctx.font = `${fontSize}px 'Arial', 'Sans-Serif'`;
             ctx.textAlign = "right";
             ctx.textBaseline = "right";
@@ -650,6 +695,35 @@ const Graph = ({
           }}
         />
       </div>
+      
+      {/* Custom Tooltip on Node Hover */}
+      {hoveredNode && fgRef.current && (
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: `${Math.max(
+              Math.min(
+                fgRef.current.graph2ScreenCoords(hoveredNode.x, hoveredNode.y)
+                  .y + 20,
+                window.innerHeight - 50
+              ),
+              0
+            )}px`,
+            left: `${Math.max(
+              Math.min(
+                fgRef.current.graph2ScreenCoords(hoveredNode.x, hoveredNode.y)
+                  .x + (hoveredNode.x > dimensions.width / 3 ? -200 : 10),
+                window.innerWidth -
+                  (nodeJsonFound ? dimensions.width / 3 : 0) -
+                  300
+              ),
+              0
+            )}px`,
+          }}
+        >
+          {formatNodeLabel(hoveredNode)}
+        </div>
+      )}
 
       {/* Container for NodeCard to scroll inside */}
       <div className="w-1/3 h-full overflow-hidden">

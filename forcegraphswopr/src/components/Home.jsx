@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/db_tenenciaNuevaRivas.json")
+    fetch("../../server/locationGroup.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
