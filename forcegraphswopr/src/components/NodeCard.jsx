@@ -2,13 +2,12 @@ import React from "react";
 
 const NodeCard = ({
   node,
-  grouped_markers,
   get_color_for_node,
   graph_type,
   selected_node_group,
   on_close,
 }) => {
-  
+
   if (!node) return null;
 
 
