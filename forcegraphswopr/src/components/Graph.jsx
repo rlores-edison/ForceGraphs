@@ -27,6 +27,7 @@ const Graph = ({
     height: window.innerHeight,
   });
 
+
   useEffect(() => {
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
@@ -38,6 +39,7 @@ const Graph = ({
   }, []);
 
   var extraWidth = 0;
+
 
   useEffect(() => {
     if (json_data && Object.keys(json_data).length > 0) {
@@ -171,16 +173,14 @@ const Graph = ({
         const currentGroupIndex = keys.indexOf(nodeType);
 
         if (currentGroupIndex === -1) {
-          console.warn(
-            `NodeType ${nodeType} not found in groupedMarkers for graph_type: ${graph_type}`
-          );
+          //console.warn(`NodeType ${nodeType} not found in groupedMarkers for graph_type: ${graph_type}`);
           return null;
         }
 
         if (currentGroupIndex === 0) {
 
           // If it's the first group, no parent exists
-          console.log(`No parent group for the first group: ${nodeType}`);
+          //console.log(`No parent group for the first group: ${nodeType}`);
           return null;
         }
 
@@ -205,7 +205,7 @@ const Graph = ({
       };
 
       if (!nodeType) {
-        console.warn("No nodeType determined for item:", key, item);
+        //console.warn("No nodeType determined for item:", key, item);
         return; // Skip items with no matching node type
       }
 
@@ -237,9 +237,11 @@ const Graph = ({
           }
         } else if (nodeType === "group6") {
           if (graph_type === "standard") {
+
             // Handle "secEquip" logic for standard graph_type
             parent = item.equipRef?.fid || null; // Equip is parent of secEquip
           } else if (graph_type === "location_group") {
+
             // Handle "equip" logic for location_group graph_type
             parent = item.tipoEquipoRef?.fid || null; // Example: Adjust based on location_group structure
           } else {
@@ -248,6 +250,7 @@ const Graph = ({
             );
             parent = null;
           }
+
         } else {
           // Resolve parent dynamically for all groups
           parent = getParentGroup(nodeType, item, groupedMarkers, graph_type);
@@ -573,14 +576,14 @@ const Graph = ({
   };
 
 
-  // NodeCard opens on right-click on the node
+  // NodeCard opens on node right-click
   const handleNodeRightClick = (node) => {
     const objectFound = Object.entries(json_data).find(
       ([key, value]) => value.fid === node.id
     );
     setNodeJsonFound(objectFound);
 
-    // Set the currently right-cliked node ID
+    // Set the currently right-clicked node ID
     setSelectedNodeId(node.id);
     setSelectedNodeGroup(node.group);
   };
@@ -593,6 +596,7 @@ const Graph = ({
     // Clear the right-clicked node ID
     setSelectedNodeId(null);
   };
+
 
   const calculateGraphDimensions = () => {
     const nodes = graphData.nodes;
@@ -642,6 +646,8 @@ const Graph = ({
     );
   };
 
+
+  
   return (
     <div className="w-full flex">
       {/* Container for ForceGraph2D */}
@@ -696,6 +702,7 @@ const Graph = ({
         />
       </div>
       
+
       {/* Custom Tooltip on Node Hover */}
       {hoveredNode && fgRef.current && (
         <div
@@ -725,13 +732,13 @@ const Graph = ({
         </div>
       )}
 
+
       {/* Container for NodeCard to scroll inside */}
       <div className="w-1/3 h-full overflow-hidden">
         {nodeJsonFound && (
           <NodeCard
             node={nodeJsonFound}
             on_close={handleCloseModal}
-            grouped_markers={groupedMarkers}
             get_color_for_node={getColorForNode}
             graph_type={graph_type}
             selected_node_group={selectedNodeGroup}
