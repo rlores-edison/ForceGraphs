@@ -8,26 +8,46 @@ const NodeCard = ({
   selected_node_group,
   on_close,
 }) => {
+  
   if (!node) return null;
 
+
   const nodeData = node[1] || {};
-  const arrayNodeType = [
-    "site",
-    "instalacion",
-    "instalZone",
-    "tipoEquipo",
-    "equip",
-    "secEquip",
-    "point",
-  ];
+
+
+  const arrayNodeType = {
+    standard: [
+      "site",
+      "instalacion",
+      "instalZone",
+      "tipoEquipo",
+      "equip",
+      "secEquip",
+      "point",
+    ],
+
+    location_group: [
+      "locationGroup",
+      "site",
+      "instalacion",
+      "instalZone",
+      "tipoEquipo",
+      "equip",
+      "secEquip",
+      "point",
+    ],
+
+    bmslytics: ["bms", "station", "controller", "point"],
+  };
+
   const defaultMarker = nodeData.markers.findIndex((item) =>
-    arrayNodeType.includes(item)
+    arrayNodeType[graph_type].includes(item)
   );
 
-
+  
   const FormDisplay = ({ data }) => {
+    
     const handleCopy = (value) => {
-      
       // Convert value from object to string
       const textToCopy =
         typeof value === "object" && value !== null
@@ -36,40 +56,26 @@ const NodeCard = ({
       navigator.clipboard.writeText(textToCopy);
     };
 
-
     return (
       <form>
         {Object.entries(data).map(([key, value]) => {
-          // Check if markers exist in arrayNodeType
+          
           const shouldRenderMarkers =
-            key === "markers" &&
-            Array.isArray(value) &&
-            defaultMarker !== -1 &&
-            value.length > 0;
+            key === "markers" && Array.isArray(value) && value.length > 0;
 
           const shouldRenderInputField =
             key !== "markers" || (key === "markers" && shouldRenderMarkers);
 
-
           return (
             <div key={key} className="h-full">
-              {/* Render label only for valid keys */}
+              
               {shouldRenderInputField && (
                 <label className="font-bold mr-4">{key}</label>
               )}
 
+
               {/* Button to copy data to clipboard */}
-              {[
-                "locationGroupRef",
-                "siteRef",
-                "instalacionRef",
-                "instalZoneRef",
-                "tipoEquipoRef",
-                "equipRef",
-                "secEquipRef",
-                "cleanRef",
-                "fid",
-              ].includes(key) && (
+              {key.endsWith("Ref") && (
                 <button
                   type="button"
                   onClick={() => handleCopy(value)}
@@ -79,6 +85,7 @@ const NodeCard = ({
                   Copy
                 </button>
               )}
+
 
               {/* Render markers as a bulleted list in two columns */}
               {shouldRenderMarkers ? (
@@ -97,11 +104,13 @@ const NodeCard = ({
                     </div>
                   ))}
                 </div>
+
               ) : typeof value === "object" &&
                 value !== null &&
                 Object.keys(value).includes("fid") &&
                 Object.keys(value).includes("repr") ? (
                 <div className="border p-2 rounded w-full mt-1 mb-3 border-gray-300 bg-white">
+
                   {/* Row for fid */}
                   <div className="flex items-center mb-2">
                     <p className="font-bold mr-2">fid:</p>
@@ -126,6 +135,7 @@ const NodeCard = ({
                     />
                   </div>
                 </div>
+
               ) : shouldRenderInputField ? (
                 <input
                   type="text"
@@ -145,6 +155,7 @@ const NodeCard = ({
     );
   };
 
+
   // Card title on top
   const widthName = (
     node,
@@ -152,32 +163,29 @@ const NodeCard = ({
     graph_type,
     selected_node_group
   ) => {
-    const name = node.markers[defaultMarker];
-    let id = node.id;
-
     // Split the name in two lines
-    const firstLine = `${name}`;
-    const secondLine = `${id}`;
-    if (id.length > 50) {
-      id = id.substring(0, 47) + "...";
+    const firstLine =
+      "locationGroup" in node ? "locationGroup" : node.markers[defaultMarker];
+    let secondLine = `${node.id}`;
+
+    if (secondLine.length > 50) {
+      secondLine = secondLine.substring(0, 47) + "...";
     }
 
     // Add color to the first line of card title - marker - based on node group
     const color = get_color_for_node[graph_type]?.[selected_node_group];
 
-
     return (
       <div className="text-center">
         <p>
-          <span style={{ color, fontWeight: "bold" }}>{name}</span>
+          <span style={{ color, fontWeight: "bold" }}>{firstLine}</span>
         </p>
         <span>
-          <p>{id}</p>
+          <p>{secondLine}</p>
         </span>
       </div>
     );
   };
-
 
   return (
     <div>
@@ -203,6 +211,7 @@ const NodeCard = ({
         >
           &#x2715;
         </button>
+
       </div>
     </div>
   );
