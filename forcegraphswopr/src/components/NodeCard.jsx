@@ -163,10 +163,9 @@ const NodeCard = ({
     selected_node_group
   ) => {
     // Split the name in two lines
-    const firstLine =
-      "locationGroup" in node ? "locationGroup" : node.markers[defaultMarker];
+    const firstLine = "locationGroup" in node && graph_type === "location_group" ? "locationGroup" : node.markers[defaultMarker];
     let secondLine = `${node.id}`;
-
+   
     if (secondLine.length > 50) {
       secondLine = secondLine.substring(0, 47) + "...";
     }

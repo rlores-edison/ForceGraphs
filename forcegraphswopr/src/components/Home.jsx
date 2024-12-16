@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch("../../server/db_CasaDelAgua.json")
+    fetch("../../server/db_tenenciaNuevaRivas.json")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -28,7 +28,7 @@ const Home = () => {
         background_color={"#fdfdfd"}
         link_color={"#BDBDBD"}
         label_color={"#0000FF"} 
-        graph_type={"bmslytics"} // Types of db: standard, location_group, bmslytics
+        graph_type={"location_group"} // Types of db: standard, location_group, bmslytics
       />
 
       </div>

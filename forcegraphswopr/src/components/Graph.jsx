@@ -382,6 +382,7 @@ const Graph = ({
 
     // Update node positions
     const updatedNodes = nodes.map((node) => {
+
       const dagreNode = graph.node(node.id);
 
       let reduceName = false;
