@@ -383,6 +383,13 @@ const Graph = ({
     // Update node positions
     const updatedNodes = nodes.map((node) => {
 
+      const objectFound = Object.entries(json_data).find(
+        ([key, value]) => value.fid === node.id
+      );
+ 
+      node.name = ('navName' in objectFound[1]) ? objectFound[1].navName
+                                                : objectFound[1].id;
+
       const dagreNode = graph.node(node.id);
 
       let reduceName = false;
